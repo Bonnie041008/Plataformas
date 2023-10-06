@@ -31,6 +31,10 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
+	const float MAX_FALL_SPEED = 10.0f;
+	bool isjumping= false;
+	int jumpcnt;
 };
 
 #endif // __PLAYER_H__

@@ -44,6 +44,7 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
@@ -59,7 +60,34 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		vel = b2Vec2(speed*dt, -GRAVITY_Y);
 	}
+	// Añadir la funcionalidad de saltar
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		// Cambia la velocidad vertical para simular un salto
+	//	vel.y = JUMP_FORCE- jumpcnt;
+		isjumping = true;
+		jumpcnt = 0;
+	}
+	if (isjumping) {
+		vel = b2Vec2( 0, GRAVITY_Y + jumpcnt - dt);
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			vel = b2Vec2(-speed * dt, GRAVITY_Y + jumpcnt - dt);
+		}
 
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt);
+		}
+
+		jumpcnt++;
+		if (GRAVITY_Y + jumpcnt - dt >= 0) {
+			isjumping = false;
+			jumpcnt = 0;
+		}
+	}
+	
+	
+	
+	
+	
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(vel);
 

@@ -40,6 +40,7 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	Player* player;
+	bool debugcamera= false;
 
 };
 
