@@ -61,7 +61,7 @@ bool Player::Update(float dt)
 		vel = b2Vec2(speed*dt, -GRAVITY_Y);
 	}
 	// Añadir la funcionalidad de saltar
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
 		// Cambia la velocidad vertical para simular un salto
 	
 		isjumping = true;
