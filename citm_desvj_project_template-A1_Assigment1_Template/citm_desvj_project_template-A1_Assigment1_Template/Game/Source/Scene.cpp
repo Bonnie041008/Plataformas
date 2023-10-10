@@ -88,8 +88,21 @@ bool Scene::Update(float dt)
 		debugcamera = false;
 	}
 	if (debugcamera == false) {
-		app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
-		app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
+		if (player->position.x < app->win->screenSurface->w / 2) {
+			app->render->camera.x = 0;
+		}
+		else {
+			app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
+		}
+
+		if (-player->position.y < app->win->screenSurface->h / 2) {
+			app->render->camera.y = 0;
+		}
+		else {
+			app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
+		}
+		//app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
+		//app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
 	}
 	
 		

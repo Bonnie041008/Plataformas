@@ -32,7 +32,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 10, position.y + 14, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -68,20 +68,37 @@ bool Player::Update(float dt)
 		jumpcnt = 0;
 	}
 	if (isjumping) {
-		vel = b2Vec2( 0, GRAVITY_Y + jumpcnt - dt);
+
+		if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
+			vel = b2Vec2(0 * dt, -GRAVITY_Y);
+		}
+		else {
+			vel = b2Vec2(0 * dt, GRAVITY_Y + jumpcnt - dt+15);
+		}
+
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			vel = b2Vec2(-speed * dt, GRAVITY_Y + jumpcnt - dt);
+			
+			if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
+				vel = b2Vec2(-speed * dt, -GRAVITY_Y);
+			}
+			else {
+				vel = b2Vec2(-speed * dt, GRAVITY_Y + jumpcnt - dt+15);
+			}
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt);
+
+			if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
+				vel = b2Vec2(speed * dt, -GRAVITY_Y);
+			}
+			else {
+				vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt+15);
+			}
 		}
 
 		jumpcnt++;
-		if ( jumpcnt - dt >= -GRAVITY_Y * 2.4f) {
-			isjumping = false;
-			jumpcnt = 0;
-		}
+		
 	}
 	
 	
@@ -95,7 +112,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	app->render->DrawTexture(texture, position.x-19, position.y-20);
 
 	return true;
 }
