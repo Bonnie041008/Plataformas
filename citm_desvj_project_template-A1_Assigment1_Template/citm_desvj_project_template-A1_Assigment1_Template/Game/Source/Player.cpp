@@ -73,7 +73,7 @@ bool Player::Update(float dt)
 			vel = b2Vec2(0 * dt, -GRAVITY_Y);
 		}
 		else {
-			vel = b2Vec2(0 * dt, GRAVITY_Y + jumpcnt - dt+15);
+			vel = b2Vec2(0 * dt, GRAVITY_Y + jumpcnt - dt+5);
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -82,7 +82,7 @@ bool Player::Update(float dt)
 				vel = b2Vec2(-speed * dt, -GRAVITY_Y);
 			}
 			else {
-				vel = b2Vec2(-speed * dt, GRAVITY_Y + jumpcnt - dt+15);
+				vel = b2Vec2(-speed * dt, GRAVITY_Y + jumpcnt - dt+5);
 			}
 		}
 
@@ -93,7 +93,7 @@ bool Player::Update(float dt)
 				vel = b2Vec2(speed * dt, -GRAVITY_Y);
 			}
 			else {
-				vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt+15);
+				vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt+5);
 			}
 		}
 
