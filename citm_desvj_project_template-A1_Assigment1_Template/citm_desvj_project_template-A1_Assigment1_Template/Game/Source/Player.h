@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Point.h"
+#include "Animation.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -35,6 +36,10 @@ public:
 	const float MAX_FALL_SPEED = 10.0f;
 	bool isjumping= false;
 	int jumpcnt;
+	Animation idleAnim;
+	Animation leftAnim;
+	Animation rightAnim;
+	Animation* currentAnimation = nullptr;
 };
 
 #endif // __PLAYER_H__

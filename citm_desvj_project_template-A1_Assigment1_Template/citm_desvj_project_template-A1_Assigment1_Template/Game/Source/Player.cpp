@@ -12,6 +12,11 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+	idleAnim.PushBack({ 127, 48, 127, 48 });
+	idleAnim.PushBack({ 295, 54, 127, 48 });
+	idleAnim.PushBack({ 467, 59, 127, 48 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.07f;
 }
 
 Player::~Player() {
@@ -22,7 +27,8 @@ bool Player::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
+	//texturePath = parameters.attribute("texturepath").as_string();
+	currentAnimation = &idleAnim;
 
 	return true;
 }
