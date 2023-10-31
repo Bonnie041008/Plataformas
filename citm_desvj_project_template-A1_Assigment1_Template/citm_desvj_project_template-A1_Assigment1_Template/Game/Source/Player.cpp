@@ -12,9 +12,11 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
-	idleAnim.PushBack({ 127, 48, 127, 48 });
-	idleAnim.PushBack({ 295, 54, 127, 48 });
-	idleAnim.PushBack({ 467, 59, 127, 48 });
+	idleAnim.PushBack({ 63, 0, 63, 44 });
+	idleAnim.PushBack({ 126, 0, 63, 44 });
+	idleAnim.PushBack({ 189, 0, 63, 44 });
+	idleAnim.PushBack({ 252, 0, 63, 44 });
+	idleAnim.PushBack({ 315, 0, 63, 44 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.07f;
 }
@@ -27,7 +29,7 @@ bool Player::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
-	//texturePath = parameters.attribute("texturepath").as_string();
+	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
 
 	return true;
@@ -36,7 +38,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load("Assets/Textures/newwizardIdle2-Sheet.png");
 
 	pbody = app->physics->CreateCircle(position.x + 10, position.y + 14, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -51,7 +53,7 @@ bool Player::Update(float dt)
 {
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	
-
+	currentAnimation = &idleAnim;
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
 	}
@@ -118,8 +120,8 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x-19, position.y-20);
-
+	app->render->DrawTexture(texture, position.x-19, position.y-20, &currentAnimation->GetCurrentFrame());
+	currentAnimation->Update();
 	return true;
 }
 
