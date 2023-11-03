@@ -4,6 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"

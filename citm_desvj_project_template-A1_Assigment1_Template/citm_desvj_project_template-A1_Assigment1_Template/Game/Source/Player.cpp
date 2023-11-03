@@ -204,10 +204,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		break;
 	case ColliderType::DEATH:
-		LOG("Collision PLATFORM");
-		/*Añadir que se muere*/
-		if (isjumping) {
-			isjumping = false;
+		LOG("Collision DEATH");
+		health = 0;
+		if (health == 0 && isalive) {
+			muriendo++;
+			currentAnimation = &deadAnim;
 		}
 		break;
 	case ColliderType::UNKNOWN:
