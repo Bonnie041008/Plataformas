@@ -222,7 +222,6 @@ bool Map::Load()
                         c1->ctype = ColliderType::DEATH;
                     }
 
-                   
                 }
             }
         }
