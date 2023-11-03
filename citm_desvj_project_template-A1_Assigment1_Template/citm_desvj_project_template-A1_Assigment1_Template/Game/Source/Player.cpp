@@ -161,8 +161,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			isjumping = false;
 		}
 		break;
+	case ColliderType::DEATH:
+		LOG("Collision PLATFORM");
+		/*Añadir que se muere*/
+		if (isjumping) {
+			isjumping = false;
+		}
+		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
 	}
+
 }
