@@ -48,11 +48,27 @@ Player::Player() : Entity(EntityType::PLAYER)
 	deadAnim.PushBack({ 576,128,64,64 });
 	deadAnim.PushBack({ 640,128,64,64 });
 	deadAnim.PushBack({ 0,0,0,0 });
-
-
-
 	deadAnim.loop = false;
 	deadAnim.speed = 0.2f;
+
+	//salto
+
+	jumpAnim.PushBack({ 0,192,64,64 });
+	jumpAnim.PushBack({ 64,192,64,64 });
+	jumpAnim.PushBack({ 128,192,64,64 });
+	jumpAnim.PushBack({ 192,192,64,64 });
+	jumpAnim.PushBack({ 256,192,64,64 });
+	jumpAnim.PushBack({ 320,192,64,64 });
+	jumpAnim.PushBack({ 384,192,64,64 });
+	jumpAnim.PushBack({ 448,192,64,64 });
+	jumpAnim.PushBack({ 512,192,64,64 });
+	jumpAnim.PushBack({ 576,192,64,64 });
+	jumpAnim.PushBack({ 640,128,64,64 });
+	jumpAnim.PushBack({ 0,0,0,0 });
+
+
+	jumpAnim.loop = false;
+	jumpAnim.speed = 0.2f;
 
 }
 
@@ -100,6 +116,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		vel = b2Vec2(-speed*dt, -GRAVITY_Y);
 		isFliped = true;
+		currentAnimation = &rightAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {

@@ -44,7 +44,7 @@ public:
 	bool isjumping= false;
 	int jumpcnt;
 	Animation idleAnim;
-	Animation leftAnim;
+	Animation jumpAnim;
 	Animation rightAnim;
 	Animation deadAnim;
 	Animation* currentAnimation = nullptr;
