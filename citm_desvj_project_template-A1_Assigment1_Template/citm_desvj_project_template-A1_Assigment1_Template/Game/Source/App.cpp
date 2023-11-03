@@ -202,6 +202,18 @@ void App::FinishUpdate()
 		lastSecFrameCount = 0;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (maxFrameDuration == 1000/60)
+		{
+			maxFrameDuration = 1000 / 30;
+		}
+		else
+		{
+			maxFrameDuration = 1000 / 60;
+		}
+	}
+
 
 	// Shows the time measurements in the window title
 	static char title[256];

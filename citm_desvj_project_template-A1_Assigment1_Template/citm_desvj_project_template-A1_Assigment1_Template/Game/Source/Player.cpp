@@ -48,11 +48,15 @@ Player::Player() : Entity(EntityType::PLAYER)
 	deadAnim.PushBack({ 576,128,64,64 });
 	deadAnim.PushBack({ 640,128,64,64 });
 	deadAnim.PushBack({ 0,0,0,0 });
-
-
-
 	deadAnim.loop = false;
 	deadAnim.speed = 0.2f;
+
+	//salto
+
+
+
+	//caida
+
 
 }
 
@@ -86,7 +90,9 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+	b2Vec2 vel = b2Vec2(move_x, move_y);
+	move_x = 0;
+	move_y = -GRAVITY_Y;
 	
 	currentAnimation = &idleAnim;
 	
@@ -98,16 +104,23 @@ bool Player::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed*dt, -GRAVITY_Y);
+		move_x = -speed*dt;
 		isFliped = true;
+		if (godmode == true)
+		{
+			move_x = -speed * 5 *dt;
+		}
 	}
-
+	//muerte
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed*dt, -GRAVITY_Y);
+		move_x = +speed * dt;
 		isFliped = false;
 		//texture = textureRun;
 		currentAnimation = &rightAnim;
-		
+		if (godmode == true)
+		{
+			move_x = +speed * 5 * dt;
+		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		//vel = b2Vec2(speed * dt, -GRAVITY_Y);
@@ -117,14 +130,25 @@ bool Player::Update(float dt)
 		
 
 	}
+	//godmode
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		if (godmode == false) {
+			godmode = true;
+		}
+		else if (godmode == true) {
+			godmode = false;
+		}
+	}
+
+	
+
 	if (health == 0 && isalive) {
 		muriendo++;
 		currentAnimation = &deadAnim;
 		/*if (muriendo > 60) {
 			currentAnimation = &idleAnim;
 		}*/
-		
-		
+	
 	}
 	// Añadir la funcionalidad de saltar
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
@@ -135,7 +159,7 @@ bool Player::Update(float dt)
 	}
 	if (isjumping) {
 
-		if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
+		/*if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
 			vel = b2Vec2(0 * dt, -GRAVITY_Y);
 		}
 		else {
@@ -161,14 +185,29 @@ bool Player::Update(float dt)
 			else {
 				vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt+5);
 			}
-		}
+		}*/
+
+		move_y = GRAVITY_Y + jumpcnt - dt + 5;
 
 		jumpcnt++;
 		
 	}
 	
+	if (godmode == true)
+	{
+		move_y = 0;
+
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			move_y = -10;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			move_y = 10;
+		}
+		godspeed = speed * 10;
+
+	}
 	
-	
+	vel = b2Vec2(move_x, move_y);
 	
 	
 	//Set the velocity of the pbody of the player
@@ -205,11 +244,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::DEATH:
 		LOG("Collision DEATH");
-		health = 0;
+		if (godmode == false)
+		{
+			health = 0;
+		}
 		if (health == 0 && isalive) {
 			muriendo++;
 			currentAnimation = &deadAnim;
 		}
+		
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

@@ -37,6 +37,12 @@ public:
 	bool isalive = true;
 	bool isFliped;
 	int muriendo = 0;
+	
+	bool godmode;
+	float move_y = -10.0f;
+	float move_x = 0.0f;
+	float godspeed = 0.0f;
+
 	PhysBody* pbody;
 	int pickCoinFxId;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
