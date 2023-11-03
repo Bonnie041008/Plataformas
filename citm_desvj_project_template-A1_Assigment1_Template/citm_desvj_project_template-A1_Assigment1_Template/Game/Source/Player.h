@@ -30,6 +30,10 @@ public:
 	float speed = 0.2f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* currentTexture;
+	SDL_Texture* textureRun = NULL;
+
+	
 	PhysBody* pbody;
 	int pickCoinFxId;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades

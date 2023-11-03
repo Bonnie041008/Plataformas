@@ -12,6 +12,7 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+	//idle
 	idleAnim.PushBack({ 63, 0, 63, 44 });
 	idleAnim.PushBack({ 126, 0, 63, 44 });
 	idleAnim.PushBack({ 189, 0, 63, 44 });
@@ -19,6 +20,15 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 315, 0, 63, 44 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.07f;
+
+	//correr
+	rightAnim.PushBack({ 63,0,63,44 });
+	rightAnim.PushBack({ 126,0,63,44 });
+	rightAnim.PushBack({ 189,0,63,44 });
+	rightAnim.PushBack({ 0,0,0,0 });
+	rightAnim.PushBack({ 315,0,63,44 });
+	rightAnim.loop = true;
+	rightAnim.speed = 0.07f;
 }
 
 Player::~Player() {
@@ -39,7 +49,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/newwizardIdle2-Sheet.png");
-
+	textureRun = app->tex->Load("Assets/Textures/SWMG-Sprite-Correr-Sheet.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y + 14, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -54,6 +64,7 @@ bool Player::Update(float dt)
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	
 	currentAnimation = &idleAnim;
+	currentTexture = texture;
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
 	}
@@ -63,10 +74,15 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		vel = b2Vec2(-speed*dt, -GRAVITY_Y);
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		vel = b2Vec2(speed*dt, -GRAVITY_Y);
+		
+		//texture = textureRun;
+		currentAnimation = &rightAnim;
+		
 	}
 	// Añadir la funcionalidad de saltar
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
