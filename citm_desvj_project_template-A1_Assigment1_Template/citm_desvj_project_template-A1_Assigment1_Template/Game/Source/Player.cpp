@@ -44,9 +44,15 @@ Player::Player() : Entity(EntityType::PLAYER)
 	deadAnim.PushBack({ 320,128,64,64 });
 	deadAnim.PushBack({ 384,128,64,64 });
 	deadAnim.PushBack({ 448,128,64,64 });
+	deadAnim.PushBack({ 512,128,64,64 });
+	deadAnim.PushBack({ 576,128,64,64 });
+	deadAnim.PushBack({ 640,128,64,64 });
+	deadAnim.PushBack({ 0,0,0,0 });
 
-	rightAnim.loop = false;
-	rightAnim.speed = 0.07f;
+
+
+	deadAnim.loop = false;
+	deadAnim.speed = 0.2f;
 
 }
 
@@ -69,7 +75,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spriteshee2t.png");
 	//textureRun = app->tex->Load("Assets/Textures/SWMG-Sprite-Correr-Sheet.png");
-	pbody = app->physics->CreateCircle(position.x + 10, position.y + 14, 20, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 10, position.y -200, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -93,12 +99,12 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		vel = b2Vec2(-speed*dt, -GRAVITY_Y);
-		
+		isFliped = true;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		vel = b2Vec2(speed*dt, -GRAVITY_Y);
-		
+		isFliped = false;
 		//texture = textureRun;
 		currentAnimation = &rightAnim;
 		
@@ -111,8 +117,14 @@ bool Player::Update(float dt)
 		
 
 	}
-	if (health == 0) {
+	if (health == 0 && isalive) {
+		muriendo++;
 		currentAnimation = &deadAnim;
+		/*if (muriendo > 60) {
+			currentAnimation = &idleAnim;
+		}*/
+		
+		
 	}
 	// Añadir la funcionalidad de saltar
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
@@ -166,7 +178,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x-19, position.y-20, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x-19, position.y-20,isFliped, &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
 	return true;
 }

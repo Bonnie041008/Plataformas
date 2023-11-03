@@ -35,6 +35,8 @@ public:
 
 	int health = 1;
 	bool isalive = true;
+	bool isFliped;
+	int muriendo = 0;
 	PhysBody* pbody;
 	int pickCoinFxId;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
