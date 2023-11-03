@@ -53,12 +53,12 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//salto
 
-<<<<<<< HEAD
+
 
 
 	//caida
 
-=======
+
 	jumpAnim.PushBack({ 0,192,64,64 });
 	jumpAnim.PushBack({ 64,192,64,64 });
 	jumpAnim.PushBack({ 128,192,64,64 });
@@ -75,7 +75,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	jumpAnim.loop = false;
 	jumpAnim.speed = 0.2f;
->>>>>>> b3c8c5c81c807f3cb44e410a12ce2ee3de8be480
+
 
 }
 
@@ -125,14 +125,14 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		move_x = -speed*dt;
 		isFliped = true;
-<<<<<<< HEAD
+
 		if (godmode == true)
 		{
 			move_x = -speed * 5 *dt;
 		}
-=======
+
 		currentAnimation = &rightAnim;
->>>>>>> b3c8c5c81c807f3cb44e410a12ce2ee3de8be480
+
 	}
 	//muerte
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
