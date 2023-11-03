@@ -33,7 +33,8 @@ public:
 	SDL_Texture* currentTexture;
 	SDL_Texture* textureRun = NULL;
 
-	
+	int health = 1;
+	bool isalive = true;
 	PhysBody* pbody;
 	int pickCoinFxId;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
@@ -43,6 +44,7 @@ public:
 	Animation idleAnim;
 	Animation leftAnim;
 	Animation rightAnim;
+	Animation deadAnim;
 	Animation* currentAnimation = nullptr;
 };
 

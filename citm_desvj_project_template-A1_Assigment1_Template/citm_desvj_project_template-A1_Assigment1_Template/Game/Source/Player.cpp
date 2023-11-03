@@ -13,22 +13,41 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
 	//idle
-	idleAnim.PushBack({ 63, 0, 63, 44 });
-	idleAnim.PushBack({ 126, 0, 63, 44 });
-	idleAnim.PushBack({ 189, 0, 63, 44 });
-	idleAnim.PushBack({ 252, 0, 63, 44 });
-	idleAnim.PushBack({ 315, 0, 63, 44 });
+	idleAnim.PushBack({ 0, 0, 64, 64 });
+	idleAnim.PushBack({ 64, 0, 64, 64 });
+	idleAnim.PushBack({ 128, 0, 64, 64 });
+	idleAnim.PushBack({ 192, 0, 64, 64 });
+	idleAnim.PushBack({ 256, 0, 64, 64 });
+	idleAnim.PushBack({ 320, 0, 64, 64 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.07f;
 
 	//correr
-	rightAnim.PushBack({ 63,0,63,44 });
-	rightAnim.PushBack({ 126,0,63,44 });
-	rightAnim.PushBack({ 189,0,63,44 });
-	rightAnim.PushBack({ 0,0,0,0 });
-	rightAnim.PushBack({ 315,0,63,44 });
+	rightAnim.PushBack({ 0,64,64,64 });
+	rightAnim.PushBack({ 64,64,64,64 });
+	rightAnim.PushBack({ 128,64,64,64 });
+	rightAnim.PushBack({ 192,64,64,64 });
+	rightAnim.PushBack({ 256,64,64,64 });
+	rightAnim.PushBack({ 320,64,64,64 });
+	rightAnim.PushBack({ 384,64,64,64 });
+	rightAnim.PushBack({ 448,64,64,64 });
+
 	rightAnim.loop = true;
+	rightAnim.speed = 0.2f;
+
+	//dead
+	deadAnim.PushBack({ 0,128,64,64 });
+	deadAnim.PushBack({ 64,128,64,64 });
+	deadAnim.PushBack({ 128,128,64,64 });
+	deadAnim.PushBack({ 192,128,64,64 });
+	deadAnim.PushBack({ 256,128,64,64 });
+	deadAnim.PushBack({ 320,128,64,64 });
+	deadAnim.PushBack({ 384,128,64,64 });
+	deadAnim.PushBack({ 448,128,64,64 });
+
+	rightAnim.loop = false;
 	rightAnim.speed = 0.07f;
+
 }
 
 Player::~Player() {
@@ -48,8 +67,8 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/newwizardIdle2-Sheet.png");
-	textureRun = app->tex->Load("Assets/Textures/SWMG-Sprite-Correr-Sheet.png");
+	texture = app->tex->Load("Assets/Textures/spriteshee2t.png");
+	//textureRun = app->tex->Load("Assets/Textures/SWMG-Sprite-Correr-Sheet.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y + 14, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -64,7 +83,7 @@ bool Player::Update(float dt)
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	
 	currentAnimation = &idleAnim;
-	currentTexture = texture;
+	
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
 	}
@@ -83,6 +102,17 @@ bool Player::Update(float dt)
 		//texture = textureRun;
 		currentAnimation = &rightAnim;
 		
+	}
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+		//vel = b2Vec2(speed * dt, -GRAVITY_Y);
+
+		health = 0;
+		
+		
+
+	}
+	if (health == 0) {
+		currentAnimation = &deadAnim;
 	}
 	// Añadir la funcionalidad de saltar
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
