@@ -33,6 +33,8 @@ public:
 	SDL_Texture* currentTexture;
 	SDL_Texture* textureRun = NULL;
 
+	float initialX;
+	float initialY;
 	int health = 1;
 	bool isalive = true;
 	bool isFliped;
@@ -51,6 +53,7 @@ public:
 	int jumpcnt;
 	Animation idleAnim;
 	Animation jumpAnim;
+	Animation fallAnim;
 	Animation rightAnim;
 	Animation deadAnim;
 	Animation* currentAnimation = nullptr;

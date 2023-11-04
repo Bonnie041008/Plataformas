@@ -53,28 +53,37 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//salto
 
-
-
-
-	//caida
-
-
 	jumpAnim.PushBack({ 0,192,64,64 });
 	jumpAnim.PushBack({ 64,192,64,64 });
 	jumpAnim.PushBack({ 128,192,64,64 });
 	jumpAnim.PushBack({ 192,192,64,64 });
 	jumpAnim.PushBack({ 256,192,64,64 });
-	jumpAnim.PushBack({ 320,192,64,64 });
-	jumpAnim.PushBack({ 384,192,64,64 });
-	jumpAnim.PushBack({ 448,192,64,64 });
-	jumpAnim.PushBack({ 512,192,64,64 });
-	jumpAnim.PushBack({ 576,192,64,64 });
-	jumpAnim.PushBack({ 640,128,64,64 });
-	jumpAnim.PushBack({ 0,0,0,0 });
+	
 
 
-	jumpAnim.loop = false;
+
+
+	jumpAnim.loop = true;
 	jumpAnim.speed = 0.2f;
+
+
+
+
+	//caida
+	
+	/*fallAnim.PushBack({ 320,192,64,64 });
+	fallAnim.PushBack({ 384,192,64,64 });
+	fallAnim.PushBack({ 448,192,64,64 });
+	fallAnim.PushBack({ 512,192,64,64 });
+	fallAnim.PushBack({ 576,192,64,64 });*/
+	fallAnim.PushBack({ 0,0,0,0 });
+
+
+
+
+
+	fallAnim.loop = false;
+	fallAnim.speed = 0.2f;
 
 
 }
@@ -87,6 +96,9 @@ bool Player::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
+	initialX = position.x;
+	initialY = position.y;
+
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
 
@@ -97,7 +109,6 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spriteshee2t.png");
-	//textureRun = app->tex->Load("Assets/Textures/SWMG-Sprite-Correr-Sheet.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y -200, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -134,7 +145,7 @@ bool Player::Update(float dt)
 		currentAnimation = &rightAnim;
 
 	}
-	//muerte
+	
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		move_x = +speed * dt;
 		isFliped = false;
@@ -164,13 +175,15 @@ bool Player::Update(float dt)
 	}
 
 	
-
+	//muerte
 	if (health == 0 && isalive) {
 		muriendo++;
 		currentAnimation = &deadAnim;
-		/*if (muriendo > 60) {
+		if (muriendo > 70) {
+			position.x = initialX;
+			position.y = initialY;
 			currentAnimation = &idleAnim;
-		}*/
+		}
 	
 	}
 	// Añadir la funcionalidad de saltar
@@ -179,9 +192,10 @@ bool Player::Update(float dt)
 	
 		isjumping = true;
 		jumpcnt = 0;
+		
 	}
 	if (isjumping) {
-
+		currentAnimation = &jumpAnim;
 		/*if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
 			vel = b2Vec2(0 * dt, -GRAVITY_Y);
 		}
@@ -211,7 +225,10 @@ bool Player::Update(float dt)
 		}*/
 
 		move_y = GRAVITY_Y + jumpcnt - dt + 5;
-
+		currentAnimation = &jumpAnim;
+		if (jumpcnt > 22) {
+			currentAnimation = &fallAnim;
+		}
 		jumpcnt++;
 		
 	}
@@ -240,7 +257,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x-19, position.y-20,isFliped, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x-19, position.y-27,isFliped, &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
 	return true;
 }
