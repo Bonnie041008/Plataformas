@@ -58,12 +58,17 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpAnim.PushBack({ 128,192,64,64 });
 	jumpAnim.PushBack({ 192,192,64,64 });
 	jumpAnim.PushBack({ 256,192,64,64 });
+	jumpAnim.PushBack({ 320,192,64,64 });
+	/*jumpAnim.PushBack({ 384,192,64,64 });
+	jumpAnim.PushBack({ 448,192,64,64 });
+	jumpAnim.PushBack({ 512,192,64,64 });
+	jumpAnim.PushBack({ 576,192,64,64 });*/
 	
 
 
 
 
-	jumpAnim.loop = true;
+	jumpAnim.loop = false;
 	jumpAnim.speed = 0.2f;
 
 
@@ -71,11 +76,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//caida
 	
-	/*fallAnim.PushBack({ 320,192,64,64 });
-	fallAnim.PushBack({ 384,192,64,64 });
-	fallAnim.PushBack({ 448,192,64,64 });
-	fallAnim.PushBack({ 512,192,64,64 });
-	fallAnim.PushBack({ 576,192,64,64 });*/
+	
 	fallAnim.PushBack({ 0,0,0,0 });
 
 
@@ -174,6 +175,19 @@ bool Player::Update(float dt)
 		}
 	}
 
+	if (godmode == true)
+	{
+		move_y = 0;
+
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			move_y = -10;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			move_y = 10;
+		}
+		godspeed = speed * 10;
+
+	}
 	
 	//muerte
 	if (health == 0 && isalive) {
@@ -226,26 +240,15 @@ bool Player::Update(float dt)
 
 		move_y = GRAVITY_Y + jumpcnt - dt + 5;
 		currentAnimation = &jumpAnim;
-		if (jumpcnt > 22) {
-			currentAnimation = &fallAnim;
-		}
+		
 		jumpcnt++;
 		
 	}
-	
-	if (godmode == true)
-	{
-		move_y = 0;
-
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			move_y = -10;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			move_y = 10;
-		}
-		godspeed = speed * 10;
-
+	else {
+		jumpAnim.Reset();
+		jumpcnt = 0;
 	}
+	
 	
 	vel = b2Vec2(move_x, move_y);
 	
