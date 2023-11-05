@@ -29,7 +29,7 @@ public:
 	void SetPosition(int x, int y);
 
 public:
-	float speed = 0.2f;
+	float speed = 0.3f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	SDL_Texture* currentTexture;

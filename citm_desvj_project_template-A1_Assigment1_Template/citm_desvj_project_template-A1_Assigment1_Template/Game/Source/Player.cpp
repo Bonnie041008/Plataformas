@@ -168,6 +168,7 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		SetPosition(400, 352);
+		health = 1;
 	}
 
 
@@ -208,9 +209,12 @@ bool Player::Update(float dt)
 		muriendo++;
 		currentAnimation = &deadAnim;
 		if (muriendo > 70) {
-			position.x = initialX;
-			position.y = initialY;
+			SetPosition(400, 352);
 			currentAnimation = &idleAnim;
+			deadAnim.Reset();
+			health = 1;
+			
+			muriendo = 0;
 		}
 	
 	}
@@ -274,7 +278,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x-19, position.y-27,isFliped, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x-15, position.y-27,isFliped, &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
 	return true;
 }
