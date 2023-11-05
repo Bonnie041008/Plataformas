@@ -134,12 +134,8 @@ bool Player::Update(float dt)
 	
 	currentAnimation = &idleAnim;
 	
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
-	}
+
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		move_x = -speed*dt;
@@ -166,6 +162,11 @@ bool Player::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		SetPosition(400, 352);
+		health = 1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		SetPosition(400, 352);
 		health = 1;
@@ -206,10 +207,13 @@ bool Player::Update(float dt)
 	
 	//muerte
 	if (health == 0 && isalive) {
-		muriendo++;
 		currentAnimation = &deadAnim;
+		muriendo++;
+		
+		speed = 0;
 		if (muriendo > 70) {
 			SetPosition(400, 352);
+			speed = 0.3f;
 			currentAnimation = &idleAnim;
 			deadAnim.Reset();
 			health = 1;
@@ -258,6 +262,10 @@ bool Player::Update(float dt)
 
 		move_y = GRAVITY_Y + jumpcnt - dt + 5;
 		currentAnimation = &jumpAnim;
+
+		if(health == 0 && currentAnimation == &jumpAnim){
+			currentAnimation = &deadAnim;
+		}
 		
 		jumpcnt++;
 		
