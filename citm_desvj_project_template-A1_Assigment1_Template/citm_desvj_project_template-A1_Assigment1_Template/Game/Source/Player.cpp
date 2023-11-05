@@ -119,6 +119,13 @@ bool Player::Start() {
 	return true;
 }
 
+void Player::SetPosition(int x, int y) {
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+}
+
 bool Player::Update(float dt)
 {
 	b2Vec2 vel = b2Vec2(move_x, move_y);
@@ -157,6 +164,13 @@ bool Player::Update(float dt)
 			move_x = +speed * 5 * dt;
 		}
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		SetPosition(400, 352);
+	}
+
+
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		//vel = b2Vec2(speed * dt, -GRAVITY_Y);
 
@@ -294,6 +308,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (health == 0 && isalive) {
 			muriendo++;
 			currentAnimation = &deadAnim;
+			//SetPosition(400, 352);
 		}
 		
 		break;
