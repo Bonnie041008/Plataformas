@@ -28,7 +28,9 @@ enum class ColliderType {
 	ITEM,
 	PLATFORM,
 	DEATH,
-	UNKNOWN
+	UNKNOWN,
+	FIREBALL,
+	ENEMY
 
 	// ..
 };
@@ -74,6 +76,7 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radious, bodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, bodyType type);
 	PhysBody* CreateChain(int x, int y, int* points, int size, bodyType type);
+	void DestroyObject(PhysBody* physBody);
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

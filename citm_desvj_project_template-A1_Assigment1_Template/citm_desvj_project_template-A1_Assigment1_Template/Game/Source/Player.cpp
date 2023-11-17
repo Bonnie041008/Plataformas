@@ -128,6 +128,11 @@ void Player::SetPosition(int x, int y) {
 
 bool Player::Update(float dt)
 {
+	if (fireBalltoDestroy != -1) {
+		app->physics->DestroyObject(listOfFireballs[fireBalltoDestroy]);
+		fireBalltoDestroy = -1;
+		
+	}
 	b2Vec2 vel = b2Vec2(move_x, move_y);
 	move_x = 0;
 	move_y = -GRAVITY_Y;
@@ -135,7 +140,18 @@ bool Player::Update(float dt)
 	currentAnimation = &idleAnim;
 	
 
-	
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		
+		
+		b2Vec2 fireBallvel = b2Vec2(10, 0);
+
+
+		fireBall = app->physics->CreateCircle(position.x + 70, position.y +10, 20, bodyType::DYNAMIC);
+		fireBall->listener = this;
+		fireBall->ctype = ColliderType::FIREBALL;
+		fireBall->body->SetLinearVelocity(fireBallvel);
+		listOfFireballs.Add(fireBall);
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		move_x = -speed*dt;
@@ -299,34 +315,64 @@ bool Player::CleanUp()
 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-	switch (physB->ctype)
-	{
-	case ColliderType::ITEM:
-		LOG("Collision ITEM");
-		app->audio->PlayFx(pickCoinFxId);
-		break;
-	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");
-		if (isjumping) {
-			isjumping = false;
-		}
-		break;
-	case ColliderType::DEATH:
-		LOG("Collision DEATH");
-		if (godmode == false)
+	if (physA->ctype == ColliderType::PLAYER) {
+		switch (physB->ctype)
 		{
-			health = 0;
+		case ColliderType::ITEM:
+			LOG("Collision ITEM");
+			app->audio->PlayFx(pickCoinFxId);
+			break;
+		case ColliderType::PLATFORM:
+			LOG("Collision PLATFORM");
+			if (isjumping) {
+				isjumping = false;
+			}
+			break;
+		case ColliderType::DEATH:
+			LOG("Collision DEATH");
+			if (godmode == false)
+			{
+				health = 0;
+			}
+			if (health == 0 && isalive) {
+				muriendo++;
+				currentAnimation = &deadAnim;
+				//SetPosition(400, 352);
+			}
+
+			break;
+		case ColliderType::UNKNOWN:
+			LOG("Collision UNKNOWN");
+			break;
 		}
-		if (health == 0 && isalive) {
-			muriendo++;
-			currentAnimation = &deadAnim;
-			//SetPosition(400, 352);
-		}
-		
-		break;
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
-		break;
 	}
+	else if(physA->ctype == ColliderType::FIREBALL){
+		switch (physB->ctype)
+		{
+		
+		case ColliderType::PLATFORM:
+			LOG("Collision PLATFORM");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
+		case ColliderType::DEATH:
+			LOG("Collision DEATH");
+			if (godmode == false)
+			{
+				health = 0;
+			}
+			if (health == 0 && isalive) {
+				muriendo++;
+				currentAnimation = &deadAnim;
+				//SetPosition(400, 352);
+			}
+
+			break;
+		case ColliderType::UNKNOWN:
+			LOG("Collision UNKNOWN");
+			break;
+		}
+	}
+	
+	
 
 }

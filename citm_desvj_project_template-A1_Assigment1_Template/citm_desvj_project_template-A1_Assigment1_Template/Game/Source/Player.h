@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "SDL/include/SDL.h"
+#include "EntityManager.h"
 
 struct SDL_Texture;
 
@@ -33,6 +34,7 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	SDL_Texture* currentTexture;
+	int fireBalltoDestroy = -1;
 	SDL_Texture* textureRun = NULL;
 
 	float initialX;
@@ -48,6 +50,9 @@ public:
 	float godspeed = 0.0f;
 
 	PhysBody* pbody;
+	PhysBody* fireBall;
+	bool hasToDestroyBall = false;
+	List <PhysBody*> listOfFireballs;
 	int pickCoinFxId;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
 	const float MAX_FALL_SPEED = 10.0f;

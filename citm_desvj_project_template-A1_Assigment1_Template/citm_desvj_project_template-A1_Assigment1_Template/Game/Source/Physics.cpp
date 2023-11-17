@@ -175,7 +175,9 @@ PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bo
 	// Return our PhysBody class
 	return pbody;
 }
-
+void Physics::DestroyObject(PhysBody* physBody) {
+	world->DestroyBody(physBody->body);
+}
 PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType type)
 {
 	// Create BODY at position x,y
