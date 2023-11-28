@@ -221,6 +221,15 @@ void App::FinishUpdate()
 		averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);
+
+	if (loadRequest) {
+		LoadfromFile();
+		loadRequest = false;
+	}
+	if (saveRequest) {
+		SavefromFile();
+		saveRequest = false;
+	}
 }
 
 // Call modules before each loop iteration
@@ -333,6 +342,54 @@ const char* App::GetTitle() const
 const char* App::GetOrganization() const
 {
 	return organization.GetString();
+}
+void App::LoadRequest(){
+	loadRequest = true;
+}
+void App::SaveRequest() {
+	saveRequest = true;
+}
+void App::LoadfromFile(){
+
+	//Open the XMl file
+	pugi::xml_document saveGameDoc;
+	pugi::xml_parse_result result = saveGameDoc.load_file("save_game.xml");
+
+	if (result) {
+		ListItem<Module*>* moduleItem;
+		moduleItem = modules.start;
+
+		while (moduleItem != NULL) {
+			//Call the LoadState() of the module, passing as a parameter the Xml node of the module
+			moduleItem->data->LoadState(saveGameDoc.child("game_state").child(moduleItem->data->name.GetString()));
+			moduleItem = moduleItem->next;
+		}
+	}
+	else {
+		LOG("Error loading save_game.xml: %s", result.description());
+	}
+
+}
+void App::SavefromFile(){
+
+	pugi::xml_document saveGameDoc;
+	pugi::xml_node gameState = saveGameDoc.append_child("game_state");
+
+	ListItem<Module*>* moduleItem;
+	moduleItem = modules.start;
+	while (moduleItem != NULL) {
+
+		//Create the module element
+		pugi::xml_node moduleNode = gameState.append_child(moduleItem->data->name.GetString());
+
+
+		//Call the SaveState() of the module, passing as a parameter the Xml node of the module
+		moduleItem->data->SaveState(moduleNode);
+		moduleItem = moduleItem->next;
+	}
+
+	// save file
+	saveGameDoc.save_file("save_game.xml");
 }
 
 
