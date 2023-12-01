@@ -145,12 +145,19 @@ bool Player::Update(float dt)
 		
 		b2Vec2 fireBallvel = b2Vec2(10, 0);
 
-
-		fireBall = app->physics->CreateCircle(position.x + 70, position.y +10, 20, bodyType::DYNAMIC);
+		if (isFliped) {
+			fireBallvel= b2Vec2(-10, 0);
+			fireBall = app->physics->CreateCircle(position.x  -30, position.y + 10, 20, bodyType::DYNAMIC);
+		}
+		else {
+			fireBall = app->physics->CreateCircle(position.x + 70, position.y + 10, 20, bodyType::DYNAMIC);
+			
+		}
 		fireBall->listener = this;
 		fireBall->ctype = ColliderType::FIREBALL;
 		fireBall->body->SetLinearVelocity(fireBallvel);
 		listOfFireballs.Add(fireBall);
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {

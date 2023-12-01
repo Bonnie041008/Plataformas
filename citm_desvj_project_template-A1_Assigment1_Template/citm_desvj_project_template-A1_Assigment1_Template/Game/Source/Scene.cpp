@@ -6,7 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
-
+#include "Physics.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -105,11 +105,6 @@ bool Scene::Update(float dt)
 		//app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
 	}
 	
-		
-
-	
-	
-
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += (int)ceil(camSpeed * dt);
 		
@@ -150,14 +145,21 @@ bool Scene::CleanUp()
 	return true;
 }
 bool Scene::LoadState(pugi::xml_node node) {
+	
+	
 	player->position.x = node.child("player").attribute("x").as_int();
-	player->position.x = node.child("player").attribute("y").as_int();
+	player->position.y = node.child("player").attribute("y").as_int();
+	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
+	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
+	
+	
 	return true;
+	
 }
 
 
 bool Scene::SaveState(pugi::xml_node node) {
-	pugi::xml_node playerNode = node.append_child("camera");
+	pugi::xml_node playerNode = node.append_child("player");
 	playerNode.append_attribute("x").set_value(player->position.x);
 	playerNode.append_attribute("y").set_value(player->position.y);
 	return true;

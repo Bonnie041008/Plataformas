@@ -30,6 +30,7 @@ public:
 	void SetPosition(int x, int y);
 
 public:
+	PhysBody* pbody;
 	float speed = 0.3f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
@@ -49,7 +50,7 @@ public:
 	float move_x = 0.0f;
 	float godspeed = 0.0f;
 
-	PhysBody* pbody;
+	
 	PhysBody* fireBall;
 	bool hasToDestroyBall = false;
 	List <PhysBody*> listOfFireballs;
