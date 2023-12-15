@@ -63,14 +63,15 @@ bool Scene::Start()
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
-	app->map->Load();
-
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width,
 		app->map->mapData.height,
 		app->map->mapData.tileWidth,
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
+
+	// Texture to highligh mouse position 
+	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	return true;
 }
@@ -127,6 +128,34 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+
+	// Get the mouse position and obtain the map coordinate
+	iPoint mousePos;
+	app->input->GetMousePosition(mousePos.x, mousePos.y);
+	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
+		mousePos.y - app->render->camera.y);
+
+	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
+	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
+	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y, false);
+
+	iPoint origin = mouseTile;
+
+	//If mouse button is pressed modify player position
+	/*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
+		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);*/
+	app->map->pathfinding->CreatePath(origin, app->map->WorldToMap(player->position.x, player->position.y));
+	/*}*/
+
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(mouseTileTex, pos.x, pos.y, false);
+	}
+	
+	//Drawline();
+
 	return true;
 }
 
@@ -134,12 +163,23 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-
+	
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
 	return ret;
 }
+
+//void Scene::Drawline() {
+//
+//	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+//	for (uint i = 0; i < path->Count(); ++i)
+//	{
+//		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+//		app->render->DrawTexture(mouseTileTex, pos.x, pos.y, false);
+//	}
+//
+//}
 
 // Called before quitting
 bool Scene::CleanUp()

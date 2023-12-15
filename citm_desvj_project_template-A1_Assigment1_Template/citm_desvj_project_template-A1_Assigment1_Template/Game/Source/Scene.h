@@ -37,11 +37,13 @@ public:
 
 	bool LoadState(pugi::xml_node node);
 
+	void Drawline();
 
 	bool SaveState(pugi::xml_node node);
 public:
 	Player* player;
 	Enemy* enemy;
+	SDL_Texture* mouseTileTex = nullptr;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

@@ -33,6 +33,25 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
+bool Map::Start() {
+
+    //Calls the functon to load the map, make sure that the filename is assigned
+    mapPath = mapFolder;
+    mapPath += mapFileName;
+    Load();
+
+    //Initialize pathfinding 
+    pathfinding = new PathFinding();
+
+    //Initialize the navigation map
+    uchar* navigationMap = NULL;
+    CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
+    pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    RELEASE_ARRAY(navigationMap);
+
+    return true;
+}
+
 bool Map::Update(float dt)
 {
     if(mapLoaded == false)
@@ -83,7 +102,8 @@ iPoint Map::WorldToMap(int x, int y)
 {
     iPoint ret(0, 0);
 
-    //
+    ret.x = x / mapData.tileWidth;
+    ret.y = y / mapData.tileHeight;
 
     return ret;
 }
@@ -154,11 +174,11 @@ bool Map::Load()
     bool ret = true;
 
     pugi::xml_document mapFileXML;
-    pugi::xml_parse_result result = mapFileXML.load_file(mapFileName.GetString());
+    pugi::xml_parse_result result = mapFileXML.load_file(mapPath.GetString());
 
     if(result == NULL)
     {
-        LOG("Could not load map xml file %s. pugi error: %s", mapFileName, result.description());
+        LOG("Could not load map xml file %s. pugi error: %s", mapPath, result.description());
         ret = false;
     }
 
@@ -256,6 +276,19 @@ bool Map::Load()
             LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
             mapLayer = mapLayer->next;
         }
+    }
+
+    // Find the navigation layer
+    mapLayerItem = mapData.maplayers.start;
+    navigationLayer = mapLayerItem->data;
+
+    //Search the layer in the map that contains information for navigation
+    while (mapLayerItem != NULL) {
+        if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
+            navigationLayer = mapLayerItem->data;
+            break;
+        }
+        mapLayerItem = mapLayerItem->next;
     }
 
     if(mapFileXML) mapFileXML.reset();
@@ -390,6 +423,38 @@ Properties::Property* Properties::GetProperty(const char* name)
     }
 
     return p;
+}
+
+void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
+{
+    bool ret = false;
+
+    //Sets the size of the map. The navigation map is a unidimensional array 
+    uchar* navigationMap = new uchar[navigationLayer->width * navigationLayer->height];
+    //reserves the memory for the navigation map
+    memset(navigationMap, 1, navigationLayer->width * navigationLayer->height);
+
+    for (int x = 0; x < mapData.width; x++)
+    {
+        for (int y = 0; y < mapData.height; y++)
+        {
+            //i is the index of x,y coordinate in a unidimensional array that represents the navigation map
+            int i = (y * navigationLayer->width) + x;
+
+            //Gets the gid of the map in the navigation layer
+            int gid = navigationLayer->Get(x, y);
+
+            //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
+            //!!!! make sure that you assign blockedGid according to your map
+            if (gid == blockedGid) navigationMap[i] = 1;
+            else navigationMap[i] = 0;
+        }
+    }
+
+    *buffer = navigationMap;
+    width = mapData.width;
+    height = mapData.height;
+
 }
 
 
