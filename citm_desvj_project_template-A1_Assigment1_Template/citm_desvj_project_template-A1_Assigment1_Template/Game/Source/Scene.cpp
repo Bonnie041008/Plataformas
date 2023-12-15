@@ -137,22 +137,22 @@ bool Scene::Update(float dt)
 
 	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y, false);
+	//app->render->DrawTexture(mouseTileTex, highlightedTileWorld.x, highlightedTileWorld.y, false);
 
 	iPoint origin = mouseTile;
 
 	//If mouse button is pressed modify player position
 	/*if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
 		player->position = iPoint(highlightedTileWorld.x, highlightedTileWorld.y);*/
-	app->map->pathfinding->CreatePath(origin, app->map->WorldToMap(player->position.x, player->position.y));
+	//app->map->pathfinding->CreatePath(origin, app->map->WorldToMap(player->position.x, player->position.y));
 	/*}*/
 
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	/*const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(mouseTileTex, pos.x, pos.y, false);
-	}
+	}*/
 	
 	//Drawline();
 

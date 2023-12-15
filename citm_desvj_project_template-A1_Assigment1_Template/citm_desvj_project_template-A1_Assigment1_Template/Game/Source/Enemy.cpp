@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Map.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -149,6 +150,16 @@ bool Enemy::Update(float dt)
 		app->render->DrawTexture(texture, finalposition.x - 15, finalposition.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 	}
 	//Set the velocity of the pbody of the player
+
+	app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+	}
+
+
 
 	return true;
 }
