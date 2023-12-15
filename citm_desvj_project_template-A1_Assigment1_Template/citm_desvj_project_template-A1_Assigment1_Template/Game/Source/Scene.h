@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Player.h"
 #include "Item.h"
+#include "Enemy.h"
 
 struct SDL_Texture;
 
@@ -40,6 +41,7 @@ public:
 	bool SaveState(pugi::xml_node node);
 public:
 	Player* player;
+	Enemy* enemy;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
