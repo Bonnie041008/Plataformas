@@ -270,7 +270,7 @@ bool Player::Update(float dt)
 			currentAnimation = &idleAnim;
 			deadAnim.Reset();
 			health = 1;
-			
+		
 			muriendo = 0;
 		}
 	
@@ -378,15 +378,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
-			if (godmode == false)
-			{
-				health = 0;
-			}
-			if (health == 0 && isalive) {
-				muriendo++;
-				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
-			}
+			//if (godmode == false)
+			//{
+			//	health = 0;
+			//}
+			//if (health == 0 && isalive) {
+			//	muriendo++;
+			//	currentAnimation = &deadAnim;
+			//	//SetPosition(400, 352);
+			//}
 
 			break;
 		case ColliderType::UNKNOWN:

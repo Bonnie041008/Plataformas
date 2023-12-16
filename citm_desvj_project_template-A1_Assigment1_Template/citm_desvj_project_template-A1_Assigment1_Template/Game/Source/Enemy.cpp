@@ -118,30 +118,27 @@ bool Enemy::Update(float dt)
 	b2Vec2 vel = b2Vec2(move_x, move_y);
 	move_x = 0;
 	move_y = -GRAVITY_Y;
-	if (isalive == true) {
-		currentAnimation = &idleAnim;
-	}
+	
 	
 
 
 
 
-	vel = b2Vec2(move_x, move_y);
 
 	if (health == 0 && isalive) {
 		currentAnimation = &deadAnim;
 		muriendo++;
-		
-		speed = 0;
+		movX = 0;
+		vel.x = 0;
 		if (muriendo > 70) {
+			isalive = false;
 			
 			
-			health = 1;
 			finalposition.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 			finalposition.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 			app->physics->DestroyObject(pbody);
 			muriendo = 0;
-			isalive = false;
+			
 		}
 
 	}
@@ -175,7 +172,7 @@ bool Enemy::Update(float dt)
 			movX = (pos.x - this->position.x) / 50;
 			vel.x = movX;
 
-			if (position.x > pos.x)
+			if (position.x > pos.x && isalive==true)
 			{
 				isFliped = true;
 			}
@@ -189,19 +186,35 @@ bool Enemy::Update(float dt)
 
 	for (uint i = 0; i < path->Count(); i++)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		
-		movX = (pos.x - this->position.x) / 50;
-		vel.x = movX;
-		
-		if (position.x > pos.x)
-		{
-			isFliped = true;
+		if (isalive == true && health == 1) {
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			movX = (pos.x - this->position.x) / 50;
+			vel.x = movX;
+
+			if (vel.x != 0) {
+				currentAnimation = &rightAnim;
+			}
+			else {
+				currentAnimation = &idleAnim;
+			}
+			
+
+
+
+			if (position.x > pos.x && isalive == true)
+			{
+				isFliped = true;
+			}
+			else
+			{
+				isFliped = false;
+			}
 		}
-		else
-		{
-			isFliped = false;
+		else {
+			movX = 0;
+			vel.x = movX;
 		}
+		
 
 	}
 
