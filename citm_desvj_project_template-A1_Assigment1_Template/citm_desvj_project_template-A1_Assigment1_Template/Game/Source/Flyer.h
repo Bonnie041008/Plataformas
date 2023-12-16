@@ -58,9 +58,7 @@ public:
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
 	const float MAX_FALL_SPEED = 10.0f;
 	
-	Animation idleAnim;
-	
-	Animation rightAnim;
+	Animation flyingAnim;
 	Animation deadAnim;
 	Animation* currentAnimation = nullptr;
 };

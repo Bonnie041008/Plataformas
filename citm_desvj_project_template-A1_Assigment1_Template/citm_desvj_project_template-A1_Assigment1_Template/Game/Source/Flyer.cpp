@@ -14,50 +14,28 @@ Flyer::Flyer() : Entity(EntityType::FLYER)
 {
 	name.Create("Flyer");
 	//idle
-	idleAnim.PushBack({ 0, 0, 64, 64 });
-	idleAnim.PushBack({ 64, 0, 64, 64 });
-	idleAnim.PushBack({ 128, 0, 64, 64 });
-	idleAnim.PushBack({ 192, 0, 64, 64 });
-	idleAnim.PushBack({ 256, 0, 64, 64 });
-	idleAnim.PushBack({ 320, 0, 64, 64 });
-	idleAnim.PushBack({ 384, 0, 64, 64 });
-	idleAnim.PushBack({ 448, 0, 64, 64 });
-	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
+	flyingAnim.PushBack({ 0, 64, 64, 64 });
+	flyingAnim.PushBack({ 70, 64, 64, 64 });
+	flyingAnim.PushBack({ 140, 64, 64, 64 });
+	flyingAnim.PushBack({ 210, 64, 64, 64 });
+	flyingAnim.PushBack({ 280, 64, 64, 64 });
+	flyingAnim.PushBack({ 350, 64, 64, 64 });
+	flyingAnim.PushBack({ 420, 64, 64, 64 });
+	
+	flyingAnim.loop = true;
+	flyingAnim.speed = 0.1f;
 
-	//correr
-	rightAnim.PushBack({ 0,64,64,64 });
-	rightAnim.PushBack({ 64,64,64,64 });
-	rightAnim.PushBack({ 128,64,64,64 });
-	rightAnim.PushBack({ 192,64,64,64 });
-	rightAnim.PushBack({ 256,64,64,64 });
-	rightAnim.PushBack({ 320,64,64,64 });
-	rightAnim.PushBack({ 384,64,64,64 });
-	rightAnim.PushBack({ 448,64,64,64 });
-	rightAnim.PushBack({ 512,64,64,64 });
-	rightAnim.PushBack({ 576,64,64,64 });
-	rightAnim.PushBack({ 640,64,64,64 });
-	rightAnim.PushBack({ 704,64,64,64 });
-	rightAnim.PushBack({ 768,64,64,64 });
-
-	rightAnim.loop = true;
-	rightAnim.speed = 0.2f;
+	
 
 	//dead
-	deadAnim.PushBack({ 0,128,64,64 });
-	deadAnim.PushBack({ 64,128,64,64 });
-	deadAnim.PushBack({ 128,128,64,64 });
-	deadAnim.PushBack({ 192,128,64,64 });
-	deadAnim.PushBack({ 256,128,64,64 });
-	deadAnim.PushBack({ 320,128,64,64 });
-	deadAnim.PushBack({ 384,128,64,64 });
-	deadAnim.PushBack({ 448,128,64,64 });
-	deadAnim.PushBack({ 512,128,64,64 });
-	deadAnim.PushBack({ 576,128,64,64 });
-	deadAnim.PushBack({ 640,128,64,64 });
-	deadAnim.PushBack({ 704,128,64,64 });
-	deadAnim.PushBack({ 768,128,64,64 });
-	deadAnim.PushBack({ 832,128,64,64 });
+	deadAnim.PushBack({ 0, 0, 64, 64 });
+	deadAnim.PushBack({ 70, 0, 64, 64 });
+	deadAnim.PushBack({ 140, 0, 64, 64 });
+	deadAnim.PushBack({ 210, 0, 64, 64 });
+	deadAnim.PushBack({ 280, 0, 64, 64 });
+	deadAnim.PushBack({ 350, 0, 64, 64 });
+	deadAnim.PushBack({ 420, 0, 64, 64 });
+	deadAnim.PushBack({ 490, 0, 64, 64 });
 	
 	deadAnim.loop = false;
 	deadAnim.speed = 0.2f;
@@ -78,7 +56,7 @@ bool Flyer::Awake() {
 	initialY = position.y;
 
 	texturePath = parameters.attribute("texturepath").as_string();
-	currentAnimation = &idleAnim;
+	currentAnimation = &flyingAnim;
 
 	return true;
 }
@@ -86,8 +64,8 @@ bool Flyer::Awake() {
 bool Flyer::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/spritesheetskeleton.png");
-	pbody = app->physics->CreateCircle(position.x -20, position.y - 190, 17, bodyType::DYNAMIC);
+	texture = app->tex->Load("Assets/Textures/spritesheetflyer.png");
+	pbody = app->physics->CreateCircle(position.x +100, position.y - 190, 17, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -110,7 +88,7 @@ bool Flyer::Update(float dt)
 	move_x = 0;
 	move_y = -GRAVITY_Y;
 	if (isalive == true) {
-		currentAnimation = &idleAnim;
+		currentAnimation = &flyingAnim;
 	}
 	
 
