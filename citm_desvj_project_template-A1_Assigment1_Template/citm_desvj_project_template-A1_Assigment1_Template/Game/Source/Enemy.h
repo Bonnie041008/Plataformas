@@ -62,6 +62,7 @@ public:
 	
 	Animation rightAnim;
 	Animation deadAnim;
+	Animation attackAnim;
 	Animation* currentAnimation = nullptr;
 };
 

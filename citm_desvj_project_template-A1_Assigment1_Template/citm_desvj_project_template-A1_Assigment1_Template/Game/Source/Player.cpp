@@ -86,7 +86,17 @@ Player::Player() : Entity(EntityType::PLAYER)
 	fallAnim.loop = false;
 	fallAnim.speed = 0.2f;
 
+	// attack
 
+	attackAnim.PushBack({ 0,256,64,64 });
+	attackAnim.PushBack({ 64,256,64,64 });
+	attackAnim.PushBack({ 128,256,64,64 });
+	attackAnim.PushBack({ 192,256,64,64 });
+	
+
+	
+	attackAnim.loop = false;
+	attackAnim.speed = 0.2f;
 }
 
 Player::~Player() {
@@ -109,7 +119,7 @@ bool Player::Awake() {
 bool Player::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/spriteshee2t.png");
+	texture = app->tex->Load("Assets/Textures/spritesheet2.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y -200, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -137,12 +147,15 @@ bool Player::Update(float dt)
 	move_x = 0;
 	move_y = -GRAVITY_Y;
 	
-	currentAnimation = &idleAnim;
+	if (isAttacking == false) {
+		currentAnimation = &idleAnim;
+	}
+	
 	
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
-		
-		
+		isAttacking = true;
+		currentAnimation = &attackAnim;
 		b2Vec2 fireBallvel = b2Vec2(10, 0);
 
 		if (isFliped) {
@@ -157,9 +170,22 @@ bool Player::Update(float dt)
 		fireBall->ctype = ColliderType::FIREBALL;
 		fireBall->body->SetLinearVelocity(fireBallvel);
 		listOfFireballs.Add(fireBall);
-		
-	}
+		muriendo++;
+		if (muriendo > 70 && isAttacking == true) {
+			
+			
+			attackAnim.Reset();
+			
 
+			
+			isAttacking = false;
+			//currentAnimation = &idleAnim;
+			muriendo = 0;
+		}
+
+	
+	} 
+	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		move_x = -speed*dt;
 		isFliped = true;

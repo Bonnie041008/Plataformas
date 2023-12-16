@@ -62,8 +62,17 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	deadAnim.loop = false;
 	deadAnim.speed = 0.2f;
 
+	//attack
+	attackAnim.PushBack({ 0,192,104,64 });
+	attackAnim.PushBack({ 104,192,104,64 });
+	attackAnim.PushBack({ 208,192,104,64 });
+	attackAnim.PushBack({ 312,192,104,64 });
+	attackAnim.PushBack({ 416,192,104,64 });
+	attackAnim.PushBack({ 520,192,104,64 });
+	attackAnim.PushBack({ 624,192,104,64 });
 
-
+	attackAnim.loop = true;
+	attackAnim.speed = 0.2f;
 }
 
 Enemy::~Enemy() {
@@ -86,7 +95,7 @@ bool Enemy::Awake() {
 bool Enemy::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/spritesheetskeleton.png");
+	texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y - 190, 17, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
