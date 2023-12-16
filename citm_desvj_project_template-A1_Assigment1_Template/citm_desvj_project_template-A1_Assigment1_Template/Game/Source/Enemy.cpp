@@ -149,9 +149,11 @@ bool Enemy::Update(float dt)
 		pbody->body->SetLinearVelocity(vel);
 
 		//Update player position in pixels
+		
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-
+		
+		
 		app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 	}
@@ -162,13 +164,52 @@ bool Enemy::Update(float dt)
 
 	app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
+	
+	if (app->physics->debug == true)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+		for (uint i = 0; i < path->Count(); i++)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+			movX = (pos.x - this->position.x) / 50;
+			vel.x = movX;
+
+			if (position.x > pos.x)
+			{
+				isFliped = true;
+			}
+			else
+			{
+				isFliped = false;
+			}
+		}
+		
 	}
 
+	for (uint i = 0; i < path->Count(); i++)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		
+		movX = (pos.x - this->position.x) / 50;
+		vel.x = movX;
+		
+		if (position.x > pos.x)
+		{
+			isFliped = true;
+		}
+		else
+		{
+			isFliped = false;
+		}
 
+	}
+
+	pbody->body->SetLinearVelocity(vel);
+
+	
+	
+	
 
 	return true;
 }

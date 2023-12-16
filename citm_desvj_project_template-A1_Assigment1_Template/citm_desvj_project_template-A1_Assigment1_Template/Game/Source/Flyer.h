@@ -61,6 +61,10 @@ public:
 	Animation flyingAnim;
 	Animation deadAnim;
 	Animation* currentAnimation = nullptr;
+
+	float movX;
+	float movY;
+	int counter;
 };
 
 #endif // __FLYER_H__

@@ -64,6 +64,11 @@ public:
 	Animation deadAnim;
 	Animation attackAnim;
 	Animation* currentAnimation = nullptr;
+
+	float movX;
+	float movY;
+	int counter;
+	
 };
 
 #endif // __ENEMY_H__

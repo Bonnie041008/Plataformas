@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Player.h"
 #include "Map.h"
 
 Flyer::Flyer() : Entity(EntityType::FLYER)
@@ -65,9 +66,10 @@ bool Flyer::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheetflyer.png");
-	pbody = app->physics->CreateCircle(position.x +100, position.y - 190, 17, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x +100, position.y - 190, 25, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
+
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -86,7 +88,8 @@ bool Flyer::Update(float dt)
 	
 	b2Vec2 vel = b2Vec2(move_x, move_y);
 	move_x = 0;
-	move_y = -GRAVITY_Y;
+	//move_y = -GRAVITY_Y;
+	move_y = 0;
 	if (isalive == true) {
 		currentAnimation = &flyingAnim;
 	}
@@ -121,7 +124,7 @@ bool Flyer::Update(float dt)
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-		app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
+		app->render->DrawTexture(texture, position.x - 15, position.y - 20, isFliped, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 	}
 	else {
@@ -131,13 +134,55 @@ bool Flyer::Update(float dt)
 
 	app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
+	
+	if (app->physics->debug == true)
 	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+		for (uint i = 0; i < path->Count(); i++)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+			movX = (pos.x - this->position.x) / 50;
+			vel.x = movX;
+
+			if (position.x > pos.x)
+			{
+				isFliped = true;
+			}
+			else
+			{
+				isFliped = false;
+			}
+		}
+
 	}
 
+	for (uint i = 0; i < path->Count(); i++)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		movX = (pos.x - this->position.x) / 50;
+		vel.x = movX;
+		movY = (pos.y - this->position.y) / 50;
+		vel.y = movY;
 
+		if (position.x > pos.x)
+		{
+			isFliped = false;
+		}
+		else
+		{
+			isFliped = true;
+		}
+
+	}
+
+	pbody->body->SetLinearVelocity(vel);
+
+
+	
+
+	
+	
 
 	return true;
 }
