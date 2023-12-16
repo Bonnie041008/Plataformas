@@ -18,7 +18,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 128, 0, 64, 64 });
 	idleAnim.PushBack({ 192, 0, 64, 64 });
 	idleAnim.PushBack({ 256, 0, 64, 64 });
-	idleAnim.PushBack({ 320, 0, 64, 64 });
+	idleAnim.PushBack({ 320, 0, 64, 64 }); 
 	idleAnim.loop = true;
 	idleAnim.speed = 0.07f;
 
