@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __FLYER_H__
+#define __FLYER_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -9,13 +9,13 @@
 
 struct SDL_Texture;
 
-class Enemy : public Entity
+class Flyer : public Entity
 {
 public:
 
-	Enemy();
+	Flyer();
 
-	virtual ~Enemy();
+	virtual ~Flyer();
 
 	bool Awake();
 
@@ -65,4 +65,4 @@ public:
 	Animation* currentAnimation = nullptr;
 };
 
-#endif // __ENEMY_H__
+#endif // __FLYER_H__

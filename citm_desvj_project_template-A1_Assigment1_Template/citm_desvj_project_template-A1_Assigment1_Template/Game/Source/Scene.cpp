@@ -41,8 +41,8 @@ bool Scene::Awake(pugi::xml_node& config)
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->parameters = config.child("enemy");
 	}
-	if (config.child("fenemy")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::FENEMY);
+	if (config.child("flyer")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::FLYER);
 		enemy->parameters = config.child("enemy");
 	}
 

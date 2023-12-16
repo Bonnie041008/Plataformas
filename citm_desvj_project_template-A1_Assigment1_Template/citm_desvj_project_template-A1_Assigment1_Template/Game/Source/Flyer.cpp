@@ -1,4 +1,4 @@
-#include "Enemy.h"
+#include "Flyer.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -10,9 +10,9 @@
 #include "Physics.h"
 #include "Map.h"
 
-Enemy::Enemy() : Entity(EntityType::ENEMY)
+Flyer::Flyer() : Entity(EntityType::FLYER)
 {
-	name.Create("Enemy");
+	name.Create("Flyer");
 	//idle
 	idleAnim.PushBack({ 0, 0, 64, 64 });
 	idleAnim.PushBack({ 64, 0, 64, 64 });
@@ -66,11 +66,11 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 
 }
 
-Enemy::~Enemy() {
+Flyer::~Flyer() {
 
 }
 
-bool Enemy::Awake() {
+bool Flyer::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -83,11 +83,11 @@ bool Enemy::Awake() {
 	return true;
 }
 
-bool Enemy::Start() {
+bool Flyer::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheetskeleton.png");
-	pbody = app->physics->CreateCircle(position.x + 10, position.y - 190, 17, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x -20, position.y - 190, 17, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -96,14 +96,14 @@ bool Enemy::Start() {
 	return true;
 }
 
-void Enemy::SetPosition(int x, int y) {
+void Flyer::SetPosition(int x, int y) {
 	position.x = x;
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 }
 
-bool Enemy::Update(float dt)
+bool Flyer::Update(float dt)
 {
 	
 	b2Vec2 vel = b2Vec2(move_x, move_y);
@@ -164,13 +164,13 @@ bool Enemy::Update(float dt)
 	return true;
 }
 
-bool Enemy::CleanUp()
+bool Flyer::CleanUp()
 {
 
 	return true;
 }
 
-void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+void Flyer::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	if (physA->ctype == ColliderType::ENEMY) {
 		switch (physB->ctype)
