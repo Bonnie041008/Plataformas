@@ -134,7 +134,7 @@ bool Flyer::Update(float dt)
 	for (uint i = 0; i < path->Count(); ++i)
 	{
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+		//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 	}
 
 

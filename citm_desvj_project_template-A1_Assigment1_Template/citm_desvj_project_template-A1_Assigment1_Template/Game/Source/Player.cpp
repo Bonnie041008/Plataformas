@@ -153,25 +153,29 @@ bool Player::Update(float dt)
 	
 	
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || muriendo > 0 ) {
 		isAttacking = true;
 		currentAnimation = &attackAnim;
-		b2Vec2 fireBallvel = b2Vec2(10, 0);
+		if (muriendo == 0) {
+			b2Vec2 fireBallvel = b2Vec2(10, 0);
 
-		if (isFliped) {
-			fireBallvel= b2Vec2(-10, 0);
-			fireBall = app->physics->CreateCircle(position.x  -30, position.y + 10, 20, bodyType::DYNAMIC);
+			if (isFliped) {
+				fireBallvel = b2Vec2(-10, 0);
+				fireBall = app->physics->CreateCircle(position.x - 30, position.y + 10, 20, bodyType::DYNAMIC);
+			}
+			else {
+				fireBall = app->physics->CreateCircle(position.x + 70, position.y + 10, 20, bodyType::DYNAMIC);
+
+			}
+			fireBall->listener = this;
+			fireBall->ctype = ColliderType::FIREBALL;
+			fireBall->body->SetLinearVelocity(fireBallvel);
+			listOfFireballs.Add(fireBall);
 		}
-		else {
-			fireBall = app->physics->CreateCircle(position.x + 70, position.y + 10, 20, bodyType::DYNAMIC);
-			
-		}
-		fireBall->listener = this;
-		fireBall->ctype = ColliderType::FIREBALL;
-		fireBall->body->SetLinearVelocity(fireBallvel);
-		listOfFireballs.Add(fireBall);
+		
 		muriendo++;
-		if (muriendo > 70 && isAttacking == true) {
+		attackAnim.Update();
+		if (muriendo > 18 && isAttacking == true) {
 			
 			
 			attackAnim.Reset();
