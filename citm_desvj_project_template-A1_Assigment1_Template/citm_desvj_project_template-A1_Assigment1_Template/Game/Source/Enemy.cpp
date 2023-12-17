@@ -71,7 +71,7 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	attackAnim.PushBack({ 520,192,104,64 });
 	attackAnim.PushBack({ 624,192,104,64 });
 
-	attackAnim.loop = true;
+	attackAnim.loop = false;
 	attackAnim.speed = 0.2f;
 }
 
@@ -88,7 +88,7 @@ bool Enemy::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
-	walkingRange = 100;
+	walkingRange = 200;
 	return true;
 }
 
@@ -157,12 +157,13 @@ bool Enemy::Update(float dt)
 	else {
 		app->render->DrawTexture(texture, finalposition.x - 15, finalposition.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 	}
-	//Set the velocity of the pbody of the player
+	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {
 		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
 			if (app->physics->debug == true)
 			{
 				for (uint i = 0; i < path->Count(); i++)
@@ -182,27 +183,93 @@ bool Enemy::Update(float dt)
 				if (isalive == true && health == 1) {
 					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 					movX = (pos.x - this->position.x) / 50;
-					if (movX < 0) {
+					
+					if (movX < 0 ) {
 						vel.x = -3;
 					}
-					else if (movX > 0) {
+					else if (movX > 0 ) {
 						vel.x = 3;
 					}
 					else {
 						vel.x = 0;
 					}
+					if (isAttacking == false) {
+						if (currentAnimation == &deadAnim) {
+							vel.x = 0;
+						}
+						if (vel.x != 0) {
+							currentAnimation = &rightAnim;
+						}
 
-					if (vel.x != 0) {
-						currentAnimation = &rightAnim;
+						else {
+							currentAnimation = &idleAnim;
+						}
 					}
-					else {
-						currentAnimation = &idleAnim;
+					
+					/*if (currentAnimation == &attackAnim) {
+						vel.x = 0;
+					}*/
+					
+
+
+
+
+					if (position.x > pos.x)
+					{
+						isFliped = true;
+					}
+					else
+					{
+						isFliped = false;
 					}
 
 
 
+				}
+				else {
+					movX = 0;
+					vel.x = movX;
+				}
 
-					if (position.x > pos.x && isalive == true)
+			}
+			pbody->body->SetLinearVelocity(vel);
+		}
+		else if (position.x != initialX ) {
+			app->map->pathfinding->ClearLastPath();
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
+			for (uint i = 0; i < path->Count(); i++)
+			{
+
+				if (isalive == true && health == 1) {
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+					if (isAttacking == false) {
+						movX = (pos.x - this->position.x) / 50;
+						if (movX < 0) {
+							vel.x = -3;
+						}
+						else if (movX > 0) {
+							vel.x = 3;
+						}
+						else {
+							vel.x = 0;
+						}
+					}
+					
+
+
+					
+
+
+
+
+
+
+					
+					if (position.x > pos.x)
 					{
 						isFliped = true;
 					}
@@ -218,45 +285,7 @@ bool Enemy::Update(float dt)
 
 
 			}
-		}
-		else if (position.x != initialX && position.y != initialY) {
-			app->map->pathfinding->ClearLastPath();
-			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
-			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-
-			for (uint i = 0; i < path->Count(); i++)
-			{
-
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				movX = (pos.x - this->position.x) / 50;
-				if (movX < 0) {
-					vel.x = -3;
-				}
-				else if (movX > 0) {
-					vel.x = 3;
-				}
-				else {
-					vel.x = 0;
-				}
-
-
-
-
-
-				if (position.x > pos.x)
-				{
-					isFliped = false;
-				}
-				else
-				{
-					isFliped = true;
-				}
-
-			}
 			pbody->body->SetLinearVelocity(vel);
-
-
-
 		}
 	}
 	
@@ -288,6 +317,26 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ITEM");
 			app->audio->PlayFx(pickCoinFxId);
 			break;
+		case ColliderType::PLAYER:
+			LOG("Collision PLAYER");
+			isAttacking = true;
+			currentAnimation = &attackAnim;
+			
+
+			cntAnim++;
+			attackAnim.Update();
+			if (cntAnim > 18 && isAttacking == true) {
+
+
+				attackAnim.Reset();
+
+
+
+				isAttacking = false;
+				//currentAnimation = &idleAnim;
+				cntAnim = 0;
+			}
+			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
 			
@@ -300,6 +349,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 			if (health == 0 && isalive) {
 				muriendo++;
+				
 				currentAnimation = &deadAnim;
 				//SetPosition(400, 352);
 			}
@@ -310,46 +360,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		}
 	}
-	else if (physA->ctype == ColliderType::FIREBALL) {
-		switch (physB->ctype)
-		{
-
-		case ColliderType::PLATFORM:
-			LOG("Collision PLATFORM");
-			fireBalltoDestroy = listOfFireballs.Find(physA);
-			break;
-		case ColliderType::DEATH:
-			LOG("Collision DEATH");
-			if (godmode == false)
-			{
-				health = 0;
-			}
-			if (health == 0 && isalive) {
-				muriendo++;
-				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
-			}
-		case ColliderType::ENEMY:
-			LOG("Collision ENEMY");
-			fireBalltoDestroy = listOfFireballs.Find(physA);
-		case ColliderType::FIREBALL:
-			LOG("Collision FIREBALL");
-			if (godmode == false)
-			{
-				health = 0;
-			}
-			if (health == 0 && isalive) {
-				muriendo++;
-				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
-			}
-
-			break;
-		case ColliderType::UNKNOWN:
-			LOG("Collision UNKNOWN");
-			break;
-		}
-	}
+	
+	
 
 
 

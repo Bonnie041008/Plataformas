@@ -37,7 +37,8 @@ public:
 	SDL_Texture* currentTexture;
 	int fireBalltoDestroy = -1;
 	SDL_Texture* textureRun = NULL;
-
+	int cntAnim = 0;
+	bool isAttacking = false;
 	float initialX;
 	float initialY;
 	int health = 1;

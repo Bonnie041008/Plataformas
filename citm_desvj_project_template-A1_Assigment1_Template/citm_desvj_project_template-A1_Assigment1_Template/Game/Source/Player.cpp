@@ -120,7 +120,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheet2.png");
-	fireballtexture = app->tex->Load("Assets/Textures/spritesheet2.png");
+	fireballtexture = app->tex->Load("Assets/Textures/fireball.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y -200, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -166,10 +166,10 @@ bool Player::Update(float dt)
 
 			if (isFliped) {
 				fireBallvel = b2Vec2(-10, 0);
-				fireBall = app->physics->CreateCircle(position.x - 30, position.y - 10, 20, bodyType::DYNAMIC);
+				fireBall = app->physics->CreateCircle(position.x - 30, position.y + 15, 15, bodyType::DYNAMIC);
 			}
 			else {
-				fireBall = app->physics->CreateCircle(position.x +70,position.y - 10, 20, bodyType::DYNAMIC);
+				fireBall = app->physics->CreateCircle(position.x +70,position.y +15, 15, bodyType::DYNAMIC);
 
 			}
 			fireBall->listener = this;
@@ -346,7 +346,7 @@ bool Player::Update(float dt)
 
 	app->render->DrawTexture(texture, position.x-15, position.y-27,isFliped, &currentAnimation->GetCurrentFrame());
 	for (int i = 0; i < listOfFireballs.Count(); i++) {
-		app->render->DrawTexture(fireballtexture, METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.x), METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.y), isFliped, &currentAnimation->GetCurrentFrame());
+		app->render->DrawTexture(fireballtexture, METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.x)-10, METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.y)-12, isFliped);
 	}
 	currentAnimation->Update();
 	return true;
