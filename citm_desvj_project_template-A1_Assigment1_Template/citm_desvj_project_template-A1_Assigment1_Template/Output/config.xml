@@ -30,6 +30,7 @@
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
 	  <enemy x="1150" y="650" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <flyer x="600" y="400" texturepath="Assets/Textures/spritesheetflyer.png"/>
+	  <flyer2 x="1500" y="400" texturepath="Assets/Textures/spritesheetflyer.png"/>
   </scene>
 
   <map>

@@ -47,6 +47,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		flyer = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
 		flyer->parameters = config.child("flyer");
 	}
+	if (config.child("flyer2")) {
+		flyer = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
+		flyer->parameters = config.child("flyer2");
+	}
 
 	return ret;
 }
