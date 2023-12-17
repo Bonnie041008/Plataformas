@@ -120,6 +120,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheet2.png");
+	fireballtexture = app->tex->Load("Assets/Textures/spritesheet2.png");
 	pbody = app->physics->CreateCircle(position.x + 10, position.y -200, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
@@ -138,8 +139,12 @@ void Player::SetPosition(int x, int y) {
 
 bool Player::Update(float dt)
 {
+
+
+	
 	if (fireBalltoDestroy != -1) {
 		app->physics->DestroyObject(listOfFireballs[fireBalltoDestroy]);
+		listOfFireballs.Del(listOfFireballs.At(fireBalltoDestroy));
 		fireBalltoDestroy = -1;
 		
 	}
@@ -153,18 +158,18 @@ bool Player::Update(float dt)
 	
 	
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || muriendo > 0 ) {
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || cntfire > 0 ) {
 		isAttacking = true;
 		currentAnimation = &attackAnim;
-		if (muriendo == 0) {
+		if (cntfire == 0) {
 			b2Vec2 fireBallvel = b2Vec2(10, 0);
 
 			if (isFliped) {
 				fireBallvel = b2Vec2(-10, 0);
-				fireBall = app->physics->CreateCircle(position.x - 30, position.y + 10, 20, bodyType::DYNAMIC);
+				fireBall = app->physics->CreateCircle(position.x - 30, position.y - 10, 20, bodyType::DYNAMIC);
 			}
 			else {
-				fireBall = app->physics->CreateCircle(position.x + 70, position.y + 10, 20, bodyType::DYNAMIC);
+				fireBall = app->physics->CreateCircle(position.x +70,position.y - 10, 20, bodyType::DYNAMIC);
 
 			}
 			fireBall->listener = this;
@@ -173,9 +178,9 @@ bool Player::Update(float dt)
 			listOfFireballs.Add(fireBall);
 		}
 		
-		muriendo++;
+		cntfire++;
 		attackAnim.Update();
-		if (muriendo > 18 && isAttacking == true) {
+		if (cntfire > 18 && isAttacking == true) {
 			
 			
 			attackAnim.Reset();
@@ -184,7 +189,7 @@ bool Player::Update(float dt)
 			
 			isAttacking = false;
 			//currentAnimation = &idleAnim;
-			muriendo = 0;
+			cntfire = 0;
 		}
 
 	
@@ -219,7 +224,7 @@ bool Player::Update(float dt)
 		SetPosition(400, 352);
 		health = 1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && muriendo == 0)
 	{
 		SetPosition(400, 352);
 		health = 1;
@@ -340,6 +345,9 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	app->render->DrawTexture(texture, position.x-15, position.y-27,isFliped, &currentAnimation->GetCurrentFrame());
+	for (int i = 0; i < listOfFireballs.Count(); i++) {
+		app->render->DrawTexture(fireballtexture, METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.x), METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.y), isFliped, &currentAnimation->GetCurrentFrame());
+	}
 	currentAnimation->Update();
 	return true;
 }
@@ -400,6 +408,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
@@ -411,7 +420,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				muriendo++;
+				cntfire++;
 				currentAnimation = &deadAnim;
 				//SetPosition(400, 352);
 			}

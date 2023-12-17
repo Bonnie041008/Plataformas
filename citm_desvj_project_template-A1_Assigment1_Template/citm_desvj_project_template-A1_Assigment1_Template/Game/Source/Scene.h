@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Item.h"
 #include "Enemy.h"
+#include "flyer.h"
 
 struct SDL_Texture;
 
@@ -43,6 +44,7 @@ public:
 public:
 	Player* player;
 	Enemy* enemy;
+	Flyer* flyer;
 	SDL_Texture* mouseTileTex = nullptr;
 private:
 	SDL_Texture* img;

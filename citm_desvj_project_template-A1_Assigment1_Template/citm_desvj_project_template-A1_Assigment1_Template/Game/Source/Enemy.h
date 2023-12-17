@@ -44,6 +44,7 @@ public:
 	bool isalive = true;
 	bool isFliped;
 	int muriendo = 0;
+	int walkingRange = 0;
 
 	bool godmode;
 	float move_y = -10.0f;

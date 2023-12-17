@@ -88,7 +88,7 @@ bool Enemy::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
-
+	walkingRange = 100;
 	return true;
 }
 
@@ -159,66 +159,112 @@ bool Enemy::Update(float dt)
 	}
 	//Set the velocity of the pbody of the player
 
-	app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	if (isalive == true) {
+		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+			if (app->physics->debug == true)
+			{
+				for (uint i = 0; i < path->Count(); i++)
+				{
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+
+
+
+				}
+
+			}
+
+			for (uint i = 0; i < path->Count(); i++)
+			{
+				if (isalive == true && health == 1) {
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					movX = (pos.x - this->position.x) / 50;
+					if (movX < 0) {
+						vel.x = -3;
+					}
+					else if (movX > 0) {
+						vel.x = 3;
+					}
+					else {
+						vel.x = 0;
+					}
+
+					if (vel.x != 0) {
+						currentAnimation = &rightAnim;
+					}
+					else {
+						currentAnimation = &idleAnim;
+					}
+
+
+
+
+					if (position.x > pos.x && isalive == true)
+					{
+						isFliped = true;
+					}
+					else
+					{
+						isFliped = false;
+					}
+				}
+				else {
+					movX = 0;
+					vel.x = movX;
+				}
+
+
+			}
+		}
+		else if (position.x != initialX && position.y != initialY) {
+			app->map->pathfinding->ClearLastPath();
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
+			for (uint i = 0; i < path->Count(); i++)
+			{
+
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				movX = (pos.x - this->position.x) / 50;
+				if (movX < 0) {
+					vel.x = -3;
+				}
+				else if (movX > 0) {
+					vel.x = 3;
+				}
+				else {
+					vel.x = 0;
+				}
+
+
+
+
+
+				if (position.x > pos.x)
+				{
+					isFliped = false;
+				}
+				else
+				{
+					isFliped = true;
+				}
+
+			}
+			pbody->body->SetLinearVelocity(vel);
+
+
+
+		}
+	}
 	
-	if (app->physics->debug == true)
-	{
-		for (uint i = 0; i < path->Count(); i++)
-		{
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+	
+	
+	
 
-			movX = (pos.x - this->position.x) / 50;
-			vel.x = movX;
-
-			if (position.x > pos.x && isalive==true)
-			{
-				isFliped = true;
-			}
-			else
-			{
-				isFliped = false;
-			}
-		}
-		
-	}
-
-	for (uint i = 0; i < path->Count(); i++)
-	{
-		if (isalive == true && health == 1) {
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			movX = (pos.x - this->position.x) / 50;
-			vel.x = movX;
-
-			if (vel.x != 0) {
-				currentAnimation = &rightAnim;
-			}
-			else {
-				currentAnimation = &idleAnim;
-			}
-			
-
-
-
-			if (position.x > pos.x && isalive == true)
-			{
-				isFliped = true;
-			}
-			else
-			{
-				isFliped = false;
-			}
-		}
-		else {
-			movX = 0;
-			vel.x = movX;
-		}
-		
-
-	}
-
-	pbody->body->SetLinearVelocity(vel);
+	
 
 	
 	

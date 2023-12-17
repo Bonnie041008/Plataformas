@@ -34,6 +34,7 @@ public:
 	float speed = 0.3f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* fireballtexture = NULL;
 	SDL_Texture* currentTexture;
 	int fireBalltoDestroy = -1;
 	SDL_Texture* textureRun = NULL;
@@ -44,7 +45,7 @@ public:
 	bool isalive = true;
 	bool isFliped;
 	int muriendo = 0;
-	
+	int cntfire = 0;
 	bool godmode;
 	float move_y = -10.0f;
 	float move_x = 0.0f;

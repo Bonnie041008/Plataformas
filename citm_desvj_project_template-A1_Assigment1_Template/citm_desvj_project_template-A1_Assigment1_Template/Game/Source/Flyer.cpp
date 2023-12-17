@@ -58,7 +58,7 @@ bool Flyer::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &flyingAnim;
-
+	walkingRange = 500;
 	return true;
 }
 
@@ -131,52 +131,128 @@ bool Flyer::Update(float dt)
 		app->render->DrawTexture(texture, finalposition.x - 15, finalposition.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 	}
 	//Set the velocity of the pbody of the player
+	if (isalive == true) {
+		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
-	app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+			if (app->physics->debug == true)
+			{
+				for (uint i = 0; i < path->Count(); i++)
+				{
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+
+				}
+
+			}
+
+			for (uint i = 0; i < path->Count(); i++)
+			{
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				movX = (pos.x - this->position.x) / 50;
+				if (movX < 0) {
+					vel.x = -3;
+				}
+				else if (movX > 0) {
+					vel.x = 3;
+				}
+				else {
+					vel.x = 0;
+				}
+
+
+				movY = (pos.y - this->position.y) / 50;
+
+				if (movY < 0) {
+					vel.y = -3;
+				}
+				else if (movY > 0) {
+					vel.y = 3;
+				}
+				else {
+					vel.y = 0;
+				}
+
+
+				if (position.x > pos.x)
+				{
+					isFliped = false;
+				}
+				else
+				{
+					isFliped = true;
+				}
+
+			}
+			pbody->body->SetLinearVelocity(vel);
+		}
+		else if (position.x != initialX && position.y != initialY) {
+			app->map->pathfinding->ClearLastPath();
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
+			for (uint i = 0; i < path->Count(); i++)
+			{
+
+				if (isalive == true && health == 1) {
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+					movX = (pos.x - this->position.x) / 50;
+					if (movX < 0) {
+						vel.x = -3;
+					}
+					else if (movX > 0) {
+						vel.x = 3;
+					}
+					else {
+						vel.x = 0;
+					}
+
+
+					movY = (pos.y - this->position.y) / 50;
+
+					if (movY < 0) {
+						vel.y = -3;
+					}
+					else if (movY > 0) {
+						vel.y = 3;
+					}
+					else {
+						vel.y = 0;
+					}
+
+
+
+
+
+
+
+					if (position.x > pos.x && isalive == true)
+					{
+						isFliped = false;
+					}
+					else
+					{
+						isFliped = true;
+					}
+				}
+				else {
+					movX = 0;
+					vel.x = movX;
+				}
+
+
+			}
+			pbody->body->SetLinearVelocity(vel);
+		}
+	}
 	
-	if (app->physics->debug == true)
-	{
-		for (uint i = 0; i < path->Count(); i++)
-		{
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+	
 
-			movX = (pos.x - this->position.x) / 50;
-			vel.x = movX;
 
-			if (position.x > pos.x)
-			{
-				isFliped = true;
-			}
-			else
-			{
-				isFliped = false;
-			}
-		}
-
-	}
-
-	for (uint i = 0; i < path->Count(); i++)
-	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		movX = (pos.x - this->position.x) / 50;
-		vel.x = movX;
-		movY = (pos.y - this->position.y) / 50;
-		vel.y = movY;
-
-		if (position.x > pos.x)
-		{
-			isFliped = false;
-		}
-		else
-		{
-			isFliped = true;
-		}
-
-	}
-
-	pbody->body->SetLinearVelocity(vel);
 
 
 	
