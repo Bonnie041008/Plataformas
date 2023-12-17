@@ -17,6 +17,8 @@ Controls:
 
     SPACE: Jump
 
+    Q: Attack
+
 - Others:
 
    F1/F2 Start from the first/second level
