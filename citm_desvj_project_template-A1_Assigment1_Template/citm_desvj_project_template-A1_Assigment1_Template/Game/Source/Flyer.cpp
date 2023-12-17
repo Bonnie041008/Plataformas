@@ -103,7 +103,7 @@ bool Flyer::Update(float dt)
 	if (health == 0 && isalive) {
 		currentAnimation = &deadAnim;
 		muriendo++;
-		
+		pbody->ctype = ColliderType::UNKNOWN;
 		speed = 0;
 		if (muriendo > 70) {
 			

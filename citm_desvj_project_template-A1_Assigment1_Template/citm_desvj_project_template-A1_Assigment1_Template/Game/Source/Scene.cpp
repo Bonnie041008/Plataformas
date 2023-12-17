@@ -10,6 +10,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+
+
 Scene::Scene() : Module()
 {
 	name.Create("scene");
@@ -56,6 +58,7 @@ bool Scene::Start()
 	//img = app->tex->Load("Assets/Textures/test.png");
 	
 	//Music is commented so that you can add your own music
+	
 	app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
 	//Get the size of the window

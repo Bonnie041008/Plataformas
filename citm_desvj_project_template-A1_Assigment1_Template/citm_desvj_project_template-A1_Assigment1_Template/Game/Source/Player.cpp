@@ -126,6 +126,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	MuerteMago = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Mago.wav");
 
 	return true;
 }
@@ -265,6 +266,7 @@ bool Player::Update(float dt)
 	
 	//muerte
 	if (health == 0 && isalive) {
+		app->audio->PlayFx(MuerteMago);	
 		currentAnimation = &deadAnim;
 		muriendo++;
 		
@@ -375,6 +377,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
+			
 			if (godmode == false)
 			{
 				health = 0;
@@ -386,15 +389,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
-			//if (godmode == false)
-			//{
-			//	health = 0;
-			//}
-			//if (health == 0 && isalive) {
-			//	muriendo++;
-			//	currentAnimation = &deadAnim;
-			//	//SetPosition(400, 352);
-			//}
+			if (godmode == false)
+			{
+				health = 0;
+			}
+			if (health == 0 && isalive) {
+				muriendo++;
+				currentAnimation = &deadAnim;
+				//SetPosition(400, 352);
+			}
 
 			break;
 		case ColliderType::UNKNOWN:

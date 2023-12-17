@@ -130,6 +130,7 @@ bool Enemy::Update(float dt)
 		muriendo++;
 		movX = 0;
 		vel.x = 0;
+		pbody->ctype = ColliderType::UNKNOWN;
 		if (muriendo > 70) {
 			isalive = false;
 			
@@ -141,6 +142,7 @@ bool Enemy::Update(float dt)
 			
 		}
 
+
 	}
 	if (isalive) {
 		pbody->body->SetLinearVelocity(vel);
@@ -150,9 +152,31 @@ bool Enemy::Update(float dt)
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 		
+		if (isAttacking == false) {
+			app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
+		}
+		else {
+			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
+		}
 		
-		app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
+
+		if (isAttacking == true) {
+			currentAnimation = &attackAnim;
+			cntatt++;
+			attackAnim.Update();
+			if (cntatt > 20 && isAttacking == true) {
+
+
+				attackAnim.Reset();
+
+
+
+				isAttacking = false;
+				currentAnimation = &idleAnim;
+				cntatt = 0;
+			}
+		}
 	}
 	else {
 		app->render->DrawTexture(texture, finalposition.x - 15, finalposition.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
@@ -160,6 +184,8 @@ bool Enemy::Update(float dt)
 	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {
+
+
 		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
@@ -326,20 +352,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::PLAYER:
 			LOG("Collision PLAYER");
 			isAttacking = true;
-			currentAnimation = &attackAnim;
 			
-			attackAnim.Update();
-			if (cntatt > 18 && isAttacking == true) {
-
-
-				attackAnim.Reset();
-
-
-
-				isAttacking = false;
-				currentAnimation = &idleAnim;
-				cntatt = 0;
-			}
+			
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");

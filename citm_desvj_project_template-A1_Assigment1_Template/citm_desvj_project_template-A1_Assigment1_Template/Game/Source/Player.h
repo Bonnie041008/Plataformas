@@ -57,6 +57,7 @@ public:
 	bool hasToDestroyBall = false;
 	List <PhysBody*> listOfFireballs;
 	int pickCoinFxId;
+	int MuerteMago;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
 	const float MAX_FALL_SPEED = 10.0f;
 	bool isjumping= false;
