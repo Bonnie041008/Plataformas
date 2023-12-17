@@ -216,9 +216,9 @@ bool Enemy::Update(float dt)
 
 			}
 
-			if (path->Count() > 2) {
+			for (uint i = 0; i < path->Count(); i++) {
 				if (isalive == true && health == 1) {
-					iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 					movX = (pos.x - this->position.x);
 
 					if (movX < 0) {
@@ -267,7 +267,10 @@ bool Enemy::Update(float dt)
 					movX = 0;
 					vel.x = movX;
 				}
+
 			}
+				
+			
 				
 
 			
@@ -278,11 +281,9 @@ bool Enemy::Update(float dt)
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
-			
-			if (path->Count() > 2) {
-
+			for (uint i = 0; i < path->Count(); i++) {
 				if (isalive == true && health == 1) {
-					iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
+					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 
 					if (isAttacking == false) {
@@ -325,6 +326,10 @@ bool Enemy::Update(float dt)
 					vel.x = movX;
 				}
 			}
+			
+
+				
+			
 				
 
 
