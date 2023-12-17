@@ -72,6 +72,7 @@ bool Flyer::Start() {
 
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	MuerteFantasma = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Fantasma.wav");
 
 	return true;
 }
@@ -101,6 +102,11 @@ bool Flyer::Update(float dt)
 	vel = b2Vec2(move_x, move_y);
 
 	if (health == 0 && isalive) {
+
+		if(Muerte_Fantasma == true){
+			app->audio->PlayFx(MuerteFantasma);	
+		}
+		Muerte_Fantasma = false;
 		currentAnimation = &deadAnim;
 		muriendo++;
 		pbody->ctype = ColliderType::UNKNOWN;
@@ -147,29 +153,27 @@ bool Flyer::Update(float dt)
 				}
 
 			}
-
-			for (uint i = 0; i < path->Count(); i++)
-			{
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				movX = (pos.x - this->position.x) / 50;
+			if (path->Count() > 2) {
+				iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
+				movX = (pos.x - this->position.x);
 				if (movX < 0) {
-					vel.x = -3;
+					vel.x = -2;
 				}
 				else if (movX > 0) {
-					vel.x = 3;
+					vel.x = 2;
 				}
 				else {
 					vel.x = 0;
 				}
 
 
-				movY = (pos.y - this->position.y) / 50;
+				movY = (pos.y - this->position.y);
 
 				if (movY < 0) {
-					vel.y = -3;
+					vel.y = -2;
 				}
 				else if (movY > 0) {
-					vel.y = 3;
+					vel.y = 2;
 				}
 				else {
 					vel.y = 0;
@@ -184,8 +188,11 @@ bool Flyer::Update(float dt)
 				{
 					isFliped = true;
 				}
-
 			}
+		
+				
+
+			
 			pbody->body->SetLinearVelocity(vel);
 		}
 		else if (position.x != initialX && position.y != initialY) {

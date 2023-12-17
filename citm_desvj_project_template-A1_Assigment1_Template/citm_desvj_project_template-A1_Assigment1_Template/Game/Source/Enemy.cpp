@@ -101,6 +101,9 @@ bool Enemy::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	MuerteEsqueleto = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Esqueloeto.wav");
+	AtaqueEsqueleto = app->audio->LoadFx("Assets/Audio/Fx/Ataque-Esqueleto.wav");
+
 
 	return true;
 }
@@ -126,6 +129,11 @@ bool Enemy::Update(float dt)
 
 
 	if (health == 0 && isalive) {
+		
+		if(Muerte_Esqueleto == true){
+			app->audio->PlayFx(MuerteEsqueleto);	
+		}
+		Muerte_Esqueleto = false;
 		currentAnimation = &deadAnim;
 		muriendo++;
 		movX = 0;
@@ -162,6 +170,10 @@ bool Enemy::Update(float dt)
 		currentAnimation->Update();
 
 		if (isAttacking == true) {
+			if(Ataque_Esqueleto == true){
+				app->audio->PlayFx(AtaqueEsqueleto);	
+			}
+			Ataque_Esqueleto = false;
 			currentAnimation = &attackAnim;
 			cntatt++;
 			attackAnim.Update();
@@ -171,7 +183,7 @@ bool Enemy::Update(float dt)
 				attackAnim.Reset();
 
 
-
+				Ataque_Esqueleto = true;
 				isAttacking = false;
 				currentAnimation = &idleAnim;
 				cntatt = 0;
@@ -204,16 +216,15 @@ bool Enemy::Update(float dt)
 
 			}
 
-			for (uint i = 0; i < path->Count(); i++)
-			{
+			if (path->Count() > 2) {
 				if (isalive == true && health == 1) {
-					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-					movX = (pos.x - this->position.x) / 50;
-					
-					if (movX < 0 ) {
+					iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
+					movX = (pos.x - this->position.x);
+
+					if (movX < 0) {
 						vel.x = -3;
 					}
-					else if (movX > 0 ) {
+					else if (movX > 0) {
 						vel.x = 3;
 					}
 					else {
@@ -234,13 +245,10 @@ bool Enemy::Update(float dt)
 					else {
 						vel.x = 0;
 					}
-					
+
 					/*if (currentAnimation == &attackAnim) {
 						vel.x = 0;
 					}*/
-					
-
-
 
 
 					if (position.x > pos.x)
@@ -259,8 +267,10 @@ bool Enemy::Update(float dt)
 					movX = 0;
 					vel.x = movX;
 				}
-
 			}
+				
+
+			
 			pbody->body->SetLinearVelocity(vel);
 		}
 		else if (position.x != initialX ) {
@@ -268,15 +278,15 @@ bool Enemy::Update(float dt)
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
-			for (uint i = 0; i < path->Count(); i++)
-			{
+			
+			if (path->Count() > 2) {
 
 				if (isalive == true && health == 1) {
-					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
 					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 
 					if (isAttacking == false) {
-						movX = (pos.x - this->position.x) / 50;
+						movX = (pos.x - this->position.x);
 						if (movX < 0) {
 							vel.x = -3;
 						}
@@ -290,17 +300,17 @@ bool Enemy::Update(float dt)
 					else {
 						vel.x = 0;
 					}
-					
-
-
-					
 
 
 
 
 
 
-					
+
+
+
+
+
 					if (position.x > pos.x)
 					{
 						isFliped = true;
@@ -314,11 +324,26 @@ bool Enemy::Update(float dt)
 					movX = 0;
 					vel.x = movX;
 				}
-
-
 			}
+				
+
+
+			
 			pbody->body->SetLinearVelocity(vel);
 		}
+		else {
+
+		   if (position.x < initialX - walkingRange) {
+			   speed = -3;
+		   }
+		   else if (position.x > initialX + walkingRange) {
+			   speed = +3;
+		   }
+		   pbody->body->SetLinearVelocity(vel);
+		}
+
+
+
 	}
 	
 	

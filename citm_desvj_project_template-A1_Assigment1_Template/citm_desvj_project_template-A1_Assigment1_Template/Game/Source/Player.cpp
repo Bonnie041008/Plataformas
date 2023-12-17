@@ -127,6 +127,8 @@ bool Player::Start() {
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 	MuerteMago = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Mago.wav");
+	SaltoMago = app->audio->LoadFx("Assets/Audio/Fx/Salto.wav");
+	AtaqueMago = app->audio->LoadFx("Assets/Audio/Fx/Ataque.wav");
 
 	return true;
 }
@@ -158,9 +160,18 @@ bool Player::Update(float dt)
 	}
 	
 	
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || cntfire > 0 ) {
+	
+	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || cntfire > 0 ) {
+		
+		
+		
+		
 		isAttacking = true;
+		if (isAttacking == true && Ataque_Mago == true) {
+			app->audio->PlayFx(AtaqueMago);
+
+		}
+		Ataque_Mago = false;
 		currentAnimation = &attackAnim;
 		if (cntfire == 0) {
 			b2Vec2 fireBallvel = b2Vec2(10, 0);
@@ -184,11 +195,13 @@ bool Player::Update(float dt)
 		if (cntfire > 18 && isAttacking == true) {
 			
 			
+		
 			attackAnim.Reset();
 			
 
 			
 			isAttacking = false;
+			Ataque_Mago = true;
 			//currentAnimation = &idleAnim;
 			cntfire = 0;
 		}
@@ -266,7 +279,11 @@ bool Player::Update(float dt)
 	
 	//muerte
 	if (health == 0 && isalive) {
-		app->audio->PlayFx(MuerteMago);	
+		
+		if(Muerte_Mago == true){
+			app->audio->PlayFx(MuerteMago);	
+		}
+		Muerte_Mago = false;
 		currentAnimation = &deadAnim;
 		muriendo++;
 		
@@ -279,19 +296,32 @@ bool Player::Update(float dt)
 			health = 1;
 		
 			muriendo = 0;
+
+			Muerte_Mago = true;
 		}
 	
 	}
+
 	// Añadir la funcionalidad de saltar
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
 		// Cambia la velocidad vertical para simular un salto
-	
+		Salto_Mago = true;
+		if (isjumping == false && Salto_Mago == true) {
+			app->audio->PlayFx(SaltoMago);
+
+		}
+		Salto_Mago = false;
+		
 		isjumping = true;
 		jumpcnt = 0;
+		
 		
 	}
 	if (isjumping) {
 		currentAnimation = &jumpAnim;
+		
+		
+		
 		/*if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
 			vel = b2Vec2(0 * dt, -GRAVITY_Y);
 		}
