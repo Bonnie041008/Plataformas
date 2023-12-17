@@ -205,6 +205,9 @@ bool Enemy::Update(float dt)
 							currentAnimation = &idleAnim;
 						}
 					}
+					else {
+						vel.x = 0;
+					}
 					
 					/*if (currentAnimation == &attackAnim) {
 						vel.x = 0;
@@ -257,6 +260,9 @@ bool Enemy::Update(float dt)
 						else {
 							vel.x = 0;
 						}
+					}
+					else {
+						vel.x = 0;
 					}
 					
 
@@ -322,10 +328,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			isAttacking = true;
 			currentAnimation = &attackAnim;
 			
-
-			cntAnim++;
 			attackAnim.Update();
-			if (cntAnim > 18 && isAttacking == true) {
+			if (cntatt > 18 && isAttacking == true) {
 
 
 				attackAnim.Reset();
@@ -333,8 +337,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 
 				isAttacking = false;
-				//currentAnimation = &idleAnim;
-				cntAnim = 0;
+				currentAnimation = &idleAnim;
+				cntatt = 0;
 			}
 			break;
 		case ColliderType::PLATFORM:

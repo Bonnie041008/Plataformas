@@ -52,7 +52,7 @@ public:
 	float move_x = 0.0f;
 	float godspeed = 0.0f;
 	iPoint finalposition;
-
+	int cntatt = 0;
 	PhysBody* fireBall;
 	bool hasToDestroyBall = false;
 	List <PhysBody*> listOfFireballs;
