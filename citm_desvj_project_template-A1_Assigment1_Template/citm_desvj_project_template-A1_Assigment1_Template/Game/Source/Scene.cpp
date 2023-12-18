@@ -244,8 +244,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (enemy->isalive && checkAlive == false) {
 
 		enemy->health = 1;
-		enemy->finalposition.x = METERS_TO_PIXELS(enemy->pbody->body->GetTransform().p.x) - 16;
-		enemy->finalposition.y = METERS_TO_PIXELS(enemy->pbody->body->GetTransform().p.y) - 16;
+		enemy->finalposition.x = METERS_TO_PIXELS(enemy->pbody->body->GetTransform().p.x) ;
+		enemy->finalposition.y = METERS_TO_PIXELS(enemy->pbody->body->GetTransform().p.y) ;
 		app->physics->DestroyObject(enemy->pbody);
 		enemy->muriendo = 0;
 		enemy->isalive = false;
@@ -260,8 +260,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (enemy2->isalive && checkAlive == false) {
 
 		enemy2->health = 1;
-		enemy2->finalposition.x = METERS_TO_PIXELS(enemy2->pbody->body->GetTransform().p.x) - 16;
-		enemy2->finalposition.y = METERS_TO_PIXELS(enemy2->pbody->body->GetTransform().p.y) - 16;
+		enemy2->finalposition.x = METERS_TO_PIXELS(enemy2->pbody->body->GetTransform().p.x) ;
+		enemy2->finalposition.y = METERS_TO_PIXELS(enemy2->pbody->body->GetTransform().p.y) ;
 		app->physics->DestroyObject(enemy2->pbody);
 		enemy2->muriendo = 0;
 		enemy2->isalive = false;
@@ -276,8 +276,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (enemy3->isalive && checkAlive == false) {
 
 		enemy3->health = 1;
-		enemy3->finalposition.x = METERS_TO_PIXELS(enemy3->pbody->body->GetTransform().p.x) - 16;
-		enemy3->finalposition.y = METERS_TO_PIXELS(enemy3->pbody->body->GetTransform().p.y) - 16;
+		enemy3->finalposition.x = METERS_TO_PIXELS(enemy3->pbody->body->GetTransform().p.x) ;
+		enemy3->finalposition.y = METERS_TO_PIXELS(enemy3->pbody->body->GetTransform().p.y) ;
 		app->physics->DestroyObject(enemy3->pbody);
 		enemy3->muriendo = 0;
 		enemy3->isalive = false;
@@ -292,8 +292,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (enemy4->isalive && checkAlive == false) {
 
 		enemy4->health = 1;
-		enemy4->finalposition.x = METERS_TO_PIXELS(enemy4->pbody->body->GetTransform().p.x) - 16;
-		enemy4->finalposition.y = METERS_TO_PIXELS(enemy4->pbody->body->GetTransform().p.y) - 16;
+		enemy4->finalposition.x = METERS_TO_PIXELS(enemy4->pbody->body->GetTransform().p.x) ;
+		enemy4->finalposition.y = METERS_TO_PIXELS(enemy4->pbody->body->GetTransform().p.y) ;
 		app->physics->DestroyObject(enemy4->pbody);
 		enemy4->muriendo = 0;
 		enemy4->isalive = false;
@@ -308,8 +308,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 	if (enemy5->isalive && checkAlive == false) {
 
 		enemy5->health = 1;
-		enemy5->finalposition.x = METERS_TO_PIXELS(enemy5->pbody->body->GetTransform().p.x) - 16;
-		enemy5->finalposition.y = METERS_TO_PIXELS(enemy5->pbody->body->GetTransform().p.y) - 16;
+		enemy5->finalposition.x = METERS_TO_PIXELS(enemy5->pbody->body->GetTransform().p.x) ;
+		enemy5->finalposition.y = METERS_TO_PIXELS(enemy5->pbody->body->GetTransform().p.y) ;
 		app->physics->DestroyObject(enemy5->pbody);
 		enemy5->muriendo = 0;
 		enemy5->isalive = false;
