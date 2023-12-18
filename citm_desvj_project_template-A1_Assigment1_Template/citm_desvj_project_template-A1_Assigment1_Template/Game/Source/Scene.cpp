@@ -221,7 +221,6 @@ bool Scene::LoadState(pugi::xml_node node) {
 		app->physics->DestroyObject(enemy->pbody);
 		enemy->muriendo = 0;
 		enemy->isalive = false;
-		
 	}
 
 	flyer->position.x = node.child("flyer").attribute("x").as_int();
@@ -245,12 +244,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 	flyer2->pbody->body->SetTransform(newPos, flyer2->pbody->body->GetAngle());
 	checkAlive = node.child("flyer2").attribute("estavivo").as_bool();
 	if (flyer2->isalive && checkAlive == false) {
-		flyer2->health = 1;
-		flyer2->finalposition.x = METERS_TO_PIXELS(flyer2->pbody->body->GetTransform().p.x) - 16;
-		flyer2->finalposition.y = METERS_TO_PIXELS(flyer2->pbody->body->GetTransform().p.y) - 16;
 		app->physics->DestroyObject(flyer2->pbody);
-		flyer2->muriendo = 0;
-		flyer2->isalive = false;
 	}
 
 	return true;

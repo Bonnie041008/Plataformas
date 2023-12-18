@@ -241,7 +241,7 @@ bool Player::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && muriendo == 0)
 	{
-		SetPosition(183, 635);
+		SetPosition(400, 352);
 		health = 1;
 	}
 
@@ -290,7 +290,7 @@ bool Player::Update(float dt)
 		
 		speed = 0;
 		if (muriendo > 70) {
-			SetPosition(183, 635);
+			SetPosition(400, 352);
 			speed = 0.3f;
 			currentAnimation = &idleAnim;
 			deadAnim.Reset();

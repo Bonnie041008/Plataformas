@@ -28,7 +28,7 @@
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-	  <enemy x="1160" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
+	  <enemy x="1160" y="650" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <flyer x="600" y="400" texturepath="Assets/Textures/spritesheetflyer.png"/>
 	  <flyer2 x="1500" y="400" texturepath="Assets/Textures/spritesheetflyer.png"/>
   </scene>
