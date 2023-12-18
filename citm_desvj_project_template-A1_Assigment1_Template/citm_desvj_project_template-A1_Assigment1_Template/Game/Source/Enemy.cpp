@@ -211,7 +211,7 @@ bool Enemy::Update(float dt)
 		}
 	}
 	else {
-		app->render->DrawTexture(skellRip, finalposition.x - 15, finalposition.y - 30, isFliped);
+		//app->render->DrawTexture(skellRip, finalposition.x - 15, finalposition.y - 30, isFliped);
 	}
 	//Set the velocity of the pbody of the enemy
 
