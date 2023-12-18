@@ -254,7 +254,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 	enemy2->position.x = node.child("enemy2").attribute("x").as_int();
 	enemy2->position.y = node.child("enemy2").attribute("y").as_int();
-	newPos = b2Vec2(PIXEL_TO_METERS(enemy->position.x), PIXEL_TO_METERS(enemy2->position.y));
+	newPos = b2Vec2(PIXEL_TO_METERS(enemy2->position.x), PIXEL_TO_METERS(enemy2->position.y));
 	enemy2->pbody->body->SetTransform(newPos, enemy2->pbody->body->GetAngle());
 	checkAlive = node.child("enemy2").attribute("estavivo").as_bool();
 	if (enemy2->isalive && checkAlive == false) {
@@ -270,7 +270,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 	enemy3->position.x = node.child("enemy3").attribute("x").as_int();
 	enemy3->position.y = node.child("enemy3").attribute("y").as_int();
-	newPos = b2Vec2(PIXEL_TO_METERS(enemy->position.x), PIXEL_TO_METERS(enemy3->position.y));
+	newPos = b2Vec2(PIXEL_TO_METERS(enemy3->position.x), PIXEL_TO_METERS(enemy3->position.y));
 	enemy3->pbody->body->SetTransform(newPos, enemy3->pbody->body->GetAngle());
 	checkAlive = node.child("enemy3").attribute("estavivo").as_bool();
 	if (enemy3->isalive && checkAlive == false) {
@@ -286,7 +286,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 	enemy4->position.x = node.child("enemy4").attribute("x").as_int();
 	enemy4->position.y = node.child("enemy4").attribute("y").as_int();
-	newPos = b2Vec2(PIXEL_TO_METERS(enemy->position.x), PIXEL_TO_METERS(enemy4->position.y));
+	newPos = b2Vec2(PIXEL_TO_METERS(enemy4->position.x), PIXEL_TO_METERS(enemy4->position.y));
 	enemy4->pbody->body->SetTransform(newPos, enemy4->pbody->body->GetAngle());
 	checkAlive = node.child("enemy4").attribute("estavivo").as_bool();
 	if (enemy4->isalive && checkAlive == false) {
@@ -302,7 +302,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 	enemy5->position.x = node.child("enemy5").attribute("x").as_int();
 	enemy5->position.y = node.child("enemy5").attribute("y").as_int();
-	newPos = b2Vec2(PIXEL_TO_METERS(enemy->position.x), PIXEL_TO_METERS(enemy5->position.y));
+	newPos = b2Vec2(PIXEL_TO_METERS(enemy5->position.x), PIXEL_TO_METERS(enemy5->position.y));
 	enemy5->pbody->body->SetTransform(newPos, enemy5->pbody->body->GetAngle());
 	checkAlive = node.child("enemy5").attribute("estavivo").as_bool();
 	if (enemy5->isalive && checkAlive == false) {
