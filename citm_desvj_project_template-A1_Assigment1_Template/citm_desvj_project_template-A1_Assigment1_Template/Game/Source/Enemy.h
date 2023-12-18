@@ -35,6 +35,7 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	SDL_Texture* currentTexture;
+	SDL_Texture* skellRip = NULL;
 	int fireBalltoDestroy = -1;
 	SDL_Texture* textureRun = NULL;
 	int cntAnim = 0;
