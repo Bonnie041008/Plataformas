@@ -300,18 +300,21 @@ bool Player::Update(float dt)
 
 			Muerte_Mago = true;
 			if (app->scene->enemy->isalive == false) {
-
+				 LOG("Reiniciando enemigo");
 				app->scene->enemy->health = 1;
 				app->scene->enemy->isalive = true;
 				//app->scene->enemy->texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
 				app->scene->enemy->pbody = app->physics->CreateCircle(app->scene->enemy->initialX, app->scene->enemy->initialY, 17, bodyType::DYNAMIC);
-				app->scene->enemy->pbody->listener = this;
+				//app->scene->enemy->pbody->listener = this;
+				app->scene->enemy->muriendo = 0;
 				app->scene->enemy->pbody->ctype = ColliderType::ENEMY;
 				app->scene->enemy->idleAnim.Reset();
 				app->scene->enemy->rightAnim.Reset();
 				app->scene->enemy->deadAnim.Reset();
 				app->scene->enemy->isAttacking = false;
 				app->scene->enemy->currentAnimation = &app->scene->enemy->idleAnim;
+				app->scene->enemy->currentAnimation->Update();
+				
 			}
 			
 		}
@@ -477,6 +480,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
+
 			break;
 		}
 	}

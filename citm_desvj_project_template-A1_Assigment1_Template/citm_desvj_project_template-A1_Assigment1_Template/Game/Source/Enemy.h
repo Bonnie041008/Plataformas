@@ -53,10 +53,7 @@ public:
 	float godspeed = 0.0f;
 	iPoint finalposition;
 	int cntatt = 0;
-	PhysBody* fireBall;
-	bool hasToDestroyBall = false;
-	List <PhysBody*> listOfFireballs;
-	int pickCoinFxId;
+	
 	bool Muerte_Esqueleto = true;
 	int MuerteEsqueleto;
 	bool Ataque_Esqueleto = true;

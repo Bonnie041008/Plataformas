@@ -101,7 +101,7 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	
 	MuerteEsqueleto = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Esqueloeto.wav");
 	AtaqueEsqueleto = app->audio->LoadFx("Assets/Audio/Fx/Ataque-Esqueleto.wav");
 
@@ -125,7 +125,21 @@ bool Enemy::Update(float dt)
 	
 	
 
-
+	/*if (app->scene->player->isalive == false && isalive == false) {
+		if (app->scene->player->muriendo > 70)
+		health = 1;
+			isalive = true;
+			texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
+		    pbody = app->physics->CreateCircle(initialX,initialY, 17, bodyType::DYNAMIC);
+			pbody->listener = this;
+			pbody->ctype = ColliderType::ENEMY;
+		    idleAnim.Reset();
+			rightAnim.Reset();
+			deadAnim.Reset();
+			isAttacking = false;
+			currentAnimation = &idleAnim;
+			currentAnimation->Update();
+	}*/
 
 
 
@@ -139,7 +153,8 @@ bool Enemy::Update(float dt)
 		muriendo++;
 		movX = 0;
 		vel.x = 0;
-		pbody->ctype = ColliderType::UNKNOWN;
+		pbody->ctype = ColliderType::ITEM;
+		
 		if (muriendo > 70) {
 			isalive = false;
 			
@@ -147,6 +162,7 @@ bool Enemy::Update(float dt)
 			finalposition.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 			finalposition.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 			app->physics->DestroyObject(pbody);
+			
 			muriendo = 0;
 			
 			
@@ -389,7 +405,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		{
 		case ColliderType::ITEM:
 			LOG("Collision ITEM");
-			app->audio->PlayFx(pickCoinFxId);
+			
 			break;
 		case ColliderType::PLAYER:
 			LOG("Collision PLAYER");
@@ -402,7 +418,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			
 			break;
 		case ColliderType::FIREBALL:
-			LOG("Collision DEATH");
+			LOG("Collision FIREBALL");
+			
 			health = 0;
 			
 			if (health == 0 && isalive) {
