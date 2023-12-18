@@ -135,3 +135,23 @@ bool EntityManager::Update(float dt)
 
 	return ret;
 }
+
+//void EntityManager::Respawn() {
+//
+//	ListItem<Entity*>* item;
+//	Entity* pEntity = NULL;
+//
+//	for (item = entities.start; item != NULL; item = item->next)
+//	{
+//		pEntity = item->data;
+//
+//		if (pEntity->type)
+//		{
+//
+//		}
+//
+//
+//
+//	}
+//
+//}

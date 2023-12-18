@@ -33,6 +33,8 @@ public:
 
 	void AddEntity(Entity* entity);
 
+	void Respawn();
+
 public:
 
 	List<Entity*> entities;
