@@ -7,14 +7,18 @@
 	<:anonymous />
 	<map />
 	<scene>
-		<player x="156" y="635" />
-		<enemy x="1110" y="638" estavivo="false" />
-		<enemy2 x="1110" y="638" estavivo="false" />
-		<flyer x="195" y="624" estavivo="false" />
-		<flyer2 x="1486" y="384" estavivo="true" />
+		<player x="774" y="443" />
+		<enemy x="1104" y="638" estavivo="true" />
+		<enemy2 x="257" y="638" estavivo="true" />
+		<enemy3 x="209" y="638" estavivo="false" />
+		<enemy4 x="171" y="638" estavivo="false" />
+		<enemy5 x="291" y="638" estavivo="true" />
+		<flyer x="770" y="405" estavivo="false" />
+		<flyer2 x="1478" y="384" estavivo="true" />
+		<flyer3 x="1518" y="384" estavivo="true" />
 	</scene>
 	<entitymanager />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-262" y="0" />
 	</renderer>
 </game_state>

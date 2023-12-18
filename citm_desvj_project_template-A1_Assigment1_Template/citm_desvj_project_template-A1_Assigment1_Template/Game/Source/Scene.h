@@ -45,8 +45,12 @@ public:
 	Player* player;
 	Enemy* enemy;
 	Enemy* enemy2;
+	Enemy* enemy3;
+	Enemy* enemy4;
+	Enemy* enemy5;
 	Flyer* flyer;
 	Flyer* flyer2;
+	Flyer* flyer3;
 	SDL_Texture* mouseTileTex = nullptr;
 private:
 	SDL_Texture* img;
