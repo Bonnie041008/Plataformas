@@ -3,6 +3,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Input.h"
+#include "Player.h"
 #include "Render.h"
 #include "Scene.h"
 #include "Log.h"
@@ -128,7 +129,7 @@ bool Enemy::Update(float dt)
 
 
 
-	if (health == 0 && isalive) {
+	if (health == 0 && isalive== true) {
 		
 		if(Muerte_Esqueleto == true){
 			app->audio->PlayFx(MuerteEsqueleto);	
@@ -148,11 +149,13 @@ bool Enemy::Update(float dt)
 			app->physics->DestroyObject(pbody);
 			muriendo = 0;
 			
+			
 		}
 
 
 	}
-	if (isalive) {
+	
+	if (isalive == true) {
 		pbody->body->SetLinearVelocity(vel);
 
 		//Update player position in pixels
@@ -196,8 +199,7 @@ bool Enemy::Update(float dt)
 	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {
-
-
+		
 		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y));
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
@@ -208,8 +210,6 @@ bool Enemy::Update(float dt)
 				{
 					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
-
-
 
 
 				}
@@ -232,7 +232,9 @@ bool Enemy::Update(float dt)
 					}
 					if (isAttacking == false) {
 						if (currentAnimation == &deadAnim) {
+							
 							vel.x = 0;
+
 						}
 						if (vel.x != 0) {
 							currentAnimation = &rightAnim;
@@ -284,8 +286,18 @@ bool Enemy::Update(float dt)
 			for (uint i = 0; i < path->Count(); i++) {
 				if (isalive == true && health == 1) {
 					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+					//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+					if (app->physics->debug == true)
+					{
+						for (uint i = 0; i < path->Count(); i++)
+						{
+							iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+							app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 
+
+						}
+
+					}
 					if (isAttacking == false) {
 						movX = (pos.x - this->position.x);
 						if (movX < 0) {
@@ -391,14 +403,12 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::FIREBALL:
 			LOG("Collision DEATH");
-			if (godmode == false)
-			{
-				health = 0;
-			}
+			health = 0;
+			
 			if (health == 0 && isalive) {
 				muriendo++;
 				
-				currentAnimation = &deadAnim;
+				//currentAnimation = &deadAnim;
 				//SetPosition(400, 352);
 			}
 

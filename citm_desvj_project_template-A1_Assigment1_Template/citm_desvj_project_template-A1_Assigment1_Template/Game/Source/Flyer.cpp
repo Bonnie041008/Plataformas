@@ -205,7 +205,18 @@ bool Flyer::Update(float dt)
 
 				if (isalive == true && health == 1) {
 					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-					app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+					if (app->physics->debug == true)
+					{
+						for (uint i = 0; i < path->Count(); i++)
+						{
+							iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+							app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+
+
+						}
+
+					}
+					//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 
 					movX = (pos.x - this->position.x) / 50;
 					if (movX < 0) {
