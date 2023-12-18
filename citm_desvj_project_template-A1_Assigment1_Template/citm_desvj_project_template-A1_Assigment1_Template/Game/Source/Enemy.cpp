@@ -89,7 +89,7 @@ bool Enemy::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
-	walkingRange = 250;
+	walkingRange = 220;
 	return true;
 }
 
@@ -98,7 +98,7 @@ bool Enemy::Start() {
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
 	skellRip = app->tex->Load("Assets/Textures/skellRip.png");
-	pbody = app->physics->CreateCircle(position.x + 10, position.y - 190, 17, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x , position.y , 17, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -184,7 +184,7 @@ bool Enemy::Update(float dt)
 			app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 		}
 		else {
-			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &deadAnim.GetCurrentFrame());
+			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &attackAnim.GetCurrentFrame());
 		}
 		
 		currentAnimation->Update();

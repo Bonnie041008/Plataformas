@@ -122,7 +122,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheet2.png");
 	fireballtexture = app->tex->Load("Assets/Textures/fireball.png");
-	pbody = app->physics->CreateCircle(position.x + 10, position.y -200, 20, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x , position.y , 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
