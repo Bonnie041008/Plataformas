@@ -39,6 +39,10 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
+	if (config.child("enemy2")) {
+		enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy2->parameters = config.child("enemy2");
+	}
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->parameters = config.child("enemy");
@@ -224,6 +228,22 @@ bool Scene::LoadState(pugi::xml_node node) {
 		
 	}
 
+	enemy2->position.x = node.child("enemy2").attribute("x").as_int();
+	enemy2->position.y = node.child("enemy2").attribute("y").as_int();
+	newPos = b2Vec2(PIXEL_TO_METERS(enemy->position.x), PIXEL_TO_METERS(enemy2->position.y));
+	enemy2->pbody->body->SetTransform(newPos, enemy2->pbody->body->GetAngle());
+	checkAlive = node.child("enemy2").attribute("estavivo").as_bool();
+	if (enemy2->isalive && checkAlive == false) {
+
+		enemy2->health = 1;
+		enemy2->finalposition.x = METERS_TO_PIXELS(enemy2->pbody->body->GetTransform().p.x) - 16;
+		enemy2->finalposition.y = METERS_TO_PIXELS(enemy2->pbody->body->GetTransform().p.y) - 16;
+		app->physics->DestroyObject(enemy2->pbody);
+		enemy2->muriendo = 0;
+		enemy2->isalive = false;
+
+	}
+
 	flyer->position.x = node.child("flyer").attribute("x").as_int();
 	player->position.y = node.child("flyer").attribute("y").as_int();
 	newPos = b2Vec2(PIXEL_TO_METERS(flyer->position.x), PIXEL_TO_METERS(flyer->position.y));
@@ -261,6 +281,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node playerNode = node.append_child("player");
 	pugi::xml_node enemyNode = node.append_child("enemy");
+	pugi::xml_node enemy2Node = node.append_child("enemy2");
 	pugi::xml_node flyerNode = node.append_child("flyer");
 	pugi::xml_node flyer2Node = node.append_child("flyer2");
 	playerNode.append_attribute("x").set_value(player->position.x);
@@ -269,6 +290,10 @@ bool Scene::SaveState(pugi::xml_node node) {
 	enemyNode.append_attribute("x").set_value(enemy->position.x);
 	enemyNode.append_attribute("y").set_value(enemy->position.y);
 	enemyNode.append_attribute("estavivo").set_value(enemy->isalive);
+
+	enemy2Node.append_attribute("x").set_value(enemy->position.x);
+	enemy2Node.append_attribute("y").set_value(enemy->position.y);
+	enemy2Node.append_attribute("estavivo").set_value(enemy->isalive);
 
 	flyerNode.append_attribute("x").set_value(flyer->position.x);
 	flyerNode.append_attribute("y").set_value(flyer->position.y);
