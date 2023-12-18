@@ -183,7 +183,7 @@ bool Enemy::Update(float dt)
 			app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
 		}
 		else {
-			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
+			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &deadAnim.GetCurrentFrame());
 		}
 		
 		currentAnimation->Update();

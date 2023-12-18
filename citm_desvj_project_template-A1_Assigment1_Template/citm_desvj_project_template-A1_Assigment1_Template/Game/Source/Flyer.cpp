@@ -66,7 +66,7 @@ bool Flyer::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheetflyer.png");
-	pbody = app->physics->CreateCircle(position.x +100, position.y - 190, 25, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x +100, position.y - 190, 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -133,9 +133,9 @@ bool Flyer::Update(float dt)
 		app->render->DrawTexture(texture, position.x - 15, position.y - 20, isFliped, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 	}
-	else {
+	/*else {
 		app->render->DrawTexture(texture, finalposition.x - 15, finalposition.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
-	}
+	}*/
 	//Set the velocity of the pbody of the player
 	if (isalive == true) {
 		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
@@ -157,10 +157,10 @@ bool Flyer::Update(float dt)
 				iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
 				movX = (pos.x - this->position.x);
 				if (movX < 0) {
-					vel.x = -2;
+					vel.x = -3;
 				}
 				else if (movX > 0) {
-					vel.x = 2;
+					vel.x = 3;
 				}
 				else {
 					vel.x = 0;
@@ -170,10 +170,10 @@ bool Flyer::Update(float dt)
 				movY = (pos.y - this->position.y);
 
 				if (movY < 0) {
-					vel.y = -2;
+					vel.y = -3;
 				}
 				else if (movY > 0) {
-					vel.y = 2;
+					vel.y = 3;
 				}
 				else {
 					vel.y = 0;
@@ -218,7 +218,7 @@ bool Flyer::Update(float dt)
 					}
 					//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 
-					movX = (pos.x - this->position.x) / 50;
+					movX = (pos.x - this->position.x) ;
 					if (movX < 0) {
 						vel.x = -3;
 					}
@@ -230,7 +230,7 @@ bool Flyer::Update(float dt)
 					}
 
 
-					movY = (pos.y - this->position.y) / 50;
+					movY = (pos.y - this->position.y) ;
 
 					if (movY < 0) {
 						vel.y = -3;

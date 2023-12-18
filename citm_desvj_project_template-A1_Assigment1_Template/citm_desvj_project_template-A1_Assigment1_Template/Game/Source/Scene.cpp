@@ -48,8 +48,8 @@ bool Scene::Awake(pugi::xml_node& config)
 		flyer->parameters = config.child("flyer");
 	}
 	if (config.child("flyer2")) {
-		flyer = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
-		flyer->parameters = config.child("flyer2");
+		flyer2 = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
+		flyer2->parameters = config.child("flyer2");
 	}
 
 	return ret;
@@ -202,12 +202,51 @@ bool Scene::CleanUp()
 bool Scene::LoadState(pugi::xml_node node) {
 	
 	
+
 	player->position.x = node.child("player").attribute("x").as_int();
 	player->position.y = node.child("player").attribute("y").as_int();
 	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
 	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
 	
-	
+	enemy->position.x = node.child("enemy").attribute("x").as_int();
+	enemy->position.y = node.child("enemy").attribute("y").as_int();
+	newPos = b2Vec2(PIXEL_TO_METERS(enemy->position.x), PIXEL_TO_METERS(enemy->position.y));
+	enemy->pbody->body->SetTransform(newPos, enemy->pbody->body->GetAngle());
+	bool checkAlive = node.child("enemy").attribute("estavivo").as_bool();
+	if (enemy->isalive && checkAlive == false) {
+
+		enemy->health = 1;
+		enemy->finalposition.x = METERS_TO_PIXELS(enemy->pbody->body->GetTransform().p.x) - 16;
+		enemy->finalposition.y = METERS_TO_PIXELS(enemy->pbody->body->GetTransform().p.y) - 16;
+		app->physics->DestroyObject(enemy->pbody);
+		enemy->muriendo = 0;
+		enemy->isalive = false;
+	}
+
+	flyer->position.x = node.child("flyer").attribute("x").as_int();
+	player->position.y = node.child("flyer").attribute("y").as_int();
+	newPos = b2Vec2(PIXEL_TO_METERS(flyer->position.x), PIXEL_TO_METERS(flyer->position.y));
+	flyer->pbody->body->SetTransform(newPos, flyer->pbody->body->GetAngle());
+	checkAlive = node.child("flyer").attribute("estavivo").as_bool();
+	if (flyer->isalive && checkAlive == false) {
+
+		flyer->health = 1;
+		flyer->finalposition.x = METERS_TO_PIXELS(flyer->pbody->body->GetTransform().p.x) - 16;
+		flyer->finalposition.y = METERS_TO_PIXELS(flyer->pbody->body->GetTransform().p.y) - 16;
+		app->physics->DestroyObject(flyer->pbody);
+		flyer->muriendo = 0;
+		flyer->isalive = false;
+	}
+
+	flyer2->position.x = node.child("flyer2").attribute("x").as_int();
+	flyer2->position.y = node.child("flyer2").attribute("y").as_int();
+	newPos= b2Vec2(PIXEL_TO_METERS(flyer2->position.x), PIXEL_TO_METERS(flyer2->position.y));
+	flyer2->pbody->body->SetTransform(newPos, flyer2->pbody->body->GetAngle());
+	checkAlive = node.child("flyer2").attribute("estavivo").as_bool();
+	if (flyer2->isalive && checkAlive == false) {
+		app->physics->DestroyObject(flyer2->pbody);
+	}
+
 	return true;
 	
 }
@@ -215,7 +254,24 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node playerNode = node.append_child("player");
+	pugi::xml_node enemyNode = node.append_child("enemy");
+	pugi::xml_node flyerNode = node.append_child("flyer");
+	pugi::xml_node flyer2Node = node.append_child("flyer2");
 	playerNode.append_attribute("x").set_value(player->position.x);
 	playerNode.append_attribute("y").set_value(player->position.y);
+
+	enemyNode.append_attribute("x").set_value(enemy->position.x);
+	enemyNode.append_attribute("y").set_value(enemy->position.y);
+	enemyNode.append_attribute("estavivo").set_value(enemy->isalive);
+
+	flyerNode.append_attribute("x").set_value(flyer->position.x);
+	flyerNode.append_attribute("y").set_value(flyer->position.y);
+	flyerNode.append_attribute("estavivo").set_value(flyer->isalive);
+
+	flyer2Node.append_attribute("x").set_value(flyer2->position.x);
+	flyer2Node.append_attribute("y").set_value(flyer2->position.y);
+	flyer2Node.append_attribute("estavivo").set_value(flyer2->isalive);
+
+
 	return true;
 }
