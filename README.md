@@ -25,6 +25,8 @@ Controls:
 
    F3 Start from the beginning of the current level
 
+   F5/F6: Save/Load State 
+
    F9 Visualize the colliders / logic
 
    F10 God Mode (fly around, cannot be killed)
