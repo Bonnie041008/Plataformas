@@ -153,8 +153,8 @@ bool Flyer::Update(float dt)
 				}
 
 			}
-			if (path->Count() > 2) {
-				iPoint pos = app->map->MapToWorld(path->At(2)->x, path->At(2)->y);
+			for (uint i = 0; i < path->Count(); i++) {
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 				movX = (pos.x - this->position.x);
 				if (movX < 0) {
 					vel.x = -3;
@@ -162,7 +162,7 @@ bool Flyer::Update(float dt)
 				else if (movX > 0) {
 					vel.x = 3;
 				}
-				else {
+				else if (app->scene->player->isalive == false){
 					vel.x = 0;
 				}
 
@@ -175,7 +175,7 @@ bool Flyer::Update(float dt)
 				else if (movY > 0) {
 					vel.y = 3;
 				}
-				else {
+				else if (app->scene->player->isalive == false) {
 					vel.y = 0;
 				}
 
@@ -209,53 +209,58 @@ bool Flyer::Update(float dt)
 					{
 						for (uint i = 0; i < path->Count(); i++)
 						{
-							iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-							app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+							iPoint pos4 = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+							app->render->DrawTexture(app->scene->mouseTileTex, pos4.x, pos4.y, false);
 
 
 						}
 
 					}
 					//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+					for (uint i = 0; i < path->Count(); i++) {
 
-					movX = (pos.x - this->position.x) ;
-					if (movX < 0) {
-						vel.x = -3;
+						iPoint pos5 = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+						movX = (pos.x - this->position.x);
+						if (movX < 0) {
+							vel.x = -3;
+						}
+						else if (movX > 0) {
+							vel.x = 3;
+						}
+						else {
+							vel.x = 0;
+						}
+
+
+						movY = (pos.y - this->position.y);
+
+						if (movY < 0) {
+							vel.y = -3;
+						}
+						else if (movY > 0) {
+							vel.y = 3;
+						}
+						else {
+							vel.y = 0;
+						}
+
+
+
+
+
+
+
+						if (position.x > pos.x && isalive == true)
+						{
+							isFliped = false;
+						}
+						else
+						{
+							isFliped = true;
+						}
 					}
-					else if (movX > 0) {
-						vel.x = 3;
-					}
-					else {
-						vel.x = 0;
-					}
 
-
-					movY = (pos.y - this->position.y) ;
-
-					if (movY < 0) {
-						vel.y = -3;
-					}
-					else if (movY > 0) {
-						vel.y = 3;
-					}
-					else {
-						vel.y = 0;
-					}
-
-
-
-
-
-
-
-					if (position.x > pos.x && isalive == true)
-					{
-						isFliped = false;
-					}
-					else
-					{
-						isFliped = true;
-					}
+					
 				}
 				else {
 					movX = 0;
@@ -267,6 +272,84 @@ bool Flyer::Update(float dt)
 			pbody->body->SetLinearVelocity(vel);
 		}
 	}
+	else {
+
+	app->map->pathfinding->ClearLastPath();
+	app->map->pathfinding->CreatePath(app->map->WorldToMap(position.x, position.y), app->map->WorldToMap(initialX, initialY));
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->Count(); i++)
+	{
+
+		if ( health == 0) {
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			if (app->physics->debug == true)
+			{
+				for (uint i = 0; i < path->Count(); i++)
+				{
+					iPoint pos4 = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+					app->render->DrawTexture(app->scene->mouseTileTex, pos4.x, pos4.y, false);
+
+
+				}
+
+			}
+			//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+			for (uint i = 0; i < path->Count(); i++) {
+
+				iPoint pos5 = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				movX = (pos.x - this->position.x);
+				if (movX < 0) {
+					vel.x = -3;
+				}
+				else if (movX > 0) {
+					vel.x = 3;
+				}
+				else {
+					vel.x = 0;
+				}
+
+
+				movY = (pos.y - this->position.y);
+
+				if (movY < 0) {
+					vel.y = -3;
+				}
+				else if (movY > 0) {
+					vel.y = 3;
+				}
+				else {
+					vel.y = 0;
+				}
+
+
+
+
+
+
+
+				if (position.x > pos.x && isalive == true)
+				{
+					isFliped = false;
+				}
+				else
+				{
+					isFliped = true;
+				}
+			}
+
+
+		}
+		else {
+			movX = 0;
+			vel.x = movX;
+		}
+
+
+	}
+	pbody->body->SetLinearVelocity(vel);
+}
+
 	
 	
 
