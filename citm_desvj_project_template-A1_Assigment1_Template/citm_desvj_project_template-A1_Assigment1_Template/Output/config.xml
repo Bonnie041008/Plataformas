@@ -28,11 +28,11 @@
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-	  <enemy x="1117" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
+	  <enemy x="1125" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <enemy2 x="1719" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
-	  <enemy3 x="3444" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
+	  <enemy3 x="3450" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <enemy4 x="4951" y="393" texturepath="Assets/Textures/spritesheetskeleton.png"/>
-	  <enemy5 x="6045" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
+	  <enemy5 x="6047" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <flyer x="600" y="400" texturepath="Assets/Textures/spritesheetflyer.png"/>
 	  <flyer2 x="2527" y="285" texturepath="Assets/Textures/spritesheetflyer.png"/>
 	  <flyer3 x="5592" y="285" texturepath="Assets/Textures/spritesheetflyer.png"/>

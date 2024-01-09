@@ -466,16 +466,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			fireBalltoDestroy = listOfFireballs.Find(physA);
 			break;
 		case ColliderType::DEATH:
-			LOG("Collision DEATH");
-			if (godmode == false)
-			{
-				health = 0;
-			}
-			if (health == 0 && isalive) {
-				cntfire++;
-				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
-			}
+			LOG("Collision PLATFORM");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
 
 			break;
 		case ColliderType::UNKNOWN:

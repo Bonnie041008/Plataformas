@@ -7,13 +7,13 @@
 	<:anonymous />
 	<map />
 	<scene>
-		<player x="167" y="635" />
+		<player x="442" y="491" />
 		<enemy x="1103" y="638" estavivo="true" />
 		<enemy2 x="1680" y="638" estavivo="true" />
 		<enemy3 x="3409" y="638" estavivo="true" />
 		<enemy4 x="4944" y="398" estavivo="true" />
 		<enemy5 x="5999" y="638" estavivo="true" />
-		<flyer x="226" y="624" estavivo="true" />
+		<flyer x="431" y="580" estavivo="true" />
 		<flyer2 x="2496" y="241" estavivo="true" />
 		<flyer3 x="5568" y="241" estavivo="true" />
 	</scene>
