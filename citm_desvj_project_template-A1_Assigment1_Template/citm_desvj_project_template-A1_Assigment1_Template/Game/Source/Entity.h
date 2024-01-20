@@ -14,7 +14,8 @@ enum class EntityType
 	ITEM,
 	UNKNOWN,
 	ENEMY,
-	FLYER
+	FLYER,
+	CHECKPOINT
 };
 
 class Entity
