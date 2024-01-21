@@ -258,9 +258,12 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 		if (godmode == false) {
 			godmode = true;
+			LOG("GOD");
 		}
 		else if (godmode == true) {
 			godmode = false;
+			LOG("NOT GOD");
+
 		}
 	}
 
