@@ -47,7 +47,7 @@ public:
 	int muriendo = 0;
 	int cntfire = 0;
 	int firelive = 0;
-	bool godmode;
+	bool godmode = false;
 	float move_y = -10.0f;
 	float move_x = 0.0f;
 	float godspeed = 0.0f;

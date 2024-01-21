@@ -350,17 +350,6 @@ bool Flyer::Update(float dt)
 	pbody->body->SetLinearVelocity(vel);
 }
 
-	
-	
-
-
-
-
-	
-
-	
-	
-
 	return true;
 }
 
@@ -385,10 +374,9 @@ void Flyer::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::FIREBALL:
 			LOG("Collision DEATH");
-			if (godmode == false)
-			{
+			
 				health = 0;
-			}
+			
 			if (health == 0 && isalive) {
 				muriendo++;
 				currentAnimation = &deadAnim;
@@ -401,46 +389,7 @@ void Flyer::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		}
 	}
-	else if (physA->ctype == ColliderType::FIREBALL) {
-		switch (physB->ctype)
-		{
-
-		case ColliderType::PLATFORM:
-			LOG("Collision PLATFORM");
-			fireBalltoDestroy = listOfFireballs.Find(physA);
-			break;
-		case ColliderType::DEATH:
-			LOG("Collision DEATH");
-			if (godmode == false)
-			{
-				health = 0;
-			}
-			if (health == 0 && isalive) {
-				muriendo++;
-				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
-			}
-		case ColliderType::ENEMY:
-			LOG("Collision ENEMY");
-			fireBalltoDestroy = listOfFireballs.Find(physA);
-		case ColliderType::FIREBALL:
-			LOG("Collision FIREBALL");
-			if (godmode == false)
-			{
-				health = 0;
-			}
-			if (health == 0 && isalive) {
-				muriendo++;
-				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
-			}
-
-			break;
-		case ColliderType::UNKNOWN:
-			LOG("Collision UNKNOWN");
-			break;
-		}
-	}
+	
 
 
 
