@@ -68,6 +68,7 @@ public:
 	bool isjumping= false;
 	bool isAttacking = false;
 	int jumpcnt;
+	iPoint lastCheckpoint;
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation fallAnim;

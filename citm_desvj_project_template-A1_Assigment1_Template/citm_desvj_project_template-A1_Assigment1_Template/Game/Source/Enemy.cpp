@@ -265,9 +265,7 @@ bool Enemy::Update(float dt)
 						vel.x = 0;
 					}
 
-					/*if (currentAnimation == &attackAnim) {
-						vel.x = 0;
-					}*/
+					
 
 
 					if (position.x > pos.x)

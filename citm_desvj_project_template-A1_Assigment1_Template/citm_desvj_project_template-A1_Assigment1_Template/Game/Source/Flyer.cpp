@@ -387,10 +387,14 @@ void Flyer::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 			break;
+
+		case ColliderType::CHECKPOINT:
+			LOG("Collision CHECKPoINT");
+			physB->body->SetActive(false);
+		}
 		}
 	}
 	
 
 
 
-}

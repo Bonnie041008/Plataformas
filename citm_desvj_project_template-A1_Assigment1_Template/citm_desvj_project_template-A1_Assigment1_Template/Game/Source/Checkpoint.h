@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -32,6 +33,10 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 	PhysBody* pbody;
+	Animation inactive;
+	Animation actived;
+	int cnt;
+	Animation* currentAnimation = nullptr;
 };
 
 #endif // __CHECKPOINT_H__

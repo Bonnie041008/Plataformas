@@ -5,6 +5,7 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "Checkpoint.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -96,6 +97,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Flyer();
 		break;
 	default:
+		break;
+	case EntityType::CHECKPOINT:
+		entity = new Checkpoint();
 		break;
 	}
 

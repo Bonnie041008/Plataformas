@@ -293,7 +293,7 @@ bool Player::Update(float dt)
 		
 		speed = 0;
 		if (muriendo > 70) {
-			SetPosition(183, 635);
+			SetPosition(lastCheckpoint.x,lastCheckpoint.y);
 			speed = 0.3f;
 			currentAnimation = &idleAnim;
 			deadAnim.Reset();
@@ -455,6 +455,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 			break;
+		case ColliderType::CHECKPOINT:
+			LOG("Collision CHECKPOINT");
+			physB->body->SetActive(false);
+			lastCheckpoint.x = METERS_TO_PIXELS(physB->body->GetTransform().p.x);
+			lastCheckpoint.y = METERS_TO_PIXELS(physB->body->GetTransform().p.y);
 		}
 	}
 	else if(physA->ctype == ColliderType::FIREBALL){

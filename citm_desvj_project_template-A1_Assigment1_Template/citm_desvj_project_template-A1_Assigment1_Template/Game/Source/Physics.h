@@ -30,7 +30,8 @@ enum class ColliderType {
 	DEATH,
 	UNKNOWN,
 	FIREBALL,
-	ENEMY
+	ENEMY,
+	CHECKPOINT
 
 	// ..
 };

@@ -6,6 +6,7 @@
 #include "Item.h"
 #include "Enemy.h"
 #include "flyer.h"
+#include "Checkpoint.h"
 
 struct SDL_Texture;
 
@@ -52,6 +53,7 @@ public:
 	Flyer* flyer2;
 	Flyer* flyer3;
 	SDL_Texture* mouseTileTex = nullptr;
+	Checkpoint* checkpoint;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
