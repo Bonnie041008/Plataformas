@@ -126,22 +126,6 @@ bool Enemy::Update(float dt)
 	
 	
 
-	/*if (app->scene->player->isalive == false && isalive == false) {
-		if (app->scene->player->muriendo > 70)
-		health = 1;
-			isalive = true;
-			texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
-		    pbody = app->physics->CreateCircle(initialX,initialY, 17, bodyType::DYNAMIC);
-			pbody->listener = this;
-			pbody->ctype = ColliderType::ENEMY;
-		    idleAnim.Reset();
-			rightAnim.Reset();
-			deadAnim.Reset();
-			isAttacking = false;
-			currentAnimation = &idleAnim;
-			currentAnimation->Update();
-	}*/
-
 
 
 	if (health == 0 && isalive== true) {

@@ -7,6 +7,9 @@
 
 #include "Point.h"
 #include "SString.h"
+#include "App.h"
+
+
 
 #include "SDL/include/SDL.h"
 
@@ -93,7 +96,10 @@ public:
 		observer->OnGuiMouseClickEvent(this);
 
 		switch (function) {
-		case FunctionGUI::START: break;
+		case FunctionGUI::START: 
+		
+		
+			break;
 
 		case FunctionGUI::EXIT: 
 			
@@ -110,6 +116,7 @@ public:
 		case FunctionGUI::SOUND: break;
 		case FunctionGUI::FULLSCREEN: break;
 		case FunctionGUI::VSYNC: break;
+
 		}
 		
 

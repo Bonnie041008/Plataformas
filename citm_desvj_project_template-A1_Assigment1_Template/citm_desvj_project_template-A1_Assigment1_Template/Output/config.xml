@@ -26,6 +26,8 @@
   <scene>
     <player x="183" y="635" texturepath="Assets/Textures/player1.png"/>
     <checkpoint  x="603" y="665" texturepath="Assets/Textures/checkpoint-export.png"/>
+	  <checkpoint2  x="6047" y="200" texturepath="Assets/Textures/checkpoint-export.png"/>
+	  <coin  x="403" y="665" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>

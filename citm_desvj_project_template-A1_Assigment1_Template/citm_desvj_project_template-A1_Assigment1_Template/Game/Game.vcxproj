@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Checkpoint.cpp" />
+    <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Flyer.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="..\..\..\..\DEF-SORCER-PROJ\SORCER STRIKER\Project_9_Solution\Source\Animation.h" />
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Checkpoint.h" />
+    <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />

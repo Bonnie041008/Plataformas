@@ -8,6 +8,7 @@
 #include "flyer.h"
 #include "Checkpoint.h"
 #include "Boss.h"
+#include"Coin.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -60,6 +61,8 @@ public:
 	Boss* boss;
 	SDL_Texture* mouseTileTex = nullptr;
 	Checkpoint* checkpoint;
+	Checkpoint* checkpoint2;
+	Coin* coin;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

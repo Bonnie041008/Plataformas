@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "Checkpoint.h"
+#include "Boss.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -100,6 +101,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::CHECKPOINT:
 		entity = new Checkpoint();
+		break;
+	case EntityType::COIN:
+		entity = new Coin();
 		break;
 	case EntityType::BOSS:
 		entity = new Boss();

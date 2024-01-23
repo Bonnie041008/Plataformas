@@ -42,9 +42,21 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
+
+	//Checkpoints------------------------------------------------------------------------
 	if (config.child("checkpoint")) {
 		checkpoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
 		checkpoint->parameters = config.child("checkpoint");
+	}
+	if (config.child("checkpoint2")) {
+		checkpoint2 = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
+		checkpoint2->parameters = config.child("checkpoint2");
+	}
+
+	//Coins--------------------------------------------------------------------------------
+	if (config.child("coin")) {
+		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin->parameters = config.child("coin");
 	}
 	//Boss---------------------------------------------------------------------------
 	if (config.child("boss")) {
@@ -116,7 +128,7 @@ bool Scene::Start()
 
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
-
+	return true;
 }
 
 // Called each loop iteration
@@ -194,7 +206,7 @@ bool Scene::PostUpdate()
 	
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
-	if (exitButton->exit == true) {
+	if (app->menu->exitButton->exit == true) {
 		ret = false;
 	}
 	return ret;

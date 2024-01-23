@@ -164,10 +164,10 @@ bool Boss::Update(float dt)
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 		
 		if (isAttacking == false) {
-			app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
+			app->render->DrawTexture(texture, position.x - 60, position.y - 85, isFliped, &currentAnimation->GetCurrentFrame());
 		}
 		else {
-			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &attackAnim.GetCurrentFrame());
+			app->render->DrawTexture(texture, position.x - 40, position.y - 85, isFliped, &attackAnim.GetCurrentFrame());
 		}
 		
 		currentAnimation->Update();

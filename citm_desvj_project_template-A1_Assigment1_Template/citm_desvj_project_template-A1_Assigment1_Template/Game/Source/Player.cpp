@@ -421,6 +421,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ITEM");
 			
 			break;
+		case ColliderType::COIN:
+			LOG("Collision COIN");
+			//physB->body->SetActive(false);
+			app->physics->DestroyObject(physB);
+			
+			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
 			if (isjumping) {
@@ -471,6 +477,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::CHECKPOINT:
 			LOG("Collision CHECKPOINT");
 			physB->body->SetActive(false);
+
 			lastCheckpoint.x = METERS_TO_PIXELS(physB->body->GetTransform().p.x);
 			lastCheckpoint.y = METERS_TO_PIXELS(physB->body->GetTransform().p.y);
 		}
@@ -482,9 +489,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ENEMY");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
 			break;
+		case ColliderType::PLAYER:
+			LOG("Collision PLAYER");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
+		case ColliderType::BOSS:
+			LOG("Collision BOSS");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
+		case ColliderType::FIREBALL:
+			LOG("Collision FIREBALL");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
+		case ColliderType::CHECKPOINT:
+			LOG("Collision CHECKPOINT");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
+			physB->body->SetActive(false);
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision PLATFORM");

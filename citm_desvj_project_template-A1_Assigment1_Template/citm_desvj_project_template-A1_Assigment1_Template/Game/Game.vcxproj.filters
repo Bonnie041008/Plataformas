@@ -31,6 +31,7 @@
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
+    <ClCompile Include="Source\Coin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Menu.h" />
+    <ClInclude Include="Source\Coin.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
