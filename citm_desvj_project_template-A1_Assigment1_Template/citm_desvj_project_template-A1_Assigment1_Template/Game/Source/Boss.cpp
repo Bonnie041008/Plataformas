@@ -16,7 +16,7 @@ Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
 	//idle
-	idleAnim.PushBack({ 0, 0, 64, 64 });
+	idleAnim.PushBack({ 0, 3, 64, 64 });
 	idleAnim.PushBack({ 64, 0, 64, 64 });
 	idleAnim.PushBack({ 128, 0, 64, 64 });
 	idleAnim.PushBack({ 192, 0, 64, 64 });
@@ -97,7 +97,7 @@ bool Boss::Awake() {
 bool Boss::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
+	texture = app->tex->Load("Assets/Textures/SWMG_Boss_Spritesheet.png");
 	skellRip = app->tex->Load("Assets/Textures/skellRip.png");
 	pbody = app->physics->CreateCircle(position.x , position.y , 17, bodyType::DYNAMIC);
 	pbody->listener = this;
