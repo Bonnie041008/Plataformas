@@ -7,6 +7,7 @@
 #include "Timer.h"
 #include "EntityManager.h"
 
+
 #include "PugiXml/src/pugixml.hpp"
 
 // Modules
@@ -20,6 +21,7 @@ class EntityManager;
 class Map;
 class Physics;
 class GuiManager;
+class ModuleFadeToBlack;
 
 class App
 {
@@ -90,6 +92,7 @@ public:
 	Map* map;
 	Physics* physics;
 	GuiManager* guiManager;
+	ModuleFadeToBlack* moduleFadetoBlack;
 
 private:
 

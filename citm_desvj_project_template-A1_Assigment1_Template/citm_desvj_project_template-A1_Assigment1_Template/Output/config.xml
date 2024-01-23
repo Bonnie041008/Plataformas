@@ -21,6 +21,10 @@
     <fx volume="128"/>
   </audio>
 
+	<menu>
+		<pantallaInicio texturepath="Assets/Pantallas/SWMG_PantallaInicio.png"/>
+	</menu>
+	
   <scene>
     <player x="183" y="635" texturepath="Assets/Textures/player1.png"/>
     <checkpoint  x="603" y="665" texturepath="Assets/Textures/checkpoint-export.png"/>

@@ -4,7 +4,7 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "Menu.h"
 #include "Map.h"
 #include "Physics.h"
 #include "Defs.h"
@@ -13,22 +13,21 @@
 
 #include "GuiControl.h"
 #include "GuiManager.h"
-Scene::Scene() : Module()
+Menu::Menu() : Module()
 {
-	name.Create("scene");
+	name.Create("menu");
 }
 
 // Destructor
-Scene::~Scene()
+Menu::~Menu()
 {}
 
 // Called before render is available
-bool Scene::Awake(pugi::xml_node& config)
+bool Menu::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
 	bool ret = true;
 
-	// iterate all objects in the scene
+	// iterate all objects in the menu
 	// Check https://pugixml.org/docs/quickstart.html#access
 	/*for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
@@ -36,62 +35,13 @@ bool Scene::Awake(pugi::xml_node& config)
 		item->parameters = itemNode;
 	}*/
 
-	if (config.child("player")) {
-		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("player");
-	}
-	if (config.child("checkpoint")) {
-		checkpoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
-		checkpoint->parameters = config.child("checkpoint");
-	}
-	//Boss---------------------------------------------------------------------------
-	if (config.child("boss")) {
-		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
-		boss->parameters = config.child("boss");
-	}
-	//Esqueletos---------------------------------------------------------------------
-
-	if (config.child("enemy2")) {
-		enemy2 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy2->parameters = config.child("enemy2");
-	}
-	if (config.child("enemy")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy");
-	}
-	if (config.child("enemy3")) {
-		enemy3 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy3->parameters = config.child("enemy3");
-	}
-	if (config.child("enemy4")) {
-		enemy4 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy4->parameters = config.child("enemy4");
-	}
-	if (config.child("enemy5")) {
-		enemy5 = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy5->parameters = config.child("enemy5");
-	}
-
-	//Fantasmas----------------------------------------------------------------------
-
-	if (config.child("flyer")) {
-		flyer = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
-		flyer->parameters = config.child("flyer");
-	}
-	if (config.child("flyer2")) {
-		flyer2 = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
-		flyer2->parameters = config.child("flyer2");
-	}
-	if (config.child("flyer3")) {
-		flyer3 = (Flyer*)app->entityManager->CreateEntity(EntityType::FLYER);
-		flyer3->parameters = config.child("flyer3");
-	}
+	
 
 	return ret;
 }
 
 // Called before the first frame
-bool Scene::Start()
+bool Menu::Start()
 {
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
@@ -115,11 +65,10 @@ bool Scene::Start()
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
 	//Pantallas
-	//pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaInicio.png");
-	//pantallaWin = app->tex->Load("Assets/Pantallas/SWMG_PantallaWin.png");
+	pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaInicio.png");
 	//Poner en el config.xml
 	// <pantallaInicio texturepath="Assets/Pantallas/SWMG_PantallaInicio.png"/>
-	//<pantallaWin texturepath = "Assets/Pantallas/SWMG_PantallaWin.png" / >
+	
 
 	SDL_Rect btPos = { windowW / 2 - 60, windowH / 2 - 10, 120,20 };
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Exit", btPos, this);
@@ -128,73 +77,73 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool Menu::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+bool Menu::Update(float dt)
 {
-	float camSpeed = 1; 
-	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
-		debugcamera = true;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
-		debugcamera = false;
-	}
-	if (debugcamera == false) {
-		if (player->position.x < app->win->screenSurface->w / 2) {
-			app->render->camera.x = 0;
-		}
-		else {
-			app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
-		}
+	//float camSpeed = 1; 
+	//if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
+	//	debugcamera = true;
+	//}
+	//if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
+	//	debugcamera = false;
+	//}
+	//if (debugcamera == false) {
+	//	if (player->position.x < app->win->screenSurface->w / 2) {
+	//		app->render->camera.x = 0;
+	//	}
+	//	else {
+	//		app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
+	//	}
 
-		if (-player->position.y < app->win->screenSurface->h / 2) {
-			app->render->camera.y = 0;
-		}
-		else {
-			app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
-		}
-		
-	}
-	
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
-		
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
+	//	if (-player->position.y < app->win->screenSurface->h / 2) {
+	//		app->render->camera.y = 0;
+	//	}
+	//	else {
+	//		app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
+	//	}
+	//	
+	//}
+	//
+	//if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	//	app->render->camera.y += (int)ceil(camSpeed * dt);
+	//	
+	//if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	//	app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
+	//if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	//	app->render->camera.x += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
-		
+	//if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	//	app->render->camera.x -= (int)ceil(camSpeed * dt);
+	//	
 
-	// Renders the image in the center of the screen 
-	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+	//// Renders the image in the center of the screen 
+	////app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
+	//if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	//if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 
-	// Get the mouse position and obtain the map coordinate
-	iPoint mousePos;
-	app->input->GetMousePosition(mousePos.x, mousePos.y);
-	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
-		mousePos.y - app->render->camera.y);
+	//// Get the mouse position and obtain the map coordinate
+	//iPoint mousePos;
+	//app->input->GetMousePosition(mousePos.x, mousePos.y);
+	//iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
+	//	mousePos.y - app->render->camera.y);
 
-	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	iPoint origin = mouseTile;
+	//// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
+	//iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
+	//iPoint origin = mouseTile;
 
-	//app->render->DrawTexture(pantallaInicio, 0, 0, false);
+	app->render->DrawTexture(pantallaInicio, 0, 0, false);
 
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool Menu::PostUpdate()
 {
 	bool ret = true;
 	
@@ -208,13 +157,13 @@ bool Scene::PostUpdate()
 
 
 // Called before quitting
-bool Scene::CleanUp()
+bool Menu::CleanUp()
 {
-	LOG("Freeing Menu");
+	LOG("Freeing scene");
 
 	return true;
 }
-bool Scene::LoadState(pugi::xml_node node) {
+bool Menu::LoadState(pugi::xml_node node) {
 	
 	player->position.x = node.child("player").attribute("x").as_int();
 	player->position.y = node.child("player").attribute("y").as_int();
@@ -372,7 +321,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 }
 
 
-bool Scene::SaveState(pugi::xml_node node) {
+bool Menu::SaveState(pugi::xml_node node) {
 	pugi::xml_node playerNode = node.append_child("player");
 	pugi::xml_node enemyNode = node.append_child("enemy");
 	pugi::xml_node enemy2Node = node.append_child("enemy2");
