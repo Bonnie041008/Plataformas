@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Defs.h"
 #include "Log.h"
+#include "ModuleFadeToBlack.h"
 
 
 #include "GuiControl.h"
@@ -189,6 +190,11 @@ bool Scene::Update(float dt)
 	iPoint origin = mouseTile;
 
 	//app->render->DrawTexture(pantallaInicio, 0, 0, false);
+	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		app->moduleFadetoBlack->FadeToBlack(this, (ModuleFadeToBlack*)app->scene, 90 );
+	}
+
 
 	return true;
 }
