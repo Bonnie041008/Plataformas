@@ -44,7 +44,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		checkpoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
 		checkpoint->parameters = config.child("checkpoint");
 	}
-
+	//Boss---------------------------------------------------------------------------
+	if (config.child("boss")) {
+		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+		boss->parameters = config.child("boss");
+	}
 	//Esqueletos---------------------------------------------------------------------
 
 	if (config.child("enemy2")) {

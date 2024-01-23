@@ -28,6 +28,7 @@
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+	  <boss x="1225" y="635" texturepath="Assets/Textures/SWMG_Boss_Spritesheet.png"/>
 	  <enemy x="1125" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <enemy2 x="1719" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
 	  <enemy3 x="3450" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>

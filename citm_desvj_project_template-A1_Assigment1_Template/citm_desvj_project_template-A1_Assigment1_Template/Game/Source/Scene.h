@@ -7,6 +7,7 @@
 #include "Enemy.h"
 #include "flyer.h"
 #include "Checkpoint.h"
+#include "Boss.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -56,6 +57,7 @@ public:
 	Flyer* flyer;
 	Flyer* flyer2;
 	Flyer* flyer3;
+	Boss* boss;
 	SDL_Texture* mouseTileTex = nullptr;
 	Checkpoint* checkpoint;
 private:
