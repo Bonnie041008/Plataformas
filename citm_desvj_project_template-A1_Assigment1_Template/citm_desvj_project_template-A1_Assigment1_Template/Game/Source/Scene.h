@@ -8,6 +8,10 @@
 #include "flyer.h"
 #include "Checkpoint.h"
 
+#include "GuiControl.h"
+#include "GuiControlButton.h"
+#include "GuiManager.h"
+
 struct SDL_Texture;
 
 class Scene : public Module
@@ -61,6 +65,8 @@ private:
 	uint windowW, windowH;
 	
 	bool debugcamera= false;
+
+	GuiControlButton* exitButton;
 
 };
 

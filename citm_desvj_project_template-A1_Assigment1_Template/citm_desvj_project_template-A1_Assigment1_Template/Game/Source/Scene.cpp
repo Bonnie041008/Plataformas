@@ -11,7 +11,8 @@
 #include "Log.h"
 
 
-
+#include "GuiControl.h"
+#include "GuiManager.h"
 Scene::Scene() : Module()
 {
 	name.Create("scene");
@@ -88,10 +89,6 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	
-	//Music is commented so that you can add your own music
-	
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
 	//Get the size of the window
@@ -113,6 +110,9 @@ bool Scene::Start()
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
+	SDL_Rect btPos = { windowW / 2 - 60, windowH / 2 - 10, 120,20 };
+	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Exit", btPos, this);
+	exitButton->function = FunctionGUI::EXIT;
 	return true;
 }
 
@@ -187,7 +187,9 @@ bool Scene::PostUpdate()
 	
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
-
+	if (exitButton->exit == true) {
+		ret = false;
+	}
 	return ret;
 }
 
