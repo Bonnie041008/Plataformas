@@ -15,6 +15,7 @@ enum class EntityType
 	UNKNOWN,
 	ENEMY,
 	FLYER,
+	BOSS,
 	CHECKPOINT
 };
 

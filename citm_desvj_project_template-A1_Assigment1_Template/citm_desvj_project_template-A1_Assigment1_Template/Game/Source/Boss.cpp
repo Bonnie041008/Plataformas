@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Boss.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -11,9 +12,9 @@
 #include "Physics.h"
 #include "Map.h"
 
-Enemy::Enemy() : Entity(EntityType::ENEMY)
+Boss::Boss() : Entity(EntityType::BOSS)
 {
-	name.Create("Enemy");
+	name.Create("Boss");
 	//idle
 	idleAnim.PushBack({ 0, 0, 64, 64 });
 	idleAnim.PushBack({ 64, 0, 64, 64 });
@@ -76,11 +77,11 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	attackAnim.speed = 0.2f;
 }
 
-Enemy::~Enemy() {
+Boss::~Boss() {
 
 }
 
-bool Enemy::Awake() {
+bool Boss::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -93,7 +94,7 @@ bool Enemy::Awake() {
 	return true;
 }
 
-bool Enemy::Start() {
+bool Boss::Start() {
 
 	//initilize textures
 	texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
@@ -103,21 +104,21 @@ bool Enemy::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 
 	
-	MuerteEsqueleto = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Esqueloeto.wav");
-	AtaqueEsqueleto = app->audio->LoadFx("Assets/Audio/Fx/Ataque-Esqueleto.wav");
+	MuerteBoss = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Esqueloeto.wav");
+	AtaqueBoss = app->audio->LoadFx("Assets/Audio/Fx/Ataque-Esqueleto.wav");
 
 
 	return true;
 }
 
-void Enemy::SetPosition(int x, int y) {
+void Boss::SetPosition(int x, int y) {
 	position.x = x;
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 }
 
-bool Enemy::Update(float dt)
+bool Boss::Update(float dt)
 {
 	
 	b2Vec2 vel = b2Vec2(move_x, move_y);
@@ -146,10 +147,10 @@ bool Enemy::Update(float dt)
 
 	if (health == 0 && isalive== true) {
 		
-		if(Muerte_Esqueleto == true){
-			app->audio->PlayFx(MuerteEsqueleto);	
+		if(Muerte_Boss == true){
+			app->audio->PlayFx(MuerteBoss);	
 		}
-		Muerte_Esqueleto = false;
+		Muerte_Boss = false;
 		currentAnimation = &deadAnim;
 		muriendo++;
 		movX = 0;
@@ -190,10 +191,10 @@ bool Enemy::Update(float dt)
 		currentAnimation->Update();
 
 		if (isAttacking == true) {
-			if(Ataque_Esqueleto == true){
-				app->audio->PlayFx(AtaqueEsqueleto);	
+			if(Ataque_Boss == true){
+				app->audio->PlayFx(AtaqueBoss);	
 			}
-			Ataque_Esqueleto = false;
+			Ataque_Boss = false;
 			currentAnimation = &attackAnim;
 			cntatt++;
 			attackAnim.Update();
@@ -203,7 +204,7 @@ bool Enemy::Update(float dt)
 				attackAnim.Reset();
 
 
-				Ataque_Esqueleto = true;
+				Ataque_Boss = true;
 				isAttacking = false;
 				currentAnimation = &idleAnim;
 				cntatt = 0;
@@ -391,15 +392,15 @@ bool Enemy::Update(float dt)
 	return true;
 }
 
-bool Enemy::CleanUp()
+bool Boss::CleanUp()
 {
 
 	return true;
 }
 
-void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-	if (physA->ctype == ColliderType::ENEMY) {
+	if (physA->ctype == ColliderType::BOSS) {
 		switch (physB->ctype)
 		{
 		case ColliderType::ITEM:

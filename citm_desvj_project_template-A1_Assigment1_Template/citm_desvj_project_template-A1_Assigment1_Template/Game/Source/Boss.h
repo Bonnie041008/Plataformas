@@ -1,5 +1,5 @@
-#ifndef __ENEMY_H__
-#define __ENEMY_H__
+#ifndef __Boss_H__
+#define __Boss_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -9,13 +9,13 @@
 
 struct SDL_Texture;
 
-class Enemy : public Entity
+class Boss : public Entity
 {
 public:
 
-	Enemy();
+	Boss();
 
-	virtual ~Enemy();
+	virtual ~Boss();
 
 	bool Awake();
 
@@ -55,10 +55,10 @@ public:
 	iPoint finalposition;
 	int cntatt = 0;
 	
-	bool Muerte_Esqueleto = true;
-	int MuerteEsqueleto;
-	bool Ataque_Esqueleto = true;
-	int AtaqueEsqueleto;
+	bool Muerte_Boss = true;
+	int MuerteBoss;
+	bool Ataque_Boss = true;
+	int AtaqueBoss;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
 	const float MAX_FALL_SPEED = 10.0f;
 	
@@ -75,4 +75,4 @@ public:
 	
 };
 
-#endif // __ENEMY_H__
+#endif // __Boss_H__
