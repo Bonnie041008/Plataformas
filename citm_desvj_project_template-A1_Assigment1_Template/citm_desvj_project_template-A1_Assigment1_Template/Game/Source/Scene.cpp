@@ -107,9 +107,11 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-
+	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 + 100, 120,20 };
+	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
+	exitButton->state = GuiControlState::DISABLED;
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
-
+	
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
 
@@ -203,12 +205,14 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-	
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (ext == true) {
+		ret = false;
+	}
+	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 	if (app->menu->exitButton->exit == true) {
 		ret = false;
-	}
+	}*/
 	return ret;
 }
 
@@ -430,5 +434,17 @@ bool Scene::SaveState(pugi::xml_node node) {
 	flyer3Node.append_attribute("estavivo").set_value(flyer3->isalive);
 
 
+	return true;
+}
+bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
+	if (control->id == 1) {
+		//app->audio->active = true;
+		
+		ext = true;
+		
+	}
+	/*if (control->id == 2) {
+		
+	}*/
 	return true;
 }

@@ -52,6 +52,8 @@ public:
 	float move_x = 0.0f;
 	float godspeed = 0.0f;
 
+	bool pausa = false;
+
 	
 	PhysBody* fireBall;
 	bool hasToDestroyBall = false;

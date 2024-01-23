@@ -144,9 +144,9 @@ void Player::SetPosition(int x, int y) {
 bool Player::Update(float dt)
 {
 
-
 	
-	if (fireBalltoDestroy != -1) {
+	
+	if (fireBalltoDestroy != -1 && pausa == false) {
 		app->physics->DestroyObject(listOfFireballs[fireBalltoDestroy]);
 		listOfFireballs.Del(listOfFireballs.At(fireBalltoDestroy));
 		fireBalltoDestroy = -1;
@@ -156,13 +156,23 @@ bool Player::Update(float dt)
 	move_x = 0;
 	move_y = -GRAVITY_Y;
 	
-	if (isAttacking == false) {
+	
+	if (isAttacking == false && pausa == false) {
 		currentAnimation = &idleAnim;
 	}
 	
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+		if (pausa == false) {
+			pausa = true;
+			app->scene->exitButton->state = GuiControlState::NORMAL;
+		}
+		else {
+			pausa = false;
+			app->scene->exitButton->state = GuiControlState::DISABLED;
+		}
+	}
 	
-	
-	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || cntfire > 0 ) {
+	if ((app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || cntfire > 0 ) && pausa == false) {
 		
 		
 		
@@ -210,7 +220,7 @@ bool Player::Update(float dt)
 	
 	} 
 	
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pausa==false) {
 		move_x = -speed*dt;
 		isFliped = true;
 
@@ -223,7 +233,7 @@ bool Player::Update(float dt)
 
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pausa == false) {
 		move_x = +speed * dt;
 		isFliped = false;
 		//texture = textureRun;
@@ -234,19 +244,19 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN && pausa == false)
 	{
 		SetPosition(400, 352);
 		health = 1;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && muriendo == 0)
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN && muriendo == 0 && pausa == false)
 	{
 		SetPosition(183, 635);
 		health = 1;
 	}
 
 
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && pausa == false) {
 		//vel = b2Vec2(speed * dt, -GRAVITY_Y);
 
 		health = 0;
@@ -255,7 +265,7 @@ bool Player::Update(float dt)
 
 	}
 	//godmode
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && pausa == false) {
 		if (godmode == false) {
 			godmode = true;
 			LOG("GOD");
@@ -267,14 +277,14 @@ bool Player::Update(float dt)
 		}
 	}
 
-	if (godmode == true)
+	if (godmode == true && pausa == false)
 	{
 		move_y = 0;
 
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && pausa == false) {
 			move_y = -10;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && pausa == false) {
 			move_y = 10;
 		}
 		godspeed = speed * 10;
@@ -282,7 +292,7 @@ bool Player::Update(float dt)
 	}
 	
 	//muerte
-	if (health == 0 && isalive) {
+	if (health == 0 && isalive && pausa == false) {
 		
 		if(Muerte_Mago == true){
 			app->audio->PlayFx(MuerteMago);	
@@ -325,7 +335,7 @@ bool Player::Update(float dt)
 	}
 
 	// Añadir la funcionalidad de saltar
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false && pausa == false) {
 		// Cambia la velocidad vertical para simular un salto
 		Salto_Mago = true;
 		if (isjumping == false && Salto_Mago == true) {
@@ -387,7 +397,9 @@ bool Player::Update(float dt)
 		jumpcnt = 0;
 	}
 	
-	
+	if (pausa == true) {
+		move_y = 0.0f;
+	}
 	vel = b2Vec2(move_x, move_y);
 	
 	
@@ -402,7 +414,11 @@ bool Player::Update(float dt)
 	for (int i = 0; i < listOfFireballs.Count(); i++) {
 		app->render->DrawTexture(fireballtexture, METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.x)-10, METERS_TO_PIXELS(listOfFireballs[i]->body->GetTransform().p.y)-12, isFliped);
 	}
-	currentAnimation->Update();
+	if (pausa == false) {
+		currentAnimation->Update();
+	}
+	
+
 	return true;
 }
 

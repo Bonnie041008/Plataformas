@@ -141,7 +141,10 @@ bool EntityManager::Update(float dt)
 		pEntity = item->data;
 
 		if (pEntity->active == false) continue;
-		ret = item->data->Update(dt);
+		if (app->scene->player->pausa == false|| item->data == app->scene->player) {
+			ret = item->data->Update(dt);
+		}
+	
 	}
 
 	return ret;
