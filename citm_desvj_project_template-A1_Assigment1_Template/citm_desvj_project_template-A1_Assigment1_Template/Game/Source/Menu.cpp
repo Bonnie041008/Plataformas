@@ -64,12 +64,12 @@ bool Menu::Start()
 	//Pantallas
 	pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaDeInicio.png");	
 
-	SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
+	SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 300, 120,20 };
 	startButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPosStart, this);
 	startButton->function = FunctionGUI::START;
 
 	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 - 10, 120,20 };
-	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
+	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "EXIT", btPosExit, this);
 	exitButton->function = FunctionGUI::EXIT;
 
 	return true;
