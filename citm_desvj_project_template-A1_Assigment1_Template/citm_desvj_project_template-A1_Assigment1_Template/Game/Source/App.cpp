@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "ModuleFadeToBlack.h"
+#include "Menu.h"
 
 #include "GuiManager.h"
 #include "Defs.h"
@@ -37,6 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	entityManager = new EntityManager();
 	guiManager = new GuiManager();
 	moduleFadetoBlack = new ModuleFadeToBlack();
+	menu = new Menu();
 
 
 	// Ordered for awake / Start / Update
@@ -47,10 +49,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(map);
+	AddModule(menu);
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(guiManager);
 	AddModule(moduleFadetoBlack);
+
 
 	// Render last to swap buffer
 	AddModule(render);

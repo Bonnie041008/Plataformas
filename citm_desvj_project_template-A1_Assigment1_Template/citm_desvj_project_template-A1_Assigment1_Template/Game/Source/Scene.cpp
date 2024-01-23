@@ -10,6 +10,7 @@
 #include "Defs.h"
 #include "Log.h"
 #include "ModuleFadeToBlack.h"
+#include "Menu.h"
 
 
 #include "GuiControl.h"
@@ -192,7 +193,7 @@ bool Scene::Update(float dt)
 	//app->render->DrawTexture(pantallaInicio, 0, 0, false);
 	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		app->moduleFadetoBlack->FadeToBlack(this, (ModuleFadeToBlack*)app->scene, 90 );
+		app->moduleFadetoBlack->FadeToBlack(this, (ModuleFadeToBlack*)app->menu, 60 );
 	}
 
 
