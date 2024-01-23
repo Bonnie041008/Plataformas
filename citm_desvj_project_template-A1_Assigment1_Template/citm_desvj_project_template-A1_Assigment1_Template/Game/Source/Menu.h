@@ -69,7 +69,9 @@ private:
 	
 	bool debugcamera= false;
 
+	GuiControlButton* startButton;
 	GuiControlButton* exitButton;
+	
 
 };
 

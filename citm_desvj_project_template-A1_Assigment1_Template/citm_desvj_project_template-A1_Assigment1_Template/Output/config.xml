@@ -21,9 +21,7 @@
     <fx volume="128"/>
   </audio>
 
-	<menu>
-		<pantallaInicio texturepath="Assets/Pantallas/SWMG_PantallaInicio.png"/>
-	</menu>
+	
 	
   <scene>
     <player x="183" y="635" texturepath="Assets/Textures/player1.png"/>

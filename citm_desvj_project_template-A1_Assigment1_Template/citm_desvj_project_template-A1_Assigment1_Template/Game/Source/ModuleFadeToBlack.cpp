@@ -79,8 +79,8 @@ bool ModuleFadeToBlack::FadeToBlack(Module* moduleToDisable, Module* moduleToEna
 		frameCount = 0;
 		maxFadeFrames = frames;
 
-		this->moduleToDisable = moduleToDisable;
-		this->moduleToEnable = moduleToEnable;
+		moduleToDisable->active = false;
+		moduleToEnable->active = true;
 
 		ret = true;
 	}

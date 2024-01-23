@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Scene.h"
 
 
 #include "GuiControl.h"
@@ -43,6 +44,12 @@ bool Menu::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Menu::Start()
 {
+	app->entityManager->active = false;
+	app->map->active = false;
+	app->scene->active = false;
+	app->audio->active = false;
+
+
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
 	//Get the size of the window
@@ -54,25 +61,17 @@ bool Menu::Start()
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-		app->map->mapData.width,
-		app->map->mapData.height,
-		app->map->mapData.tileWidth,
-		app->map->mapData.tileHeight,
-		app->map->mapData.tilesets.Count());
-
-	// Texture to highligh mouse position 
-	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
-
 	//Pantallas
-	pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaInicio.png");
-	//Poner en el config.xml
-	// <pantallaInicio texturepath="Assets/Pantallas/SWMG_PantallaInicio.png"/>
-	
+	pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaDeInicio.png");	
 
-	SDL_Rect btPos = { windowW / 2 - 60, windowH / 2 - 10, 120,20 };
-	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Exit", btPos, this);
+	SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
+	startButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPosStart, this);
+	startButton->function = FunctionGUI::START;
+
+	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 - 10, 120,20 };
+	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
 	exitButton->function = FunctionGUI::EXIT;
+
 	return true;
 }
 
@@ -85,59 +84,16 @@ bool Menu::PreUpdate()
 // Called each loop iteration
 bool Menu::Update(float dt)
 {
-	//float camSpeed = 1; 
-	//if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
-	//	debugcamera = true;
-	//}
-	//if (app->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT) {
-	//	debugcamera = false;
-	//}
-	//if (debugcamera == false) {
-	//	if (player->position.x < app->win->screenSurface->w / 2) {
-	//		app->render->camera.x = 0;
-	//	}
-	//	else {
-	//		app->render->camera.x = -player->position.x + app->win->screenSurface->w / 2;
-	//	}
-
-	//	if (-player->position.y < app->win->screenSurface->h / 2) {
-	//		app->render->camera.y = 0;
-	//	}
-	//	else {
-	//		app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
-	//	}
-	//	
-	//}
-	//
-	//if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	//	app->render->camera.y += (int)ceil(camSpeed * dt);
-	//	
-	//if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	//	app->render->camera.y -= (int)ceil(camSpeed * dt);
-
-	//if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	//	app->render->camera.x += (int)ceil(camSpeed * dt);
-
-	//if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	//	app->render->camera.x -= (int)ceil(camSpeed * dt);
-	//	
-
-	//// Renders the image in the center of the screen 
-	////app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-	//if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
-	//if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
-
-	//// Get the mouse position and obtain the map coordinate
-	//iPoint mousePos;
-	//app->input->GetMousePosition(mousePos.x, mousePos.y);
-	//iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
-	//	mousePos.y - app->render->camera.y);
-
-	//// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
-	//iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
-	//iPoint origin = mouseTile;
-
 	app->render->DrawTexture(pantallaInicio, 0, 0, false);
+	
+	if (app->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
+	{
+		app->entityManager->active = true;
+		app->map->active = true;
+		app->scene->active = true;
+		app->audio->active = true;
+		active = false;
+	}
 
 	return true;
 }
@@ -316,7 +272,7 @@ bool Menu::LoadState(pugi::xml_node node) {
 	//}
 	//
 
-	//return true;
+	return true;
 	
 }
 
@@ -373,5 +329,5 @@ bool Menu::SaveState(pugi::xml_node node) {
 	//flyer3Node.append_attribute("estavivo").set_value(flyer3->isalive);
 
 
-	//return true;
+	return true;
 }

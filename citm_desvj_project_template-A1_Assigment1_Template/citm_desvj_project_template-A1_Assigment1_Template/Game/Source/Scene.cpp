@@ -95,6 +95,7 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
+
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
 	//Get the size of the window
@@ -116,17 +117,6 @@ bool Scene::Start()
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
-	//Pantallas
-	//pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaInicio.png");
-	//pantallaWin = app->tex->Load("Assets/Pantallas/SWMG_PantallaWin.png");
-	//Poner en el config.xml
-	// <pantallaInicio texturepath="Assets/Pantallas/SWMG_PantallaInicio.png"/>
-	//<pantallaWin texturepath = "Assets/Pantallas/SWMG_PantallaWin.png" / >
-
-	SDL_Rect btPos = { windowW / 2 - 60, windowH / 2 - 10, 120,20 };
-	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Exit", btPos, this);
-	exitButton->function = FunctionGUI::EXIT;
-	return true;
 }
 
 // Called each loop iteration
@@ -191,10 +181,7 @@ bool Scene::Update(float dt)
 	iPoint origin = mouseTile;
 
 	//app->render->DrawTexture(pantallaInicio, 0, 0, false);
-	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		app->moduleFadetoBlack->FadeToBlack(this, (ModuleFadeToBlack*)app->menu, 60 );
-	}
+	
 
 
 	return true;
