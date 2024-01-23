@@ -26,9 +26,7 @@
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Flyer.cpp" />
     <ClCompile Include="Source\Checkpoint.cpp" />
-    <ClCompile Include="Source\Boss.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\Boss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -81,9 +79,7 @@
     <ClInclude Include="Source\Pathfinding.h" />
     <ClInclude Include="Source\Flyer.h" />
     <ClInclude Include="Source\Checkpoint.h" />
-    <ClInclude Include="Source\Boss.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
+    <ClInclude Include="Source\Boss.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
