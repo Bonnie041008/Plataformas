@@ -16,65 +16,47 @@ Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("Boss");
 	//idle
-	idleAnim.PushBack({ 0, 3, 64, 64 });
-	idleAnim.PushBack({ 64, 0, 64, 64 });
-	idleAnim.PushBack({ 128, 0, 64, 64 });
-	idleAnim.PushBack({ 192, 0, 64, 64 });
-	idleAnim.PushBack({ 256, 0, 64, 64 });
-	idleAnim.PushBack({ 320, 0, 64, 64 });
-	idleAnim.PushBack({ 384, 0, 64, 64 });
-	idleAnim.PushBack({ 448, 0, 64, 64 });
+	idleAnim.PushBack({ 0, 0, 160, 160 });
+	idleAnim.PushBack({ 160, 0, 160, 160 });
+	idleAnim.PushBack({ 320, 0, 160, 160 });
+	idleAnim.PushBack({ 480, 0, 160, 160 });
+	
+	
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
-	//correr
-	rightAnim.PushBack({ 0,64,64,64 });
-	rightAnim.PushBack({ 64,64,64,64 });
-	rightAnim.PushBack({ 128,64,64,64 });
-	rightAnim.PushBack({ 192,64,64,64 });
-	rightAnim.PushBack({ 256,64,64,64 });
-	rightAnim.PushBack({ 320,64,64,64 });
-	rightAnim.PushBack({ 384,64,64,64 });
-	rightAnim.PushBack({ 448,64,64,64 });
-	rightAnim.PushBack({ 512,64,64,64 });
-	rightAnim.PushBack({ 576,64,64,64 });
-	rightAnim.PushBack({ 640,64,64,64 });
-	rightAnim.PushBack({ 704,64,64,64 });
-	rightAnim.PushBack({ 768,64,64,64 });
+	//ataque
+	attackAnim.PushBack({ 0,160,160,160 });
+	attackAnim.PushBack({ 160,160,160,160 });
+	attackAnim.PushBack({ 320,160,160,160 });
+	attackAnim.PushBack({ 480,160,160,160 });
+	attackAnim.PushBack({ 640,160,160,160 });
+	
+	
 
-	rightAnim.loop = true;
-	rightAnim.speed = 0.2f;
+	attackAnim.loop = false;
+	attackAnim.speed = 0.1f;
 
 	//dead
-	deadAnim.PushBack({ 0,128,64,64 });
-	deadAnim.PushBack({ 64,128,64,64 });
-	deadAnim.PushBack({ 128,128,64,64 });
-	deadAnim.PushBack({ 192,128,64,64 });
-	deadAnim.PushBack({ 256,128,64,64 });
-	deadAnim.PushBack({ 320,128,64,64 });
-	deadAnim.PushBack({ 384,128,64,64 });
-	deadAnim.PushBack({ 448,128,64,64 });
-	deadAnim.PushBack({ 512,128,64,64 });
-	deadAnim.PushBack({ 576,128,64,64 });
-	deadAnim.PushBack({ 640,128,64,64 });
-	deadAnim.PushBack({ 704,128,64,64 });
-	deadAnim.PushBack({ 768,128,64,64 });
-	deadAnim.PushBack({ 832,128,64,64 });
+	deadAnim.PushBack({ 0,480,160,160 });
+	deadAnim.PushBack({ 160,480,160,160 });
+	deadAnim.PushBack({ 320,480,160,160 });
+	deadAnim.PushBack({ 480,480,160,160 });
+	deadAnim.PushBack({ 640,480,160,160 });
+	
 	
 	deadAnim.loop = false;
 	deadAnim.speed = 0.2f;
 
-	//attack
-	attackAnim.PushBack({ 0,192,104,64 });
-	attackAnim.PushBack({ 104,192,104,64 });
-	attackAnim.PushBack({ 208,192,104,64 });
-	attackAnim.PushBack({ 312,192,104,64 });
-	attackAnim.PushBack({ 416,192,104,64 });
-	attackAnim.PushBack({ 520,192,104,64 });
-	attackAnim.PushBack({ 624,192,104,64 });
+	//correr
+	rightAnim.PushBack({ 0,320,160,160 });
+	rightAnim.PushBack({ 160,320,160,160 });
+	rightAnim.PushBack({ 320,320,160,160 });
+	rightAnim.PushBack({ 480,320,160,160 });
+	
 
-	attackAnim.loop = false;
-	attackAnim.speed = 0.2f;
+	rightAnim.loop = true;
+	rightAnim.speed = 0.2f;
 }
 
 Boss::~Boss() {
@@ -97,11 +79,11 @@ bool Boss::Awake() {
 bool Boss::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/SWMG_Boss_Spritesheet.png");
-	skellRip = app->tex->Load("Assets/Textures/skellRip.png");
+	texture = app->tex->Load("Assets/Textures/Boss_Spritesheet.png");
+	bossRip = app->tex->Load("Assets/Textures/bossRip.png");
 	pbody = app->physics->CreateCircle(position.x , position.y , 17, bodyType::DYNAMIC);
 	pbody->listener = this;
-	pbody->ctype = ColliderType::ENEMY;
+	pbody->ctype = ColliderType::BOSS;
 
 	
 	MuerteBoss = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Esqueloeto.wav");
@@ -212,8 +194,9 @@ bool Boss::Update(float dt)
 		}
 	}
 	else {
-		app->render->DrawTexture(skellRip, finalposition.x - 15, finalposition.y - 30, isFliped);
+		app->render->DrawTexture(bossRip, finalposition.x - 15, finalposition.y - 30, isFliped);
 	}
+	
 	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {

@@ -452,6 +452,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 
 			break;
+		case ColliderType::BOSS:
+			LOG("Collision BOSS");
+			if (godmode == false)
+			{
+				health = 0;
+			}
+			if (health == 0 && isalive) {
+				muriendo++;
+				currentAnimation = &deadAnim;
+				//SetPosition(400, 352);
+			}
+
+			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 			break;
