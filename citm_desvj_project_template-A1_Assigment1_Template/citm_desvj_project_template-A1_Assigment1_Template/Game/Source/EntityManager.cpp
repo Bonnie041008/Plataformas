@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "Checkpoint.h"
+#include "Boss.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -101,6 +102,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::CHECKPOINT:
 		entity = new Checkpoint();
 		break;
+	case EntityType::COIN:
+		entity = new Coin();
+		break;
 	case EntityType::BOSS:
 		entity = new Boss();
 		break;
@@ -137,7 +141,10 @@ bool EntityManager::Update(float dt)
 		pEntity = item->data;
 
 		if (pEntity->active == false) continue;
-		ret = item->data->Update(dt);
+		if (app->scene->player->pausa == false|| item->data == app->scene->player) {
+			ret = item->data->Update(dt);
+		}
+	
 	}
 
 	return ret;

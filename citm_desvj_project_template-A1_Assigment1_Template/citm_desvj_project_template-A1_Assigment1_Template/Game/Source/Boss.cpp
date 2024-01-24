@@ -84,7 +84,9 @@ bool Boss::Start() {
 	pbody = app->physics->CreateCircle(position.x , position.y , 17, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::BOSS;
-
+	b2Vec2 vel = b2Vec2(move_x, move_y);
+	move_x = 0;
+	move_y = -GRAVITY_Y;
 	
 	MuerteBoss = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Esqueloeto.wav");
 	AtaqueBoss = app->audio->LoadFx("Assets/Audio/Fx/Ataque-Esqueleto.wav");
@@ -125,8 +127,7 @@ bool Boss::Update(float dt)
 			currentAnimation->Update();
 	}*/
 
-
-
+	
 	if (health == 0 && isalive== true) {
 		
 		if(Muerte_Boss == true){
@@ -164,10 +165,10 @@ bool Boss::Update(float dt)
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 		
 		if (isAttacking == false) {
-			app->render->DrawTexture(texture, position.x - 15, position.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
+			app->render->DrawTexture(texture, position.x - 60, position.y - 85, isFliped, &currentAnimation->GetCurrentFrame());
 		}
 		else {
-			app->render->DrawTexture(texture, position.x - 40, position.y - 30, isFliped, &attackAnim.GetCurrentFrame());
+			app->render->DrawTexture(texture, position.x - 40, position.y - 85, isFliped, &attackAnim.GetCurrentFrame());
 		}
 		
 		currentAnimation->Update();
@@ -194,9 +195,19 @@ bool Boss::Update(float dt)
 		}
 	}
 	else {
-		app->render->DrawTexture(bossRip, finalposition.x - 15, finalposition.y - 30, isFliped);
+		app->render->DrawTexture(bossRip, finalposition.x - 60, finalposition.y - 85, isFliped);
 	}
-	
+	parryToggleTimer += dt;
+
+	// Check if 5 seconds have elapsed
+	if (parryToggleTimer >= 5.0f)
+	{
+		// Toggle ParryMode
+		parryMode = !parryMode;
+
+		// Reset the timer
+		parryToggleTimer = 0.0f;
+	}
 	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {
@@ -402,15 +413,26 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::FIREBALL:
 			LOG("Collision FIREBALL");
-			
-			health = 0;
-			
-			if (health == 0 && isalive) {
-				muriendo++;
-				
-				//currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
+			if (parryMode == true) {
+				isAttacking = true;
+				b2Vec2 vel = b2Vec2(move_x, move_y);
+				move_x = 0;
+				move_y = -GRAVITY_Y;
+				vel.x = 0;
+				physB->body->SetLinearVelocity(-physB->body->GetLinearVelocity());
+				physB->ctype = ColliderType::FIREENEMY;
 			}
+			else {
+				health = 0;
+
+				if (health == 0 && isalive) {
+					muriendo++;
+
+					//currentAnimation = &deadAnim;
+					//SetPosition(400, 352);
+				}
+			}
+			
 
 			break;
 		case ColliderType::UNKNOWN:

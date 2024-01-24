@@ -8,6 +8,7 @@
 #include "flyer.h"
 #include "Checkpoint.h"
 #include "Boss.h"
+#include"Coin.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -42,6 +43,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	bool LoadState(pugi::xml_node node);
 
 	void Drawline();
@@ -60,6 +63,11 @@ public:
 	Boss* boss;
 	SDL_Texture* mouseTileTex = nullptr;
 	Checkpoint* checkpoint;
+	Checkpoint* checkpoint2;
+	GuiControlButton* exitButton;
+	Coin* coin;
+
+	bool ext;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

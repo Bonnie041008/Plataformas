@@ -52,6 +52,8 @@ public:
 	float move_x = 0.0f;
 	float godspeed = 0.0f;
 
+	bool pausa = false;
+
 	
 	PhysBody* fireBall;
 	bool hasToDestroyBall = false;
@@ -68,7 +70,7 @@ public:
 	bool isjumping= false;
 	bool isAttacking = false;
 	int jumpcnt;
-	iPoint lastCheckpoint;
+	iPoint lastCheckpoint = { 183,635 };
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation fallAnim;

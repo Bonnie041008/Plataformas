@@ -42,9 +42,21 @@ bool Scene::Awake(pugi::xml_node& config)
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
+
+	//Checkpoints------------------------------------------------------------------------
 	if (config.child("checkpoint")) {
 		checkpoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
 		checkpoint->parameters = config.child("checkpoint");
+	}
+	if (config.child("checkpoint2")) {
+		checkpoint2 = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
+		checkpoint2->parameters = config.child("checkpoint2");
+	}
+
+	//Coins--------------------------------------------------------------------------------
+	if (config.child("coin")) {
+		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin->parameters = config.child("coin");
 	}
 	//Boss---------------------------------------------------------------------------
 	if (config.child("boss")) {
@@ -95,9 +107,11 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-
+	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 + 100, 120,20 };
+	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
+	exitButton->state = GuiControlState::DISABLED;
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
-
+	
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
 
@@ -116,7 +130,7 @@ bool Scene::Start()
 
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
-
+	return true;
 }
 
 // Called each loop iteration
@@ -191,12 +205,14 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
-	
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-	if (exitButton->exit == true) {
+	if (ext == true) {
 		ret = false;
 	}
+	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+	if (app->menu->exitButton->exit == true) {
+		ret = false;
+	}*/
 	return ret;
 }
 
@@ -418,5 +434,17 @@ bool Scene::SaveState(pugi::xml_node node) {
 	flyer3Node.append_attribute("estavivo").set_value(flyer3->isalive);
 
 
+	return true;
+}
+bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
+	if (control->id == 1) {
+		//app->audio->active = true;
+		
+		ext = true;
+		
+	}
+	/*if (control->id == 2) {
+		
+	}*/
 	return true;
 }

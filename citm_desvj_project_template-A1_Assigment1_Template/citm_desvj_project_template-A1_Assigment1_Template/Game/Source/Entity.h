@@ -16,7 +16,8 @@ enum class EntityType
 	ENEMY,
 	FLYER,
 	BOSS,
-	CHECKPOINT
+	CHECKPOINT,
+	COIN
 };
 
 class Entity

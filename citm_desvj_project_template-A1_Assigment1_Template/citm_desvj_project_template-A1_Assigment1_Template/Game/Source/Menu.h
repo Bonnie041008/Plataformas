@@ -47,6 +47,8 @@ public:
 	void Drawline();
 
 	bool SaveState(pugi::xml_node node);
+	bool OnGuiMouseClickEvent(GuiControl* control);
+	
 public:
 	Player* player;
 	Enemy* enemy;
@@ -61,6 +63,9 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	SDL_Texture* pantallaInicio;
 	Checkpoint* checkpoint;
+	GuiControlButton* startButton;
+	GuiControlButton* exitButton;
+	GuiControlButton* settingsButton;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
@@ -69,8 +74,7 @@ private:
 	
 	bool debugcamera= false;
 
-	GuiControlButton* startButton;
-	GuiControlButton* exitButton;
+
 	
 
 };
