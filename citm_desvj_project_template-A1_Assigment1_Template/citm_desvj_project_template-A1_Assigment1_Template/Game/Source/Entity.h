@@ -17,7 +17,8 @@ enum class EntityType
 	FLYER,
 	BOSS,
 	CHECKPOINT,
-	COIN
+	COIN,
+	TP
 };
 
 class Entity

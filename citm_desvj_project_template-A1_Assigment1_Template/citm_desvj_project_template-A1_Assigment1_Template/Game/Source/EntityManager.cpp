@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Checkpoint.h"
 #include "Boss.h"
+#include "TP.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -107,6 +108,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::BOSS:
 		entity = new Boss();
+		break;
+	case EntityType::TP:
+		entity = new TP();
 		break;
 	}
 

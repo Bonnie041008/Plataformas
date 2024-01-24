@@ -32,6 +32,7 @@
     <ClCompile Include="Source\Boss.cpp" />
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
+    <ClCompile Include="Source\TP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="Source\Boss.h" />
     <ClInclude Include="Source\Menu.h" />
     <ClInclude Include="Source\Coin.h" />
+    <ClInclude Include="Source\TP.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
