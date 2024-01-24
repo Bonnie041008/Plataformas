@@ -65,6 +65,7 @@ public:
 	SDL_Texture* pantallaInicio;
 	Checkpoint* checkpoint;
 	GuiControlButton* startButton;
+	GuiControlButton* continueButton;
 	GuiControlButton* exitButton;
 	GuiControlButton* settingsButton;
 	GuiControlSlider* musicSlider;

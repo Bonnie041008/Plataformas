@@ -64,12 +64,14 @@ bool Menu::Start()
 	SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
 	startButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPosStart, this);
 	
+	SDL_Rect btPosContinue = { windowW / 2 - 60, windowH / 2 - 0, 120,20 };
+	continueButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "CONTINUE", btPosContinue, this);
 
-	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 + 100, 120,20 };
+	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 + 200, 120,20 };
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "EXIT", btPosExit, this);
 	
 
-	SDL_Rect btPosSettings = { windowW / 2 - 60, windowH / 2 + 0, 120,20 };
+	SDL_Rect btPosSettings = { windowW / 2 - 60, windowH / 2 + 100, 120,20 };
 	settingsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings, this);
 
 	SDL_Rect btPosMusicBar = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
@@ -161,6 +163,7 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		startButton->state = GuiControlState::DISABLED;
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton->state = GuiControlState::DISABLED;
+		continueButton->state = GuiControlState::DISABLED;
 		
 		active = false;
 	}
@@ -177,6 +180,7 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		startButton->state = GuiControlState::DISABLED;
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton->state = GuiControlState::DISABLED;
+		continueButton->state = GuiControlState::DISABLED;
 	
 
 		
@@ -192,6 +196,7 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		startButton->state = GuiControlState::NORMAL;
 		exitButton->state = GuiControlState::NORMAL;
 		settingsButton->state = GuiControlState::NORMAL;
+		continueButton->state = GuiControlState::NORMAL;
 
 
 	}
@@ -212,6 +217,20 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		}
 	
 	
+
+	}
+	if (control->id == 9) {
+
+		app->entityManager->active = true;
+		app->map->active = true;
+		app->scene->active = true;
+		startButton->state = GuiControlState::DISABLED;
+		exitButton->state = GuiControlState::DISABLED;
+		settingsButton->state = GuiControlState::DISABLED;
+		continueButton->state = GuiControlState::DISABLED;
+		active = false;
+		app->LoadRequest();
+
 
 	}
 

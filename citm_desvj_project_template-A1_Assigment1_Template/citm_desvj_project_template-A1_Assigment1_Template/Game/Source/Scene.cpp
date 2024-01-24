@@ -538,9 +538,11 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->menu->startButton->state = GuiControlState::NORMAL;
 		app->menu->exitButton->state = GuiControlState::NORMAL;
 		app->menu->settingsButton->state = GuiControlState::NORMAL;
+		app->menu->continueButton->state = GuiControlState::NORMAL;
 		app->scene->resumeButton->state = GuiControlState::DISABLED;
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
+
 		
 		
 	}
