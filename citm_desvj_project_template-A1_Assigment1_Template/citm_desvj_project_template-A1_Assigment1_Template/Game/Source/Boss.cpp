@@ -278,7 +278,7 @@ bool Boss::Update(float dt)
 			}
 
 			for (uint i = 0; i < path->Count(); i++) {
-				if (isalive == true && health == 1) {
+				if (isalive == true && health != 0) {
 					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 					movX = (pos.x - this->position.x);
 
@@ -355,7 +355,7 @@ bool Boss::Update(float dt)
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 
 			for (uint i = 0; i < path->Count(); i++) {
-				if (isalive == true && health == 1) {
+				if (isalive == true && health != 0) {
 					iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 					//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
 					if (app->physics->debug == true)
@@ -484,7 +484,7 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
 				physB->ctype = ColliderType::FIREENEMY;
 			}
 			else {
-				health = 0;
+				health = health-1;
 
 				if (health == 0 && isalive) {
 					muriendo++;

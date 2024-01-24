@@ -58,7 +58,7 @@ bool Flyer::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &flyingAnim;
-	walkingRange = 500;
+	walkingRange = 450;
 	return true;
 }
 

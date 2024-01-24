@@ -42,7 +42,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	//Checkpoints------------------------------------------------------------------------
 	
-	for (pugi::xml_node CheckpointNode = config.child("checkpoint"); CheckpointNode; CheckpointNode = CheckpointNode.next_sibling("chekpoint"))
+	for (pugi::xml_node CheckpointNode = config.child("checkpoint"); CheckpointNode; CheckpointNode = CheckpointNode.next_sibling("checkpoint"))
 	{
 		Checkpoint* checkPoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
 		checkPoint->parameters = CheckpointNode;
@@ -109,9 +109,17 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 + 100, 120,20 };
+	SDL_Rect btPosResume = { windowW / 2 - 60 + 480, windowH / 2 + 250, 190,50 };
+	SDL_Rect btPosBackToTitle = { windowW / 2 - 60 + 380, windowH / 2 + 350, 410,60 };
+	SDL_Rect btPosExit = { windowW / 2 - 60+500, windowH / 2 + 450, 150,50 };
+	
+
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
 	exitButton->state = GuiControlState::DISABLED;
+	resumeButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "RESUME", btPosResume, this);
+	resumeButton->state = GuiControlState::DISABLED;
+	backToTitleButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "BACK TO TITLE", btPosBackToTitle, this);
+	backToTitleButton->state = GuiControlState::DISABLED;
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 	
 	//Get the size of the window
@@ -230,6 +238,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 	
 	player->position.x = node.child("player").attribute("lastCheckpointX").as_int();
 	player->position.y = node.child("player").attribute("lastCheckpointY").as_int();
+	player->lives = node.child("player").attribute("lives").as_int();
 	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
 	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
 	player->lastCheckpoint.x = newPos.x;
@@ -399,13 +408,25 @@ bool Scene::LoadState(pugi::xml_node node) {
 		}
 		i++;
 	}
+	//healthitem--------------------------------------------------------------------------------------------
+	i = 0;
+	for (pugi::xml_node healthNode = node.child("healthitem"); healthNode; healthNode = healthNode.next_sibling("healthitem"))
+	{
+		bool aux = listOfHealtthitems[i]->isPicked;
+
+		listOfHealtthitems[i]->isPicked = healthNode.attribute("isPicked").as_bool();
+		if (!aux && listOfHealtthitems[i]->isPicked) {
+			app->physics->DestroyObject(listOfHealtthitems[i]->pbody);
+		}
+		i++;
+	}
 	return true;
 	
 }
 
 
 bool Scene::SaveState(pugi::xml_node node) {
-	pugi::xml_node playerNode = node.append_child("player");
+
 	pugi::xml_node enemyNode = node.append_child("enemy");
 	pugi::xml_node enemy2Node = node.append_child("enemy2");
 	pugi::xml_node enemy3Node = node.append_child("enemy3");
@@ -414,8 +435,12 @@ bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node flyerNode = node.append_child("flyer");
 	pugi::xml_node flyer2Node = node.append_child("flyer2");
 	pugi::xml_node flyer3Node = node.append_child("flyer3");
+	pugi::xml_node playerNode = node.append_child("player");
+
+	//player-----------------------------------------------------------------
 	playerNode.append_attribute("x").set_value(player->position.x);
 	playerNode.append_attribute("y").set_value(player->position.y);
+	playerNode.append_attribute("lives").set_value(player->lives);
 	playerNode.append_attribute("lastCheckpointX").set_value(player->lastCheckpoint.x);
 	playerNode.append_attribute("lastCheckpointY").set_value(player->lastCheckpoint.y);
 
@@ -475,6 +500,14 @@ bool Scene::SaveState(pugi::xml_node node) {
 		CoinNode.append_attribute("y").set_value(listOfCoins[i]->position.y);
 		CoinNode.append_attribute("isPicked").set_value(listOfCoins[i]->isPicked);
 	}
+	//healthitem--------------------------------------------------------------------------------------------
+
+	for (int i = 0; i < listOfHealtthitems.Count(); i++) {
+		pugi::xml_node HealthNode = node.append_child("healtitem");
+		HealthNode.append_attribute("x").set_value(listOfHealtthitems[i]->position.x);
+		HealthNode.append_attribute("y").set_value(listOfHealtthitems[i]->position.y);
+		HealthNode.append_attribute("isPicked").set_value(listOfHealtthitems[i]->isPicked);
+	}
 	return true;
 }
 bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
@@ -484,8 +517,22 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		ext = true;
 		
 	}
-	/*if (control->id == 2) {
+	//resume 2
+	if (control->id == 2) {
+		app->scene->player->pausa = false;
+		app->scene->resumeButton->state = GuiControlState::DISABLED;
+		app->scene->exitButton->state = GuiControlState::DISABLED;
+		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
+	}
+	//back to title screen 3
+	if (control->id == 3) {
 		
-	}*/
+		app->scene->player->pausa = false;
+		app->scene->resumeButton->state = GuiControlState::DISABLED;
+		app->scene->exitButton->state = GuiControlState::DISABLED;
+		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
+		
+
+	}
 	return true;
 }

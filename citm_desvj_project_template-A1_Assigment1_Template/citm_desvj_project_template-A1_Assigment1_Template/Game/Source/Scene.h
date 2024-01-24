@@ -9,6 +9,7 @@
 #include "Checkpoint.h"
 #include "Boss.h"
 #include"Coin.h"
+#include "HealthItem.h"
 #include "TP.h"
 
 #include "GuiControl.h"
@@ -67,10 +68,13 @@ public:
 	Checkpoint* checkpoint;
 	Checkpoint* checkpoint2;
 	GuiControlButton* exitButton;
+	GuiControlButton* resumeButton;
+	GuiControlButton* backToTitleButton;
 	Coin* coin;
 	TP* tp;
 	List<Checkpoint*> listOfCheckpoints;
 	List<Coin*> listOfCoins;
+	List<HealthItem*> listOfHealtthitems;
 	bool ext;
 private:
 	SDL_Texture* img;

@@ -170,11 +170,15 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		if (pausa == false) {
 			pausa = true;
+			app->scene->resumeButton->state = GuiControlState::NORMAL;
 			app->scene->exitButton->state = GuiControlState::NORMAL;
+			app->scene->backToTitleButton->state = GuiControlState::NORMAL;
 		}
 		else {
 			pausa = false;
+			app->scene->resumeButton->state = GuiControlState::DISABLED;
 			app->scene->exitButton->state = GuiControlState::DISABLED;
+			app->scene->backToTitleButton->state = GuiControlState::DISABLED;
 		}
 	}
 	if (health != 0 && pausa == false) {
@@ -333,7 +337,7 @@ bool Player::Update(float dt)
 	
 	//muerte
 	if (health == 0 && isalive && pausa == false) {
-		
+		lives = lives - 1;
 		if(Muerte_Mago == true){
 			app->audio->PlayFx(MuerteMago);	
 		}
@@ -455,6 +459,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::CHECKPOINT:
 			LOG("Collision CHECKPOINT");
+			physB->body->SetActive(false);
+			break;
+		case ColliderType::HEALTHITEM:
+			LOG("Collision HEALTHIEM");
 			physB->body->SetActive(false);
 			break;
 

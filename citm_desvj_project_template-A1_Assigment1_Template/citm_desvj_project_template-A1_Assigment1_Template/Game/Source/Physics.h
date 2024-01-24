@@ -34,6 +34,7 @@ enum class ColliderType {
 	FIREENEMY,
 	BOSS,
 	CHECKPOINT,
+	HEALTHITEM,
 	TP,
 	COIN
 

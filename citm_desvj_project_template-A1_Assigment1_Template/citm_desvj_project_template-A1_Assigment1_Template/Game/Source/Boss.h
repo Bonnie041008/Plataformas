@@ -45,7 +45,7 @@ public:
 	int cntfire;
 	float initialX;
 	float initialY;
-	int health = 1;
+	int health = 5;
 	bool isalive = true;
 	bool isFliped;
 	int muriendo = 0;

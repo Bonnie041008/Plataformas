@@ -43,6 +43,7 @@ public:
 	float initialX;
 	float initialY;
 	int health = 1;
+	int lives = 5;
 	bool isalive = true;
 	bool isFliped;
 	int muriendo = 0;

@@ -7,6 +7,8 @@
 #include "Scene.h"
 #include "Checkpoint.h"
 #include "Boss.h"
+#include "Coin.h"
+#include "HealthItem.h"
 #include "TP.h"
 
 #include "Defs.h"
@@ -105,6 +107,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::COIN:
 		entity = new Coin();
+		break;
+	case EntityType::HEALTHITEM:
+		entity = new HealthItem();
 		break;
 	case EntityType::BOSS:
 		entity = new Boss();
