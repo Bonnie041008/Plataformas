@@ -72,10 +72,24 @@ bool Menu::Start()
 	SDL_Rect btPosSettings = { windowW / 2 - 60, windowH / 2 + 0, 120,20 };
 	settingsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings, this);
 
-	SDL_Rect btPosMusicBar = { windowW / 2 - 60, windowH / 2 + 0, 120,20 };
+	SDL_Rect btPosMusicBar = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
 	musicSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 5, "MUSIC", btPosMusicBar, this);
 	musicSlider->function = FunctionGUI::MUSIC;
 	musicSlider->state = GuiControlState::DISABLED;
+
+
+	SDL_Rect btPosFxBar = { windowW / 2 - 60, windowH / 2 , 120,20 };
+	FxSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Fx", btPosFxBar, this);
+	FxSlider->function = FunctionGUI::MUSIC;
+	FxSlider->state = GuiControlState::DISABLED;
+
+	SDL_Rect btPosBack = { windowW / 2 - 60, windowH / 2 +200 , 120,20 };
+	GoBackButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "GO BACK", btPosBack, this);
+	GoBackButton->state = GuiControlState::DISABLED;
+
+	SDL_Rect btPosFull = { windowW / 2 - 60, windowH / 2 +50 , 120,20 };
+	FullscreenButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
+	FullscreenButton->state = GuiControlState::DISABLED;
 
 
 
@@ -153,12 +167,28 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 3) {
 		
 		musicSlider->state = GuiControlState::NORMAL;
+		FxSlider->state = GuiControlState::NORMAL;
+		GoBackButton->state = GuiControlState::NORMAL;
+		FullscreenButton->state = GuiControlState::NORMAL;
+
 		startButton->state = GuiControlState::DISABLED;
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton->state = GuiControlState::DISABLED;
 	
 
-		active = false;
+		
+
+	}
+	if (control->id == 7) {
+
+		musicSlider->state = GuiControlState::DISABLED;
+		FxSlider->state = GuiControlState::DISABLED;
+		GoBackButton->state = GuiControlState::DISABLED;
+		FullscreenButton->state = GuiControlState::DISABLED;
+		startButton->state = GuiControlState::NORMAL;
+		exitButton->state = GuiControlState::NORMAL;
+		settingsButton->state = GuiControlState::NORMAL;
+
 
 	}
 

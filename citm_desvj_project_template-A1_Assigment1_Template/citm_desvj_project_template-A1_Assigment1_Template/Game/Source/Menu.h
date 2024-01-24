@@ -68,6 +68,9 @@ public:
 	GuiControlButton* exitButton;
 	GuiControlButton* settingsButton;
 	GuiControlSlider* musicSlider;
+	GuiControlSlider* FxSlider;
+	GuiControlButton* GoBackButton;
+	GuiControlButton* FullscreenButton;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

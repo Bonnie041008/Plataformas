@@ -3,6 +3,7 @@
 #include "Textures.h"
 
 #include "GuiControlButton.h"
+#include "GuiControlSlider.h"
 #include "Audio.h"
 
 GuiManager::GuiManager() :Module()
@@ -28,10 +29,21 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::BUTTON:
 		guiControl = new GuiControlButton(id, bounds, text);
 		break;
+	
+	case GuiControlType::SLIDER:
+		guiControl = new GuiControlSlider(id, bounds, text);
+		break;
+	
+	case GuiControlType::CHECKBOX:
+		guiControl = new GuiControlButton(id, bounds, text);
+		break;
 	}
+
+
 
 	//Set the observer
 	guiControl->observer = observer;
+
 
 	// Created GuiControls are add it to the list of controls
 	guiControlsList.Add(guiControl);
