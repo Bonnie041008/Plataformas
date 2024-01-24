@@ -9,6 +9,7 @@
 #include "Physics.h"
 #include "ModuleFadeToBlack.h"
 #include "Menu.h"
+#include "Settings.h"
 
 #include "GuiManager.h"
 #include "Defs.h"
@@ -39,6 +40,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	guiManager = new GuiManager();
 	moduleFadetoBlack = new ModuleFadeToBlack();
 	menu = new Menu();
+	settings = new Settings();
 
 
 	// Ordered for awake / Start / Update
@@ -50,6 +52,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(map);
 	AddModule(menu);
+	AddModule(settings);
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(entityManager);

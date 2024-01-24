@@ -13,19 +13,20 @@
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include "Settings.h"
+#include "GuiControlSlider.h"
 
 
-Menu::Menu() : Module()
+Settings::Settings() : Module()
 {
-	name.Create("menu");
+	name.Create("settings");
 }
 
 // Destructor
-Menu::~Menu()
+Settings::~Settings()
 {}
 
 // Called before render is available
-bool Menu::Awake(pugi::xml_node& config)
+bool Settings::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
@@ -37,12 +38,9 @@ bool Menu::Awake(pugi::xml_node& config)
 }
 
 // Called before the first frame
-bool Menu::Start()
+bool Settings::Start()
 {
-	app->entityManager->active = false;
-	app->map->active = false;
-	app->scene->active = false;
-	app->settings->active = false;
+	
 
 
 
@@ -61,7 +59,7 @@ bool Menu::Start()
 	pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaDeInicio.png");	
 
 
-	SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
+	/*SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
 	startButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPosStart, this);
 	
 
@@ -70,26 +68,25 @@ bool Menu::Start()
 	
 
 	SDL_Rect btPosSettings = { windowW / 2 - 60, windowH / 2 + 0, 120,20 };
-	settingsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings, this);
+	settingsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings, this);*/
 
 	SDL_Rect btPosMusicBar = { windowW / 2 - 60, windowH / 2 + 0, 120,20 };
-	musicSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 5, "MUSIC", btPosMusicBar, this);
+	musicSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MUSIC", btPosMusicBar, this);
 	musicSlider->function = FunctionGUI::MUSIC;
 	musicSlider->state = GuiControlState::DISABLED;
-
 
 
 	return true;
 }
 
 // Called each loop iteration
-bool Menu::PreUpdate()
+bool Settings::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Menu::Update(float dt)
+bool Settings::Update(float dt)
 {
 	app->render->DrawTexture(pantallaInicio, 0, 0, false);
 	
@@ -99,7 +96,7 @@ bool Menu::Update(float dt)
 }
 
 // Called each loop iteration
-bool Menu::PostUpdate()
+bool Settings::PostUpdate()
 {
 	bool ret = true;
 	
@@ -113,13 +110,13 @@ bool Menu::PostUpdate()
 
 
 // Called before quitting
-bool Menu::CleanUp()
+bool Settings::CleanUp()
 {
 	LOG("Freeing scene");
 
 	return true;
 }
-bool Menu::LoadState(pugi::xml_node node) {
+bool Settings::LoadState(pugi::xml_node node) {
 	
 	
 
@@ -128,14 +125,14 @@ bool Menu::LoadState(pugi::xml_node node) {
 }
 
 
-bool Menu::SaveState(pugi::xml_node node) {
+bool Settings::SaveState(pugi::xml_node node) {
 	
 
 
 	return true;
 }
 
-bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
+bool  Settings:: OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 1) {
 		//app->audio->active = true;
 		app->entityManager->active = true;
@@ -150,17 +147,5 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 2) {
 		exitButton->function = FunctionGUI::EXIT;
 	}
-	if (control->id == 3) {
-		
-		musicSlider->state = GuiControlState::NORMAL;
-		startButton->state = GuiControlState::DISABLED;
-		exitButton->state = GuiControlState::DISABLED;
-		settingsButton->state = GuiControlState::DISABLED;
-	
-
-		active = false;
-
-	}
-
 	return true;
 }

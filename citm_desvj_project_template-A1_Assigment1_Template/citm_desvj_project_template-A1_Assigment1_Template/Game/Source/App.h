@@ -23,6 +23,7 @@ class Physics;
 class GuiManager;
 class ModuleFadeToBlack;
 class Menu;
+class Settings;
 
 class App
 {
@@ -95,6 +96,7 @@ public:
 	GuiManager* guiManager;
 	ModuleFadeToBlack* moduleFadetoBlack;
 	Menu* menu;
+	Settings* settings;
 
 
 private:

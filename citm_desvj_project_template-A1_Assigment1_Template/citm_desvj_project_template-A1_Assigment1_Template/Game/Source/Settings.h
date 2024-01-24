@@ -1,29 +1,28 @@
-#ifndef __MENU_H__
-#define __MENU_H__
+#ifndef __SETTINGS_H__
+#define __SETTINGS_H__
 
 #include "Module.h"
-#include "Player.h"
-#include "Item.h"
-#include "Enemy.h"
-#include "flyer.h"
-#include "Checkpoint.h"
-#include "Boss.h"
+//#include "Player.h"
+//#include "Item.h"
+//#include "Enemy.h"
+//#include "flyer.h"
+//#include "Checkpoint.h"
+//#include "Boss.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
 #include "GuiManager.h"
-#include "GuiControlSlider.h"
 
 struct SDL_Texture;
 
-class Menu : public Module
+class Settings : public Module
 {
 public:
 
-	Menu();
+	Settings();
 
 	// Destructor
-	virtual ~Menu();
+	virtual ~Settings();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);

@@ -33,6 +33,8 @@
     <ClCompile Include="Source\Menu.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\TP.cpp" />
+    <ClCompile Include="Source\Settings.cpp" />
+    <ClCompile Include="Source\GuiControlSlider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -93,6 +95,8 @@
     <ClInclude Include="Source\Menu.h" />
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\TP.h" />
+    <ClInclude Include="Source\Settings.h" />
+    <ClInclude Include="Source\GuiControlSlider.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
