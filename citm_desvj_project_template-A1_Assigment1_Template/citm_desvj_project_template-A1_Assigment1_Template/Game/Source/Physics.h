@@ -31,6 +31,7 @@ enum class ColliderType {
 	UNKNOWN,
 	FIREBALL,
 	ENEMY,
+	FIREENEMY,
 	BOSS,
 	CHECKPOINT,
 	COIN

@@ -171,54 +171,88 @@ bool Player::Update(float dt)
 			app->scene->exitButton->state = GuiControlState::DISABLED;
 		}
 	}
-	
-	if ((app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || cntfire > 0 ) && pausa == false) {
-		
-		
-		
-		
-		isAttacking = true;
-		if (isAttacking == true && Ataque_Mago == true) {
-			app->audio->PlayFx(AtaqueMago);
+	if (health != 0 && pausa == false) {
+		if ((app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || cntfire > 0) && pausa == false) {
 
-		}
-		Ataque_Mago = false;
-		currentAnimation = &attackAnim;
-		if (cntfire == 0) {
-			b2Vec2 fireBallvel = b2Vec2(10, 0);
 
-			if (isFliped) {
-				fireBallvel = b2Vec2(-10, 0);
-				fireBall = app->physics->CreateCircle(position.x - 30, position.y + 15, 15, bodyType::DYNAMIC);
-			}
-			else {
-				fireBall = app->physics->CreateCircle(position.x +70,position.y +15, 15, bodyType::DYNAMIC);
+
+
+			isAttacking = true;
+			if (isAttacking == true && Ataque_Mago == true) {
+				app->audio->PlayFx(AtaqueMago);
 
 			}
-			fireBall->listener = this;
-			fireBall->ctype = ColliderType::FIREBALL;
-			fireBall->body->SetLinearVelocity(fireBallvel);
-			listOfFireballs.Add(fireBall);
-		}
-		
-		cntfire++;
-		attackAnim.Update();
-		if (cntfire > 18 && isAttacking == true) {
-			
-			
-		
-			attackAnim.Reset();
-			
+			Ataque_Mago = false;
+			currentAnimation = &attackAnim;
+			if (cntfire == 0) {
+				b2Vec2 fireBallvel = b2Vec2(10, 0);
 
-			
-			isAttacking = false;
-			Ataque_Mago = true;
-			//currentAnimation = &idleAnim;
-			cntfire = 0;
-		}
+				if (isFliped) {
+					fireBallvel = b2Vec2(-10, 0);
+					fireBall = app->physics->CreateCircle(position.x - 30, position.y + 15, 15, bodyType::DYNAMIC);
+				}
+				else {
+					fireBall = app->physics->CreateCircle(position.x + 70, position.y + 15, 15, bodyType::DYNAMIC);
 
+				}
+				fireBall->listener = this;
+				fireBall->ctype = ColliderType::FIREBALL;
+				fireBall->body->SetLinearVelocity(fireBallvel);
+				listOfFireballs.Add(fireBall);
+			}
+
+			cntfire++;
+			attackAnim.Update();
+			if (cntfire > 18 && isAttacking == true) {
+
+
+
+				attackAnim.Reset();
+
+
+
+				isAttacking = false;
+				Ataque_Mago = true;
+				//currentAnimation = &idleAnim;
+				cntfire = 0;
+			}
+
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false && pausa == false) {
+			// Cambia la velocidad vertical para simular un salto
+			Salto_Mago = true;
+			if (isjumping == false && Salto_Mago == true) {
+				app->audio->PlayFx(SaltoMago);
+
+			}
+			Salto_Mago = false;
+
+			isjumping = true;
+			jumpcnt = 0;
+
+
+		}
+		if (isjumping) {
+			currentAnimation = &jumpAnim;
+
+
+			move_y = GRAVITY_Y + jumpcnt - dt + 5;
+			currentAnimation = &jumpAnim;
+
+			if (health == 0 && currentAnimation == &jumpAnim) {
+				currentAnimation = &deadAnim;
+			}
+
+			jumpcnt++;
+
+		}
+		else {
+			jumpAnim.Reset();
+			jumpcnt = 0;
+		}
+	}
 	
-	} 
 	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pausa==false) {
 		move_x = -speed*dt;
@@ -335,67 +369,7 @@ bool Player::Update(float dt)
 	}
 
 	// Añadir la funcionalidad de saltar
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false && pausa == false) {
-		// Cambia la velocidad vertical para simular un salto
-		Salto_Mago = true;
-		if (isjumping == false && Salto_Mago == true) {
-			app->audio->PlayFx(SaltoMago);
-
-		}
-		Salto_Mago = false;
-		
-		isjumping = true;
-		jumpcnt = 0;
-		
-		
-	}
-	if (isjumping) {
-		currentAnimation = &jumpAnim;
-		
-		
-		
-		/*if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
-			vel = b2Vec2(0 * dt, -GRAVITY_Y);
-		}
-		else {
-			vel = b2Vec2(0 * dt, GRAVITY_Y + jumpcnt - dt+5);
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			
-			if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
-				vel = b2Vec2(-speed * dt, -GRAVITY_Y);
-			}
-			else {
-				vel = b2Vec2(-speed * dt, GRAVITY_Y + jumpcnt - dt+5);
-			}
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt);
-
-			if (GRAVITY_Y + jumpcnt - dt >= -GRAVITY_Y) {
-				vel = b2Vec2(speed * dt, -GRAVITY_Y);
-			}
-			else {
-				vel = b2Vec2(speed * dt, GRAVITY_Y + jumpcnt - dt+5);
-			}
-		}*/
-
-		move_y = GRAVITY_Y + jumpcnt - dt + 5;
-		currentAnimation = &jumpAnim;
-
-		if(health == 0 && currentAnimation == &jumpAnim){
-			currentAnimation = &deadAnim;
-		}
-		
-		jumpcnt++;
-		
-	}
-	else {
-		jumpAnim.Reset();
-		jumpcnt = 0;
-	}
+	
 	
 	if (pausa == true) {
 		move_y = 0.0f;
@@ -496,6 +470,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 			lastCheckpoint.x = METERS_TO_PIXELS(physB->body->GetTransform().p.x);
 			lastCheckpoint.y = METERS_TO_PIXELS(physB->body->GetTransform().p.y);
+			break;
+		case ColliderType::FIREENEMY:
+			LOG("Collision FIREENEMY");
+			if (godmode == false)
+			{
+				health = 0;
+			}
+			if (health == 0 && isalive) {
+				muriendo++;
+				currentAnimation = &deadAnim;
+				//SetPosition(400, 352);
+			}
+			break;
 		}
 	}
 	else if(physA->ctype == ColliderType::FIREBALL){
@@ -511,11 +498,18 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::BOSS:
 			LOG("Collision BOSS");
-			fireBalltoDestroy = listOfFireballs.Find(physA);
+			if (app->scene->boss->parryMode == true) {
+
+			}
+			else {
+				fireBalltoDestroy = listOfFireballs.Find(physA);
+			}
+			
 			break;
 		case ColliderType::FIREBALL:
 			LOG("Collision FIREBALL");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
+			fireBalltoDestroy = listOfFireballs.Find(physB);
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
@@ -535,7 +529,43 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision UNKNOWN");
 
 			break;
+		case ColliderType::FIREENEMY:
+			LOG("Collision FIREENEMY");
+			fireBalltoDestroy = listOfFireballs.Find(physA);
+			fireBalltoDestroy = listOfFireballs.Find(physB);
+			break;
 		}
+	}
+	else if (physA->ctype == ColliderType::FIREENEMY) {
+	switch (physB->ctype)
+	{
+	
+	case ColliderType::PLAYER:
+		LOG("Collision PLAYER");
+		//physA->body->DestroyFixture(physA);
+		app->physics->DestroyObject(physA);
+		break;
+	
+	case ColliderType::FIREBALL:
+		LOG("Collision FIREBALL");
+		fireBalltoDestroy = listOfFireballs.Find(physA);
+		fireBalltoDestroy = listOfFireballs.Find(physB);
+		break;
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		fireBalltoDestroy = listOfFireballs.Find(physA);
+		break;
+	case ColliderType::CHECKPOINT:
+		LOG("Collision CHECKPOINT");
+		fireBalltoDestroy = listOfFireballs.Find(physA);
+		physB->body->SetActive(false);
+		break;
+	
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+
+		break;
+	}
 	}
 	
 	

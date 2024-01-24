@@ -31,6 +31,7 @@ public:
 
 public:
 	PhysBody* pbody;
+	
 	float speed = 0.3f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
@@ -40,6 +41,8 @@ public:
 	SDL_Texture* textureRun = NULL;
 	int cntAnim = 0;
 	bool isAttacking = false;
+	bool parryMode = true;
+	int cntfire;
 	float initialX;
 	float initialY;
 	int health = 1;
@@ -48,6 +51,7 @@ public:
 	int muriendo = 0;
 	int walkingRange = 0;
 
+	float parryToggleTimer = 0.0f;
 	bool godmode;
 	float move_y = -10.0f;
 	float move_x = 0.0f;
