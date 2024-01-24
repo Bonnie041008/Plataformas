@@ -8,12 +8,12 @@
 	<menu />
 	<audio />
 	<scene>
-		<player x="52" y="635" lastCheckpointX="183" lastCheckpointY="635" />
+		<player x="7495" y="635" lastCheckpointX="183" lastCheckpointY="635" />
 		<enemy x="1104" y="638" estavivo="true" />
-		<enemy2 x="1686" y="686" estavivo="true" />
+		<enemy2 x="1737" y="686" estavivo="true" />
 		<enemy3 x="3408" y="638" estavivo="true" />
-		<enemy4 x="4943" y="638" estavivo="true" />
-		<enemy5 x="6000" y="5052" estavivo="true" />
+		<enemy4 x="4945" y="638" estavivo="true" />
+		<enemy5 x="5948" y="10852" estavivo="true" />
 		<flyer x="576" y="384" estavivo="true" />
 		<flyer2 x="2496" y="239" estavivo="true" />
 		<flyer3 x="5568" y="239" estavivo="true" />
@@ -24,6 +24,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-6983" y="0" />
 	</renderer>
 </game_state>

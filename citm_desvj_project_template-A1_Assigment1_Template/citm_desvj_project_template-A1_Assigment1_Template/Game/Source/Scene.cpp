@@ -55,6 +55,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		coin->parameters = CoinNode;
 		listOfCoins.Add(coin);
 	}
+	//TP---------------------------------------------------------------------------
+	if (config.child("tp")) {
+		tp = (TP*)app->entityManager->CreateEntity(EntityType::TP);
+		tp->parameters = config.child("tp");
+	}
 	//Boss---------------------------------------------------------------------------
 	if (config.child("boss")) {
 		boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);

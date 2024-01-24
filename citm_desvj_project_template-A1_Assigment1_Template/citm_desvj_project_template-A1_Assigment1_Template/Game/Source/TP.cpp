@@ -18,8 +18,8 @@ TP::~TP() {}
 
 bool TP::Awake() {
 
-	position.x = 186;
-	position.y = 635;
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
 
 	return true;
 }
@@ -28,7 +28,7 @@ bool TP::Start() {
 
 	//initilize textures
 	
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::STATIC);
+	pbody = app->physics->CreateCircle(position.x + 16, position.y - 16, 16, bodyType::STATIC);
 	pbody->ctype = ColliderType::TP;
 
 	return true;

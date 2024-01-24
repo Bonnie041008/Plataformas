@@ -9,6 +9,7 @@
 #include "Checkpoint.h"
 #include "Boss.h"
 #include"Coin.h"
+#include "TP.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -67,6 +68,7 @@ public:
 	Checkpoint* checkpoint2;
 	GuiControlButton* exitButton;
 	Coin* coin;
+	TP* tp;
 	List<Checkpoint*> listOfCheckpoints;
 	List<Coin*> listOfCoins;
 	bool ext;
