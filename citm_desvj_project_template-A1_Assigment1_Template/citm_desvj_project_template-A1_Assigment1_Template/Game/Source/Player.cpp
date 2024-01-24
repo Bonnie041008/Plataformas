@@ -460,11 +460,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		case ColliderType::TP:
 			LOG("Collision TP");
-			//SetPosition(8305, 635);
-			position.x = 8305;
-			position.y = 635;
-			b2Vec2 newPos(8305, 635);
-			pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+			physB->body->SetActive(false);
 			break;
 		
 			
@@ -504,6 +500,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			}
 			
 			break;
+
+		case ColliderType::TP:
+			LOG("Collision TP");
+			physB->body->SetActive(false);
+			break;
+
 		case ColliderType::FIREBALL:
 			LOG("Collision FIREBALL");
 			fireBalltoDestroy = listOfFireballs.Find(physA);

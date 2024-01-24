@@ -40,6 +40,20 @@ bool TP::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
+	if (app->scene->player->position.x > METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 40 &&
+		app->scene->player->position.x<METERS_TO_PIXELS(pbody->body->GetTransform().p.x) + 40 &&
+		app->scene->player->position.y>METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 40 &&
+		app->scene->player->position.y < METERS_TO_PIXELS(pbody->body->GetTransform().p.y) + 40)
+	{
+	
+		app->scene->player->position.x = 8305;
+		app->scene->player->position.y = 635;
+		b2Vec2 newPos(PIXEL_TO_METERS(app->scene->player->position.x), PIXEL_TO_METERS(app->scene->player->position.y));
+		app->scene->player->pbody->body->SetTransform(newPos, app->scene->player->pbody->body->GetAngle());
+	
+	}
+	
+
 	return true;
 }
 
