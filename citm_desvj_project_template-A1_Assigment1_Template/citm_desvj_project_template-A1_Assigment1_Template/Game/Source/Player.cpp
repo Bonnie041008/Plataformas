@@ -152,6 +152,12 @@ bool Player::Update(float dt)
 		fireBalltoDestroy = -1;
 		
 	}
+	if (enemyfireBalltoDestroy != -1 && pausa == false) {
+		app->physics->DestroyObject(listOfFireballs[enemyfireBalltoDestroy]);
+		listOfFireballs.Del(listOfFireballs.At(enemyfireBalltoDestroy));
+		enemyfireBalltoDestroy = -1;
+
+	}
 	b2Vec2 vel = b2Vec2(move_x, move_y);
 	move_x = 0;
 	move_y = -GRAVITY_Y;
@@ -392,7 +398,7 @@ bool Player::Update(float dt)
 		currentAnimation->Update();
 	}
 	
-
+	currentposition = position;
 	return true;
 }
 
@@ -413,8 +419,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::COIN:
 			LOG("Collision COIN");
-			//physB->body->SetActive(false);
-			app->physics->DestroyObject(physB);
+			physB->body->SetActive(false);
+			
 			
 			break;
 		case ColliderType::PLATFORM:
@@ -468,8 +474,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision CHECKPOINT");
 			physB->body->SetActive(false);
 
-			lastCheckpoint.x = METERS_TO_PIXELS(physB->body->GetTransform().p.x);
-			lastCheckpoint.y = METERS_TO_PIXELS(physB->body->GetTransform().p.y);
+			
 			break;
 		case ColliderType::FIREENEMY:
 			LOG("Collision FIREENEMY");
@@ -509,7 +514,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::FIREBALL:
 			LOG("Collision FIREBALL");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
-			fireBalltoDestroy = listOfFireballs.Find(physB);
+			enemyfireBalltoDestroy = listOfFireballs.Find(physB);
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
@@ -532,8 +537,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::FIREENEMY:
 			LOG("Collision FIREENEMY");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
-			fireBalltoDestroy = listOfFireballs.Find(physB);
-			fireBalltoDestroy = listOfFireballs.Find(fireBall);
+			enemyfireBalltoDestroy = listOfFireballs.Find(physB);
+			//fireBalltoDestroy = listOfFireballs.Find(fireBall);
 			break;
 		}
 	}

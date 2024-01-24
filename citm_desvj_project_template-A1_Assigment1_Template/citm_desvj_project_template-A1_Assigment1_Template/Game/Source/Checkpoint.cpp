@@ -67,16 +67,23 @@ bool Checkpoint::Update(float dt)
 	app->render->DrawTexture(texture, position.x-32, position.y-70, false, &currentAnimation->GetCurrentFrame());
 	currentAnimation->Update();
 
-	if (app->scene->player->lastCheckpoint.x > METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 40 &&
-		app->scene->player->lastCheckpoint.x<METERS_TO_PIXELS(pbody->body->GetTransform().p.x) + 40 &&
-		app->scene->player->lastCheckpoint.y>METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 40 &&
-		app->scene->player->lastCheckpoint.y < METERS_TO_PIXELS(pbody->body->GetTransform().p.y) + 40
+	if (app->scene->player->position.x > METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 40 &&
+		app->scene->player->position.x<METERS_TO_PIXELS(pbody->body->GetTransform().p.x) + 40 &&
+		app->scene->player->position.y>METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 40 &&
+		app->scene->player->position.y < METERS_TO_PIXELS(pbody->body->GetTransform().p.y) + 40
 		&& !isPicked)
 	{
+		//efecto de sonido del portal
+		
+		isPicked = true;
 		currentAnimation = &actived;
+		app->scene->player->lastCheckpoint.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x);
+		app->scene->player->lastCheckpoint.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y);
 		actived.Update();
 	}
-
+	if (isPicked) {
+		currentAnimation = &actived;
+	}
 
 
 	return true;

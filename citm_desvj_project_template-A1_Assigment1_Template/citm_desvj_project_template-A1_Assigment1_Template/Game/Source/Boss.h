@@ -71,6 +71,11 @@ public:
 	Animation rightAnim;
 	Animation deadAnim;
 	Animation attackAnim;
+	Animation idleAnim2;
+
+	Animation rightAnim2;
+	Animation deadAnim2;
+	Animation attackAnim2;
 	Animation* currentAnimation = nullptr;
 
 	float movX;

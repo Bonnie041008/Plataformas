@@ -37,6 +37,7 @@ public:
 	SDL_Texture* fireballtexture = NULL;
 	SDL_Texture* currentTexture;
 	int fireBalltoDestroy = -1;
+	int enemyfireBalltoDestroy = -1;
 	SDL_Texture* textureRun = NULL;
 
 	float initialX;
@@ -71,6 +72,7 @@ public:
 	bool isAttacking = false;
 	int jumpcnt;
 	iPoint lastCheckpoint = { 183,635 };
+	iPoint currentposition;
 	Animation idleAnim;
 	Animation jumpAnim;
 	Animation fallAnim;

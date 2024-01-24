@@ -25,6 +25,17 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
+
+	//idle parry
+	idleAnim2.PushBack({ 0, 640, 160, 160 });
+	idleAnim2.PushBack({ 160, 640, 160, 160 });
+	idleAnim2.PushBack({ 320, 640, 160, 160 });
+	idleAnim2.PushBack({ 480, 640, 160, 160 });
+
+
+	idleAnim2.loop = true;
+	idleAnim2.speed = 0.1f;
+
 	//ataque
 	attackAnim.PushBack({ 0,160,160,160 });
 	attackAnim.PushBack({ 160,160,160,160 });
@@ -36,6 +47,18 @@ Boss::Boss() : Entity(EntityType::BOSS)
 
 	attackAnim.loop = false;
 	attackAnim.speed = 0.1f;
+
+	//ataque parry
+	attackAnim2.PushBack({ 0,800,160,160 });
+	attackAnim2.PushBack({ 160,800,160,160 });
+	attackAnim2.PushBack({ 320,800,160,160 });
+	attackAnim2.PushBack({ 480,800,160,160 });
+	attackAnim2.PushBack({ 640,800,160,160 });
+
+
+
+	attackAnim2.loop = false;
+	attackAnim2.speed = 0.1f;
 
 	//dead
 	deadAnim.PushBack({ 0,480,160,160 });
@@ -57,6 +80,16 @@ Boss::Boss() : Entity(EntityType::BOSS)
 
 	rightAnim.loop = true;
 	rightAnim.speed = 0.2f;
+
+	//correr parry
+	rightAnim2.PushBack({ 0,960,160,160 });
+	rightAnim2.PushBack({ 160,960,160,160 });
+	rightAnim2.PushBack({ 320,960,160,160 });
+	rightAnim2.PushBack({ 480,960,160,160 });
+
+
+	rightAnim2.loop = true;
+	rightAnim2.speed = 0.2f;
 }
 
 Boss::~Boss() {
@@ -72,14 +105,14 @@ bool Boss::Awake() {
 
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
-	walkingRange = 220;
+	walkingRange = 1000;
 	return true;
 }
 
 bool Boss::Start() {
 
 	//initilize textures
-	texture = app->tex->Load("Assets/Textures/Boss_Spritesheet.png");
+	texture = app->tex->Load("Assets/Textures/Boss_Spritesheet2-export.png");
 	bossRip = app->tex->Load("Assets/Textures/bossRip.png");
 	pbody = app->physics->CreateCircle(position.x , position.y , 17, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -109,23 +142,15 @@ bool Boss::Update(float dt)
 	move_x = 0;
 	move_y = -GRAVITY_Y;
 	
-	
+	// Check if 5 seconds have elapsed
+	if (parryToggleTimer >= 150.0f)
+	{
+		// Toggle ParryMode
+		parryMode = !parryMode;
 
-	/*if (app->scene->player->isalive == false && isalive == false) {
-		if (app->scene->player->muriendo > 70)
-		health = 1;
-			isalive = true;
-			texture = app->tex->Load("Assets/Textures/spritesheetskeleton2.png");
-		    pbody = app->physics->CreateCircle(initialX,initialY, 17, bodyType::DYNAMIC);
-			pbody->listener = this;
-			pbody->ctype = ColliderType::ENEMY;
-		    idleAnim.Reset();
-			rightAnim.Reset();
-			deadAnim.Reset();
-			isAttacking = false;
-			currentAnimation = &idleAnim;
-			currentAnimation->Update();
-	}*/
+		// Reset the timer
+		parryToggleTimer = 0.0f;
+	}
 
 	
 	if (health == 0 && isalive== true) {
@@ -168,7 +193,13 @@ bool Boss::Update(float dt)
 			app->render->DrawTexture(texture, position.x - 60, position.y - 85, isFliped, &currentAnimation->GetCurrentFrame());
 		}
 		else {
-			app->render->DrawTexture(texture, position.x - 40, position.y - 85, isFliped, &attackAnim.GetCurrentFrame());
+			if (parryMode == true) {
+				app->render->DrawTexture(texture, position.x - 40, position.y - 85, isFliped, &attackAnim2.GetCurrentFrame());
+			}
+			else {
+				app->render->DrawTexture(texture, position.x - 40, position.y - 85, isFliped, &attackAnim.GetCurrentFrame());
+			}
+			
 		}
 		
 		currentAnimation->Update();
@@ -178,36 +209,54 @@ bool Boss::Update(float dt)
 				app->audio->PlayFx(AtaqueBoss);	
 			}
 			Ataque_Boss = false;
-			currentAnimation = &attackAnim;
+			if (parryMode == true) {
+				currentAnimation = &attackAnim2;
+			}
+			else {
+				currentAnimation = &attackAnim;
+			}
+			
 			cntatt++;
 			attackAnim.Update();
 			if (cntatt > 20 && isAttacking == true) {
 
+				if (parryMode == true) {
+					attackAnim2.Reset();
+					Ataque_Boss = true;
+					isAttacking = false;
+					if (parryMode == true) {
+						currentAnimation = &idleAnim2;
+					}
+					else {
+						currentAnimation = &idleAnim;
+					}
+					
+					cntatt = 0;
+				}
+				else {
+					attackAnim.Reset();
 
-				attackAnim.Reset();
 
-
-				Ataque_Boss = true;
-				isAttacking = false;
-				currentAnimation = &idleAnim;
-				cntatt = 0;
+					Ataque_Boss = true;
+					isAttacking = false;
+					if (parryMode == true) {
+						currentAnimation = &idleAnim2;
+					}
+					else {
+						currentAnimation = &idleAnim;
+					}
+					cntatt = 0;
+				}
+				
 			}
 		}
 	}
 	else {
 		app->render->DrawTexture(bossRip, finalposition.x - 60, finalposition.y - 85, isFliped);
 	}
-	//parryToggleTimer += dt;
+	parryToggleTimer += 1;
 
-	//// Check if 5 seconds have elapsed
-	//if (parryToggleTimer >= 5.0f)
-	//{
-	//	// Toggle ParryMode
-	//	parryMode = !parryMode;
 
-	//	// Reset the timer
-	//	parryToggleTimer = 0.0f;
-	//}
 	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {
@@ -249,11 +298,23 @@ bool Boss::Update(float dt)
 
 						}
 						if (vel.x != 0) {
-							currentAnimation = &rightAnim;
+							if (parryMode == true) {
+								currentAnimation = &rightAnim2;
+							}
+							else {
+								currentAnimation = &rightAnim;
+							}
+							
 						}
 
 						else {
-							currentAnimation = &idleAnim;
+							if (parryMode == true) {
+								currentAnimation = &idleAnim2;
+							}
+							else {
+								currentAnimation = &idleAnim;
+							}
+							
 						}
 					}
 					else {

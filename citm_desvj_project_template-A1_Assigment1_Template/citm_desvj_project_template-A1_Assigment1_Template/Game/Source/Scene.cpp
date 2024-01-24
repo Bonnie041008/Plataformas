@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "ModuleFadeToBlack.h"
 #include "Menu.h"
+#include "Coin.h"
 
 
 #include "GuiControl.h"
@@ -32,11 +33,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	/*for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-	}*/
+	
 
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
@@ -44,19 +41,19 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 	//Checkpoints------------------------------------------------------------------------
-	if (config.child("checkpoint")) {
-		checkpoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
-		checkpoint->parameters = config.child("checkpoint");
+	
+	for (pugi::xml_node CheckpointNode = config.child("checkpoint"); CheckpointNode; CheckpointNode = CheckpointNode.next_sibling("chekpoint"))
+	{
+		Checkpoint* checkPoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
+		checkPoint->parameters = CheckpointNode;
+		listOfCheckpoints.Add(checkPoint);
 	}
-	if (config.child("checkpoint2")) {
-		checkpoint2 = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
-		checkpoint2->parameters = config.child("checkpoint2");
-	}
-
 	//Coins--------------------------------------------------------------------------------
-	if (config.child("coin")) {
-		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
-		coin->parameters = config.child("coin");
+	for (pugi::xml_node CoinNode = config.child("coin"); CoinNode; CoinNode = CoinNode.next_sibling("coin"))
+	{
+		Coin* coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
+		coin->parameters = CoinNode;
+		listOfCoins.Add(coin);
 	}
 	//Boss---------------------------------------------------------------------------
 	if (config.child("boss")) {
@@ -226,10 +223,12 @@ bool Scene::CleanUp()
 }
 bool Scene::LoadState(pugi::xml_node node) {
 	
-	player->position.x = node.child("player").attribute("x").as_int();
-	player->position.y = node.child("player").attribute("y").as_int();
+	player->position.x = node.child("player").attribute("lastCheckpointX").as_int();
+	player->position.y = node.child("player").attribute("lastCheckpointY").as_int();
 	b2Vec2 newPos(PIXEL_TO_METERS(player->position.x), PIXEL_TO_METERS(player->position.y));
 	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
+	player->lastCheckpoint.x = newPos.x;
+	player->lastCheckpoint.y = newPos.y;
 	
 	//Esqueletos---------------------------------------------------------------------------------------
 	bool checkAlive = true;
@@ -375,8 +374,26 @@ bool Scene::LoadState(pugi::xml_node node) {
 			flyer3->isalive = false;
 		}
 	}
-	
+	//checkpoint---------------------------------------------------------------------------------
+	int i = 0;
+	for (pugi::xml_node CheckpointNode = node.child("checkpoint"); CheckpointNode; CheckpointNode = CheckpointNode.next_sibling("chekpoint"))
+	{
+		listOfCheckpoints[i]->isPicked= CheckpointNode.attribute("isPicked").as_bool();
+		i++;
+	}
 
+	//coin----------------------------------------------------------------------------------------
+	i = 0;
+	for (pugi::xml_node CoinNode = node.child("coin"); CoinNode; CoinNode = CoinNode.next_sibling("coin"))
+	{
+		bool aux = listOfCoins[i]->isPicked;
+
+		listOfCoins[i]->isPicked = CoinNode.attribute("isPicked").as_bool();
+		if (!aux && listOfCoins[i]->isPicked) {
+			app->physics->DestroyObject(listOfCoins[i]->pbody);
+		}
+		i++;
+	}
 	return true;
 	
 }
@@ -394,8 +411,10 @@ bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node flyer3Node = node.append_child("flyer3");
 	playerNode.append_attribute("x").set_value(player->position.x);
 	playerNode.append_attribute("y").set_value(player->position.y);
+	playerNode.append_attribute("lastCheckpointX").set_value(player->lastCheckpoint.x);
+	playerNode.append_attribute("lastCheckpointY").set_value(player->lastCheckpoint.y);
 
-	//Fantasmas---------------------------------------------------------------------------------------
+	//esqueletos---------------------------------------------------------------------------------------
 
 	enemyNode.append_attribute("x").set_value(enemy->position.x);
 	enemyNode.append_attribute("y").set_value(enemy->position.y);
@@ -433,7 +452,24 @@ bool Scene::SaveState(pugi::xml_node node) {
 	flyer3Node.append_attribute("y").set_value(flyer3->position.y);
 	flyer3Node.append_attribute("estavivo").set_value(flyer3->isalive);
 
+	//checkpoints----------------------------------------------------------------
+	for (int i = 0; i < listOfCheckpoints.Count(); i++) {
+		pugi::xml_node CheckpointNode = node.append_child("checkpoint");
+		CheckpointNode.append_attribute("x").set_value(listOfCheckpoints[i]->position.x);
+		CheckpointNode.append_attribute("y").set_value(listOfCheckpoints[i]->position.y);
+		CheckpointNode.append_attribute("x").set_value(player->lastCheckpoint.x);
+		CheckpointNode.append_attribute("y").set_value(player->lastCheckpoint.y);
+		CheckpointNode.append_attribute("isPicked").set_value(listOfCheckpoints[i]->isPicked);
+	}
 
+	//coin---------------------------------------------------------------------------------------------
+
+	for (int i = 0; i < listOfCoins.Count(); i++) {
+		pugi::xml_node CoinNode = node.append_child("coin");
+		CoinNode.append_attribute("x").set_value(listOfCoins[i]->position.x);
+		CoinNode.append_attribute("y").set_value(listOfCoins[i]->position.y);
+		CoinNode.append_attribute("isPicked").set_value(listOfCoins[i]->isPicked);
+	}
 	return true;
 }
 bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {

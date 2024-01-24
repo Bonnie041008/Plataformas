@@ -14,6 +14,7 @@
 #include "GuiControlButton.h"
 #include "GuiManager.h"
 
+#include <list>
 struct SDL_Texture;
 
 class Scene : public Module
@@ -66,7 +67,8 @@ public:
 	Checkpoint* checkpoint2;
 	GuiControlButton* exitButton;
 	Coin* coin;
-
+	List<Checkpoint*> listOfCheckpoints;
+	List<Coin*> listOfCoins;
 	bool ext;
 private:
 	SDL_Texture* img;
