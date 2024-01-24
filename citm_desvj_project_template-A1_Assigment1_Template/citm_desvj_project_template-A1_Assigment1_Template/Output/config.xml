@@ -29,9 +29,9 @@
 	<checkpoint  x="8347" y="665" texturepath="Assets/Textures/checkpoint-export.png"/>
 	
 	  <tp  x="7495" y="665"/>
-	  <coin  x="403" y="665" texturepath="Assets/Textures/goldCoin.png"/>
-	  <coin  x="703" y="665" texturepath="Assets/Textures/goldCoin.png"/>
-	  <coin  x="1003" y="665" texturepath="Assets/Textures/goldCoin.png"/>
+	  <coin  x="403" y="605" texturepath="Assets/Textures/goldCoin.png"/>
+	  <coin  x="703" y="605" texturepath="Assets/Textures/goldCoin.png"/>
+	  <coin  x="1003" y="605" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>

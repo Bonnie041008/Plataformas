@@ -191,6 +191,25 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 
 
 	}
+	if (control->id == 8) {
+		if (fullscreen == false) {
+			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+			fullscreen = true;
+		}
+		else {
+			uint heigth;
+			uint width;
+
+			app->win->GetWindowSize(width, heigth);
+
+			SDL_SetWindowFullscreen(app->win->window, 0);
+			SDL_SetWindowSize(app->win->window, width, heigth);
+			fullscreen = false;
+		}
+	
+	
+
+	}
 
 	return true;
 }
