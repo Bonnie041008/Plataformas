@@ -107,7 +107,10 @@ bool Menu::Update(float dt)
 {
 	app->render->DrawTexture(pantallaInicio, 0, 0, false);
 	
+	app->scene->player->SetPosition(163, 665);
 	
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 
 	return true;
 }
@@ -185,6 +188,7 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		FxSlider->state = GuiControlState::DISABLED;
 		GoBackButton->state = GuiControlState::DISABLED;
 		FullscreenButton->state = GuiControlState::DISABLED;
+
 		startButton->state = GuiControlState::NORMAL;
 		exitButton->state = GuiControlState::NORMAL;
 		settingsButton->state = GuiControlState::NORMAL;

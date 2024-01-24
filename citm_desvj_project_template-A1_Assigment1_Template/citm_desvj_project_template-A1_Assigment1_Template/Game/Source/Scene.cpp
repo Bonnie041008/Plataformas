@@ -527,12 +527,22 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	//back to title screen 3
 	if (control->id == 3) {
 		
+
 		app->scene->player->pausa = false;
+		active = false;
+		app->menu->active = true;
+		app->entityManager->active = false;
+		app->map->active = false;
+		app->scene->player->SetPosition(163, 665);
+		
+		app->menu->startButton->state = GuiControlState::NORMAL;
+		app->menu->exitButton->state = GuiControlState::NORMAL;
+		app->menu->settingsButton->state = GuiControlState::NORMAL;
 		app->scene->resumeButton->state = GuiControlState::DISABLED;
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
 		
-
+		
 	}
 	return true;
 }
