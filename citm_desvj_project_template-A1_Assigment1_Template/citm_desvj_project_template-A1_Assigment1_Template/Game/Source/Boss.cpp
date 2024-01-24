@@ -197,17 +197,17 @@ bool Boss::Update(float dt)
 	else {
 		app->render->DrawTexture(bossRip, finalposition.x - 60, finalposition.y - 85, isFliped);
 	}
-	parryToggleTimer += dt;
+	//parryToggleTimer += dt;
 
-	// Check if 5 seconds have elapsed
-	if (parryToggleTimer >= 5.0f)
-	{
-		// Toggle ParryMode
-		parryMode = !parryMode;
+	//// Check if 5 seconds have elapsed
+	//if (parryToggleTimer >= 5.0f)
+	//{
+	//	// Toggle ParryMode
+	//	parryMode = !parryMode;
 
-		// Reset the timer
-		parryToggleTimer = 0.0f;
-	}
+	//	// Reset the timer
+	//	parryToggleTimer = 0.0f;
+	//}
 	//Set the velocity of the pbody of the enemy
 
 	if (isalive == true) {

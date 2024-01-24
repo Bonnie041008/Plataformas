@@ -533,6 +533,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision FIREENEMY");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
 			fireBalltoDestroy = listOfFireballs.Find(physB);
+			fireBalltoDestroy = listOfFireballs.Find(fireBall);
 			break;
 		}
 	}
@@ -543,13 +544,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYER:
 		LOG("Collision PLAYER");
 		//physA->body->DestroyFixture(physA);
-		app->physics->DestroyObject(physA);
+		fireBalltoDestroy = listOfFireballs.Find(physA);
 		break;
 	
 	case ColliderType::FIREBALL:
 		LOG("Collision FIREBALL");
 		fireBalltoDestroy = listOfFireballs.Find(physA);
 		fireBalltoDestroy = listOfFireballs.Find(physB);
+		fireBalltoDestroy = listOfFireballs.Find(fireBall);
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
