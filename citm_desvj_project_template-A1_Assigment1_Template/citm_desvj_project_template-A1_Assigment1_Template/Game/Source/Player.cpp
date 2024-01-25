@@ -166,7 +166,7 @@ bool Player::Update(float dt)
 	
 	if (pausa == true)
 	{
-		app->render->DrawTexture(fondobotonesPausa, 0, 0, false);
+		app->render->DrawTexture(fondobotonesPausa, 0, 0, false, 0, 1, 0, INT_MAX, INT_MAX, 1, true);
 	}
 	
 	if (isAttacking == false && pausa == false) {
