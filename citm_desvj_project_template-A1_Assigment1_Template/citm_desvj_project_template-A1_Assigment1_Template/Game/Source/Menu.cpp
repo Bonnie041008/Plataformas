@@ -28,11 +28,14 @@ Menu::~Menu()
 bool Menu::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
-
 	
-
 	
-
+	if (config.child("player")) {
+		
+		int x  = config.child("player").attribute("x").as_int();
+	}
+	
+	
 	return ret;
 }
 
@@ -42,7 +45,7 @@ bool Menu::Start()
 	app->entityManager->active = false;
 	app->map->active = false;
 	app->scene->active = false;
-	app->settings->active = false;
+	//app->settings->active = false;
 
 
 

@@ -58,7 +58,7 @@ bool GuiControlSlider::Update(float dt)
         app->render->DrawRectangle(sliderButton, 0, 255, 0, 255, true, false); // Draw the handle
 
         // Draw text
-        app->render->DrawText(text.GetString(), bounds.x, bounds.y - 50, bounds.w, 50);
+        app->render->DrawText(text.GetString(), bounds.x, bounds.y - 50, bounds.w-50, 50);
     }
 
     return false;
