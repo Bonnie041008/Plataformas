@@ -38,7 +38,7 @@
     <ClCompile Include="Source\GuiControlCheckBox.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\GuiControlValueBox.cpp" />
-
+    <ClCompile Include="Source\GameOver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -104,7 +104,7 @@
     <ClInclude Include="Source\GuiControlCheckBox.h" />
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\GuiControlValueBox.h" />
-
+    <ClInclude Include="Source\GameOver.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
