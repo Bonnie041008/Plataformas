@@ -174,7 +174,7 @@ bool Scene::Start()
 	scoreBox->state = GuiControlState::DISABLED;
 
 
-	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
+	app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
