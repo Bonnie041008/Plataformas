@@ -45,11 +45,11 @@ bool GuiControlCheckBox::Update(float dt)
         //Render
         app->render->DrawTexture(texture, bounds.x - 200, bounds.y, false);
 
-        app->render->DrawRectangle(bounds, 0, 255, 255, 255, true, false);
+        app->render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
         if (checked)
         {
             // Draw something to indicate the CheckBox is checked (like a checkmark or filled box)
-            app->render->DrawRectangle({ bounds.x + 4, bounds.y + 4, bounds.w - 8, bounds.h - 8 }, 0, 255, 0, 255, true, false);
+            app->render->DrawRectangle({ bounds.x + 4, bounds.y + 4, bounds.w - 8, bounds.h - 8 }, 0, 0, 0, 255, true, false);
         }
 
         // Optional: Draw the text label for the CheckBox

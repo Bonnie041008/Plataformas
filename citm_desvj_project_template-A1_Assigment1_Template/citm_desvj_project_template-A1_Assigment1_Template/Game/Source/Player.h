@@ -36,6 +36,7 @@ public:
 	SDL_Texture* texture = NULL;
 	SDL_Texture* fireballtexture = NULL;
 	SDL_Texture* currentTexture;
+	SDL_Texture* fondobotonesPausa;
 	int fireBalltoDestroy = -1;
 	int enemyfireBalltoDestroy = -1;
 	SDL_Texture* textureRun = NULL;
@@ -55,6 +56,7 @@ public:
 	float godspeed = 0.0f;
 
 	bool pausa = false;
+	bool fondoPausa = false;
 
 	
 	PhysBody* fireBall;

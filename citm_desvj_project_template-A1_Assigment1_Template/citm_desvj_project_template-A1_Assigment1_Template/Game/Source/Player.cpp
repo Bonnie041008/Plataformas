@@ -131,6 +131,8 @@ bool Player::Start() {
 	SaltoMago = app->audio->LoadFx("Assets/Audio/Fx/Salto.wav");
 	AtaqueMago = app->audio->LoadFx("Assets/Audio/Fx/Ataque.wav");
 
+	fondobotonesPausa = app->tex->Load("Assets/Textures/FondosBotones/FondoBotones-Pausa.png");
+
 	return true;
 }
 
@@ -162,6 +164,10 @@ bool Player::Update(float dt)
 	move_x = 0;
 	move_y = -GRAVITY_Y;
 	
+	if (pausa == true)
+	{
+		app->render->DrawTexture(fondobotonesPausa, 0, 0, false);
+	}
 	
 	if (isAttacking == false && pausa == false) {
 		currentAnimation = &idleAnim;
@@ -174,6 +180,9 @@ bool Player::Update(float dt)
 			app->scene->exitButton->state = GuiControlState::NORMAL;
 			app->scene->backToTitleButton->state = GuiControlState::NORMAL;
 			app->scene->settingsButton2->state = GuiControlState::NORMAL;
+			
+			
+			
 		}
 		else {
 			pausa = false;

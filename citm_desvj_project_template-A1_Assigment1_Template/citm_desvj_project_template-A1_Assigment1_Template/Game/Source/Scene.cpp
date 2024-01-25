@@ -116,8 +116,8 @@ bool Scene::Start()
 	
 	SDL_Rect btPosMusicBar = { windowW / 2 - 60+480, windowH / 2 +250, 190,50 };
 	SDL_Rect btPosFxBar = { windowW / 2 - 60+480, windowH / 2 +350, 190,50 };
-	SDL_Rect btPosFull = { windowW / 2 - 60+480, windowH / 2 + 450 , 50,50 };
-	SDL_Rect btPosVsync = { windowW / 2 - 60 + 480, windowH / 2 + 550 , 50,50 };
+	SDL_Rect btPosFull = { windowW / 2 - 60 +650, windowH / 2 + 450 , 20,20 };
+	SDL_Rect btPosVsync = { windowW / 2 - 60 + 650, windowH / 2 + 550 , 20,20 };
 	SDL_Rect btPosBack = { windowW / 2 - 60 + 480, windowH / 2 + 650 , 190,50 };
 	
 	
@@ -175,6 +175,7 @@ bool Scene::Start()
 
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
+	
 	return true;
 }
 
@@ -239,7 +240,7 @@ bool Scene::Update(float dt)
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
 	iPoint origin = mouseTile;
 
-	//app->render->DrawTexture(pantallaInicio, 0, 0, false);
+	
 	
 
 
