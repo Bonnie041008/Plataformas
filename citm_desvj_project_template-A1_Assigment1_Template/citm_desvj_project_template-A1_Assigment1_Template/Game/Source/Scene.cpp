@@ -267,25 +267,25 @@ bool Scene::Update(float dt)
 	if (app->scene->player->lives == 0)
 	{
 		
-
-		//app->scene->player->SetPosition(163, 665);
 		active = false;
 		app->map->active = false;
 		app->entityManager->active = false;
 		app->guiManager->active = false;
 
 		app->gameover->active = true;
+
 	}
 
 	if (boss->health == 0)
 	{
-		//app->scene->player->SetPosition(163, 665);
+		
 		active = false;
 		app->map->active = false;
 		app->entityManager->active = false;
 		app->guiManager->active = false;
 
 		app->winFinal->active = true;
+
 	}
 
 
@@ -301,11 +301,7 @@ bool Scene::PostUpdate()
 	if (ext == true) {
 		ret = false;
 	}
-	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-	if (app->menu->exitButton->exit == true) {
-		ret = false;
-	}*/
+	
 	return ret;
 }
 
