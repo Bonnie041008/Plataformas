@@ -10,6 +10,7 @@
 #include "ModuleFadeToBlack.h"
 #include "Menu.h"
 #include "Intro.h"
+#include "GameOver.h"
 
 
 #include "GuiManager.h"
@@ -42,6 +43,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	moduleFadetoBlack = new ModuleFadeToBlack();
 	menu = new Menu();
 	intro = new Intro();
+	gameover = new GO();
 	
 
 	// Ordered for awake / Start / Update
@@ -56,6 +58,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(menu);
 	
 	AddModule(audio);
+	AddModule(gameover);
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(guiManager);

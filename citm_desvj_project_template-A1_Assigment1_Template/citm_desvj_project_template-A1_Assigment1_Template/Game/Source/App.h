@@ -24,6 +24,7 @@ class GuiManager;
 class ModuleFadeToBlack;
 class Menu;
 class Intro;
+class GO;
 
 
 class App
@@ -98,6 +99,7 @@ public:
 	ModuleFadeToBlack* moduleFadetoBlack;
 	Menu* menu;
 	Intro* intro;
+	GO* gameover;
 	
 
 

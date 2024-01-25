@@ -13,6 +13,7 @@
 #include "Menu.h"
 #include "Coin.h"
 #include "Intro.h"
+#include "GameOver.h"
 
 
 #include "GuiControl.h"
@@ -50,6 +51,7 @@ bool Intro::Start()
 	app->scene->active = false;
 	app->menu->active = false;
 	app->guiManager->active = false;
+	app->gameover->active = false;
 
 	pantallaIntro = app->tex->Load("Assets/Pantallas/SWMG-Intro.png");
 
