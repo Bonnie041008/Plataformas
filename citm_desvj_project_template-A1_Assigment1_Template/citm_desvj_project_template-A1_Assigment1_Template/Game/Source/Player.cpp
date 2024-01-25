@@ -10,6 +10,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Window.h"
+#include "GameOver.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -410,6 +411,11 @@ bool Player::Update(float dt)
 	
 	currentposition = position;
 	return true;
+
+	
+
+
+
 }
 
 bool Player::CleanUp()

@@ -61,7 +61,7 @@ public:
 	Flyer* flyer3;
 	Boss* boss;
 	SDL_Texture* mouseTileTex = nullptr;
-	SDL_Texture* pantallaIntro;
+	SDL_Texture* pantallaGameOver;
 	Checkpoint* checkpoint;
 	Checkpoint* checkpoint2;
 	GuiControlButton* exitButton;

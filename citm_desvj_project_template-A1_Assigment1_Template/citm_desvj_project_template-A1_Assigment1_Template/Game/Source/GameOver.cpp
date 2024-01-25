@@ -46,7 +46,7 @@ bool GO::Awake(pugi::xml_node& config)
 bool GO::Start()
 {
 
-	pantallaIntro = app->tex->Load("Assets/Pantallas/SWMG_PantallaGameOver.png");
+	pantallaGameOver = app->tex->Load("Assets/Pantallas/SWMG_PantallaGameOver.png");
 
 	return true;
 }
@@ -61,18 +61,12 @@ bool GO::PreUpdate()
 bool GO::Update(float dt)
 {
 	
-	if (app->scene->boss->health == 0)
-	{
-		active = true;
-		app->entityManager->active = false;
-		app->map->active = false;
-		app->scene->active = false;
-		app->guiManager->active = false;
-		app->render->DrawTexture(pantallaIntro, 0, 0, false);
-	}
+	
+	app->render->DrawTexture(pantallaGameOver, 0, 0, false);
+	
 
 
-	app->render->DrawTexture(pantallaIntro, 0, 0, false);
+	
 
 	
 

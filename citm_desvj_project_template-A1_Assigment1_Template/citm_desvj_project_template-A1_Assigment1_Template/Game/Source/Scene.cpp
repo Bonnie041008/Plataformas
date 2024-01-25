@@ -12,7 +12,7 @@
 #include "ModuleFadeToBlack.h"
 #include "Menu.h"
 #include "Coin.h"
-
+#include "GameOver.h"
 
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -263,7 +263,15 @@ bool Scene::Update(float dt)
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
 	iPoint origin = mouseTile;
 
+	if (app->scene->player->lives == 0)
+	{
+		active = false;
+		app->map->active = false;
+		app->entityManager->active = false;
+		app->guiManager->active = false;
 
+		app->gameover->active = true;
+	}
 
 
 
