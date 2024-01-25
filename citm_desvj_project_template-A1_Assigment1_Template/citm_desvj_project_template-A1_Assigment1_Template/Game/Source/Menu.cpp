@@ -66,7 +66,7 @@ bool Menu::Start()
 	pantallaCredits = app->tex->Load("Assets/Pantallas/SWMG-Credits.png");
 	
 
-	SDL_Rect btPosStart = { windowW / 2 - 70, windowH / 2 - 80, 140,40 };
+	SDL_Rect btPosStart = { windowW / 2 - 70, windowH / 2 - 80, 180,40 };
 	startButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPosStart, this);
 	
 	SDL_Rect btPosContinue = { windowW / 2 - 70, windowH / 2 - 10, 140,40 };
