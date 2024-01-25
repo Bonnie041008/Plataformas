@@ -120,12 +120,9 @@ bool Boss::Start() {
 	b2Vec2 vel = b2Vec2(move_x, move_y);
 	move_x = 0;
 	move_y = -GRAVITY_Y;
-
-	pantallaWin = app->tex->Load("Assets/Pantallas/SWMG_PantallaYouWin.png");
 	
 	MuerteBoss = app->audio->LoadFx("Assets/Audio/Fx/BossMuerte.wav");
 	AtaqueBoss = app->audio->LoadFx("Assets/Audio/Fx/BossAtaqueEspada.wav");
-	
 
 
 	return true;
@@ -439,11 +436,7 @@ bool Boss::Update(float dt)
 
 	}
 	
-	/*if (health == 0) {
-
-		app->render->DrawTexture(pantallaWin,0,0,false);
-
-	}*/
+	
 	
 	
 

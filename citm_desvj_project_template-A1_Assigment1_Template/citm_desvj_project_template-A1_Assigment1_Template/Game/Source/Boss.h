@@ -58,8 +58,6 @@ public:
 	float godspeed = 0.0f;
 	iPoint finalposition;
 	int cntatt = 0;
-
-	/*SDL_Texture* pantallaWin;*/
 	
 	bool Muerte_Boss = true;
 	int MuerteBoss;
