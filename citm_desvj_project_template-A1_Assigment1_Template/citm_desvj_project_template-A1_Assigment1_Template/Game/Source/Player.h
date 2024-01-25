@@ -64,6 +64,8 @@ public:
 	List <PhysBody*> listOfFireballs;
 	int pickCoinFxId;
 	int coinCount=0;
+	int timerFrames = 0;
+	int timerGod = 0;
 	bool Muerte_Mago = true;
 	int MuerteMago;
 	bool Salto_Mago = false;

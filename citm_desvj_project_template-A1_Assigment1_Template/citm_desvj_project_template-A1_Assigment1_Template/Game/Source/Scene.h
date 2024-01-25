@@ -81,6 +81,7 @@ public:
 	GuiControlCheckBox* VsyncCheckBox;
 	GuiControlValueBox* playerLifesBox;
 	GuiControlValueBox* scoreBox;
+	GuiControlValueBox* timerBox;
 	
 	Coin* coin;
 	TP* tp;

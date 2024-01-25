@@ -130,8 +130,9 @@ bool Scene::Start()
 
 
 
-	SDL_Rect livesBox = { windowW / 2 - 60 + 70, windowH / 2 + 50 , 190,90 };
-	SDL_Rect coinsBox = { windowW / 2 - 60 + 70, windowH / 2 + 200 , 190,90 };
+	SDL_Rect livesBox = { windowW / 2 - 60 + 120, windowH / 2 + 50 , 40,25 };
+	SDL_Rect coinsBox = { windowW / 2 - 60 + 120, windowH / 2 + 150 , 40,25 };
+	SDL_Rect timerBoox = { windowW / 2 - 60 + 1000, windowH / 2 + 70 , 40,40 };
 
 
 
@@ -174,6 +175,9 @@ bool Scene::Start()
 	scoreBox = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 12, " ", coinsBox, this);
 	scoreBox->state = GuiControlState::DISABLED;
 
+	timerBox = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 13, " ", timerBoox, this);
+	timerBox->state = GuiControlState::DISABLED;
+
 
 	app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
@@ -213,6 +217,18 @@ bool Scene::Update(float dt)
 	playerLifesBox->SetValue(strPlayerLifes);
 	std::string coins = std::to_string(player->coinCount);
 	scoreBox->SetValue(coins);
+	std::string seconds = std::to_string(player->timerGod);
+	timerBox->SetValue(seconds);
+
+
+	app->scene->player->timerFrames++;
+	if (app->scene->player->timerFrames == 60) {
+
+		app->scene->player->timerGod= app->scene->player->timerGod+1;
+
+		app->scene->player->timerFrames = 0;
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
 		debugcamera = true;
 	}
@@ -628,6 +644,7 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->scene->settingsButton2->state = GuiControlState::DISABLED;
 		app->scene->playerLifesBox->state = GuiControlState::NORMAL;
 		app->scene->scoreBox->state = GuiControlState::NORMAL;
+		app->scene->timerBox->state = GuiControlState::NORMAL;
 	}
 	//back to title screen 3
 	if (control->id == 9) {

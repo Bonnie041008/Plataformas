@@ -184,6 +184,7 @@ bool Player::Update(float dt)
 			app->scene->settingsButton2->state = GuiControlState::NORMAL;
 			app->scene->playerLifesBox->state = GuiControlState::DISABLED;
 			app->scene->scoreBox->state = GuiControlState::DISABLED;
+			app->scene->timerBox->state = GuiControlState::DISABLED;
 
 			
 			
@@ -197,6 +198,7 @@ bool Player::Update(float dt)
 			app->scene->settingsButton2->state = GuiControlState::DISABLED;
 			app->scene->playerLifesBox->state = GuiControlState::NORMAL;
 			app->scene->scoreBox->state = GuiControlState::NORMAL;
+			app->scene->timerBox->state = GuiControlState::NORMAL;
 		}
 	}
 	if (health != 0 && pausa == false) {
@@ -476,7 +478,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				muriendo++;
+				//muriendo++;
 				currentAnimation = &deadAnim;
 				//SetPosition(400, 352);
 			}
