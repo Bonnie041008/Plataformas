@@ -87,11 +87,11 @@ bool Intro::PostUpdate()
 	if (ext == true) {
 		ret = false;
 	}
-	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 	if (app->menu->exitButton->exit == true) {
 		ret = false;
-	}*/
+	}
 	return ret;
 }
 
