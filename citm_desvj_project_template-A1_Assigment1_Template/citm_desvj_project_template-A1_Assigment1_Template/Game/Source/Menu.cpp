@@ -46,7 +46,7 @@ bool Menu::Start()
 
 
 
-	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
+	app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
@@ -184,6 +184,16 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 	
 
 		
+
+	}
+	if (control->id == 5) {
+
+		app->audio->ChangeMusicVolume(musicSlider->newValue);
+
+	}
+	if (control->id == 6) {
+
+		app->audio->ChangeFxVolume(FxSlider->newValue);
 
 	}
 	if (control->id == 7) {
