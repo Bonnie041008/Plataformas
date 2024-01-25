@@ -46,7 +46,7 @@ bool Win::Awake(pugi::xml_node& config)
 bool Win::Start()
 {
 	
-
+	
 	pantallaWin = app->tex->Load("Assets/Pantallas/SWMG_PantallaYouWin.png");
 
 	return true;
@@ -62,15 +62,9 @@ bool Win::PreUpdate()
 bool Win::Update(float dt)
 {
 	
-	
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 	app->render->DrawTexture(pantallaWin, 0, 0, false);
-	
-
-
-	
-
-	
-
 
 	return true;
 }

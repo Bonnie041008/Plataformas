@@ -65,13 +65,6 @@ bool GO::Update(float dt)
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 	app->render->DrawTexture(pantallaGameOver, 0, 0, false);
-	
-
-
-	
-
-	
-
 
 	return true;
 }
