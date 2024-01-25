@@ -732,8 +732,17 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
 		active = false;
 
-
-
+	}
+	if (control->id == 10)
+	{
+		if (app->maxFrameDuration == 1000 / 60)
+		{
+			app->maxFrameDuration = 1000 / 30;
+		}
+		else
+		{
+			app->maxFrameDuration = 1000 / 60;
+		}
 	}
 	return true;
 }

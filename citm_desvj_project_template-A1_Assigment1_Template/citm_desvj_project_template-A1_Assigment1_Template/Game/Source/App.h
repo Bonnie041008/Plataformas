@@ -103,7 +103,7 @@ public:
 	GO* gameover;
 	Win* winFinal;
 	
-
+	uint32 maxFrameDuration = 16;
 
 private:
 
@@ -134,7 +134,7 @@ private:
 	float averageFps = 0.0f;
 	uint32 secondsSinceStartup = 0;
 
-	uint32 maxFrameDuration = 16;
+	
 
 	bool saveRequest;
 	bool loadRequest;
