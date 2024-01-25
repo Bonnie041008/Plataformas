@@ -65,6 +65,7 @@ public:
 	SDL_Texture* mouseTileTex = nullptr;
 	SDL_Texture* pantallaInicio;
 	SDL_Texture* pantallaCredits;
+	SDL_Texture* fondobotonesMenu;
 	Checkpoint* checkpoint;
 	GuiControlButton* startButton;
 	GuiControlButton* continueButton;

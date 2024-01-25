@@ -563,7 +563,6 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	//back to title screen 3
 	if (control->id == 9) {
 		
-
 		app->scene->player->pausa = false;
 		active = false;
 		app->menu->active = true;

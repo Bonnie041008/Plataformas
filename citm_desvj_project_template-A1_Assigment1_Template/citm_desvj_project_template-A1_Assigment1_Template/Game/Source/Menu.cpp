@@ -61,48 +61,49 @@ bool Menu::Start()
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
 	//Pantallas
+	fondobotonesMenu = app->tex->Load("Assets/Textures/FondosBotones/FondoBotones-Menu.png");
 	pantallaInicio = app->tex->Load("Assets/Pantallas/SWMG_PantallaDeInicio.png");	
 	pantallaCredits = app->tex->Load("Assets/Pantallas/SWMG-Credits.png");
+	
 
-
-	SDL_Rect btPosStart = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
+	SDL_Rect btPosStart = { windowW / 2 - 70, windowH / 2 - 80, 140,40 };
 	startButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "START", btPosStart, this);
 	
-	SDL_Rect btPosContinue = { windowW / 2 - 60, windowH / 2 - 50, 120,20 };
+	SDL_Rect btPosContinue = { windowW / 2 - 70, windowH / 2 - 10, 140,40 };
 	continueButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "CONTINUE", btPosContinue, this);
 
-	SDL_Rect btPosExit = { windowW / 2 - 60, windowH / 2 + 100, 120,20 };
+	SDL_Rect btPosExit = { windowW / 2 - 70, windowH / 2 + 250, 140,40 };
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "EXIT", btPosExit, this);
 	
 
-	SDL_Rect btPosSettings = { windowW / 2 - 60, windowH / 2 + 0, 120,20 };
+	SDL_Rect btPosSettings = { windowW / 2 - 70, windowH / 2 + 90, 140,40 };
 	settingsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings, this);
 
-	SDL_Rect btPosCredits = { windowW / 2 - 60, windowH / 2 + 50, 120,20 };
+	SDL_Rect btPosCredits = { windowW / 2 - 70, windowH / 2 + 170, 140,40 };
 	creditsButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "CREDITS", btPosCredits, this);
 
 	
 	
 	
-	SDL_Rect btPosMusicBar = { windowW / 2 - 60, windowH / 2 - 100, 120,20 };
+	SDL_Rect btPosMusicBar = { windowW / 2 - 60, windowH / 2 - 50, 120,20 };
 	musicSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 5, "MUSIC", btPosMusicBar, this);
 	musicSlider->function = FunctionGUI::MUSIC;
 	musicSlider->state = GuiControlState::DISABLED;
 
-	SDL_Rect btPosFxBar = { windowW / 2 - 60, windowH / 2 , 120,20 };
+	SDL_Rect btPosFxBar = { windowW / 2 - 60, windowH / 2 + 50 , 120,20 };
 	FxSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Fx", btPosFxBar, this);
 	FxSlider->function = FunctionGUI::MUSIC;
 	FxSlider->state = GuiControlState::DISABLED;
 
-	SDL_Rect btPosBack = { windowW / 2 - 60, windowH / 2 +200 , 120,20 };
+	SDL_Rect btPosBack = { windowW / 2 - 70, windowH / 2 + 250, 140,40 };
 	GoBackButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "GO BACK", btPosBack, this);
 	GoBackButton->state = GuiControlState::DISABLED;
 
-	SDL_Rect btPosFull = { windowW / 2 + 60, windowH / 2 +50 , 20,20 };
+	SDL_Rect btPosFull = { windowW / 2 + 70, windowH / 2 +130 , 20,20 };
 	FullscreenCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
 	FullscreenCheckBox->state = GuiControlState::DISABLED;
 
-	SDL_Rect btPosVsync = { windowW / 2 + 60, windowH / 2 + 100 , 20,20 };
+	SDL_Rect btPosVsync = { windowW / 2 + 70, windowH / 2 + 180 , 20,20 };
 	VsyncCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 10, "V-SYNC", btPosVsync, this);
 	VsyncCheckBox->state = GuiControlState::DISABLED;
 
@@ -126,7 +127,11 @@ bool Menu::PreUpdate()
 // Called each loop iteration
 bool Menu::Update(float dt)
 {
+	
+	
 	app->render->DrawTexture(pantallaInicio, 0, 0, false);
+	app->render->DrawTexture(fondobotonesMenu, windowW / 2 - 295 / 2, windowH / 2 - 300 / 2, false);
+
 	
 	app->scene->player->SetPosition(163, 665);
 	
