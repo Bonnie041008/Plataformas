@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
+#include "Intro.h"
 
 
 
