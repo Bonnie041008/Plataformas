@@ -13,6 +13,7 @@
 #include "Menu.h"
 #include "Coin.h"
 #include "GameOver.h"
+#include "Win.h"
 
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -265,6 +266,9 @@ bool Scene::Update(float dt)
 
 	if (app->scene->player->lives == 0)
 	{
+		
+
+		//app->scene->player->SetPosition(163, 665);
 		active = false;
 		app->map->active = false;
 		app->entityManager->active = false;
@@ -272,6 +276,18 @@ bool Scene::Update(float dt)
 
 		app->gameover->active = true;
 	}
+
+	if (boss->health == 0)
+	{
+		//app->scene->player->SetPosition(163, 665);
+		active = false;
+		app->map->active = false;
+		app->entityManager->active = false;
+		app->guiManager->active = false;
+
+		app->winFinal->active = true;
+	}
+
 
 
 

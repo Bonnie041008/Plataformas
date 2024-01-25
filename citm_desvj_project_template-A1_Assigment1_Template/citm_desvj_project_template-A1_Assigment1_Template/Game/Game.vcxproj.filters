@@ -39,6 +39,7 @@
     <ClCompile Include="Source\Intro.cpp" />
     <ClCompile Include="Source\GuiControlValueBox.cpp" />
     <ClCompile Include="Source\GameOver.cpp" />
+    <ClCompile Include="Source\Win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -105,6 +106,7 @@
     <ClInclude Include="Source\Intro.h" />
     <ClInclude Include="Source\GuiControlValueBox.h" />
     <ClInclude Include="Source\GameOver.h" />
+    <ClInclude Include="Source\Win.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

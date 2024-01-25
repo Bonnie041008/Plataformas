@@ -12,24 +12,23 @@
 #include "ModuleFadeToBlack.h"
 #include "Menu.h"
 #include "Coin.h"
-#include "GameOver.h"
-#include "Player.h"
+#include "Win.h"
 
 
 #include "GuiControl.h"
 #include "GuiManager.h"
 
-GO::GO() : Module()
+Win::Win() : Module()
 {
-	name.Create("gameover");
+	name.Create("win");
 }
 
 // Destructor
-GO::~GO()
+Win::~Win()
 {}
 
 // Called before render is available
-bool GO::Awake(pugi::xml_node& config)
+bool Win::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -44,27 +43,27 @@ bool GO::Awake(pugi::xml_node& config)
 }
 
 // Called before the first frame
-bool GO::Start()
+bool Win::Start()
 {
+	
 
-	pantallaGameOver = app->tex->Load("Assets/Pantallas/SWMG_PantallaGameOver.png");
+	pantallaWin = app->tex->Load("Assets/Pantallas/SWMG_PantallaYouWin.png");
 
 	return true;
 }
 
 // Called each loop iteration
-bool GO::PreUpdate()
+bool Win::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool GO::Update(float dt)
+bool Win::Update(float dt)
 {
 	
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
-	app->render->DrawTexture(pantallaGameOver, 0, 0, false);
+	
+	app->render->DrawTexture(pantallaWin, 0, 0, false);
 	
 
 
@@ -77,7 +76,7 @@ bool GO::Update(float dt)
 }
 
 // Called each loop iteration
-bool GO::PostUpdate()
+bool Win::PostUpdate()
 {
 	bool ret = true;
 	if (ext == true) {
@@ -93,7 +92,7 @@ bool GO::PostUpdate()
 
 
 // Called before quitting
-bool GO::CleanUp()
+bool Win::CleanUp()
 {
 	LOG("Freeing Menu");
 

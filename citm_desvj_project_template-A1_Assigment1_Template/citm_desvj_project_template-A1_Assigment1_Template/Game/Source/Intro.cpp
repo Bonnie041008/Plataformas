@@ -14,6 +14,7 @@
 #include "Coin.h"
 #include "Intro.h"
 #include "GameOver.h"
+#include "Win.h"
 
 
 #include "GuiControl.h"
@@ -45,13 +46,14 @@ bool Intro::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Intro::Start()
 {
-
+	app->winFinal->active = false;
 	app->entityManager->active = false;
 	app->map->active = false;
 	app->scene->active = false;
 	app->menu->active = false;
 	app->guiManager->active = false;
 	app->gameover->active = false;
+	
 
 	pantallaIntro = app->tex->Load("Assets/Pantallas/SWMG-Intro.png");
 

@@ -25,6 +25,7 @@ class ModuleFadeToBlack;
 class Menu;
 class Intro;
 class GO;
+class Win;
 
 
 class App
@@ -100,6 +101,7 @@ public:
 	Menu* menu;
 	Intro* intro;
 	GO* gameover;
+	Win* winFinal;
 	
 
 

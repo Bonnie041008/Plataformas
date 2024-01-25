@@ -11,6 +11,7 @@
 #include "Menu.h"
 #include "Intro.h"
 #include "GameOver.h"
+#include "Win.h"
 
 
 #include "GuiManager.h"
@@ -44,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	menu = new Menu();
 	intro = new Intro();
 	gameover = new GO();
+	winFinal = new Win();
 	
 
 	// Ordered for awake / Start / Update
@@ -56,9 +58,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(intro);
 	AddModule(menu);
-	
+
 	AddModule(audio);
 	AddModule(gameover);
+	AddModule(winFinal);
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(guiManager);
