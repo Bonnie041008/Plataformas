@@ -58,10 +58,10 @@ bool Coin::Update(float dt)
 
 
 	currentAnimation->Update();
-	if (app->scene->player->currentposition.x > position.x - 40 &&
-		app->scene->player->currentposition.x<position.x + 40 &&
-		app->scene->player->currentposition.y>position.y - 40 &&
-		app->scene->player->currentposition.y < position.y + 40
+	if (app->scene->player->position.x > METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 40 &&
+		app->scene->player->position.x<METERS_TO_PIXELS(pbody->body->GetTransform().p.x) + 40 &&
+		app->scene->player->position.y>METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 40 &&
+		app->scene->player->position.y < METERS_TO_PIXELS(pbody->body->GetTransform().p.y) + 40
 		&& !isPicked)
 	{
 		//efecto de sonido de moneda
@@ -73,7 +73,8 @@ bool Coin::Update(float dt)
 	}
 	
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	
 	

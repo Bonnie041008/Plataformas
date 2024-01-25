@@ -658,15 +658,15 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	}
 	if (control->id == 9) {
 
-		app->entityManager->active = true;
-		app->map->active = true;
-		app->scene->active = true;
-		
+		app->entityManager->active = false;
+		app->map->active = false;
+		app->scene->active = false;
+		//app->physics->active = false;
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton2->state = GuiControlState::DISABLED;
 	
 		active = false;
-		app->LoadRequest();
+		
 
 
 	}
