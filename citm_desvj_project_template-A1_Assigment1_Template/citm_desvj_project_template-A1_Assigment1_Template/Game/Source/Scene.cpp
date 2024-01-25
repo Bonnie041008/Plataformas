@@ -33,7 +33,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	
+
 
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
@@ -41,7 +41,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	}
 
 	//Checkpoints------------------------------------------------------------------------
-	
+
 	for (pugi::xml_node CheckpointNode = config.child("checkpoint"); CheckpointNode; CheckpointNode = CheckpointNode.next_sibling("checkpoint"))
 	{
 		Checkpoint* checkPoint = (Checkpoint*)app->entityManager->CreateEntity(EntityType::CHECKPOINT);
@@ -117,35 +117,35 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	SDL_Rect btPosResume = { windowW / 2 - 60 + 480, windowH / 2 + 250, 190,50 };
-	SDL_Rect btPosSettings2 = { windowW / 2 - 60+480, windowH / 2 + 350, 190,50 };
+	SDL_Rect btPosSettings2 = { windowW / 2 - 60 + 480, windowH / 2 + 350, 190,50 };
 	SDL_Rect btPosBackToTitle = { windowW / 2 - 60 + 380, windowH / 2 + 450, 410,60 };
-	SDL_Rect btPosExit = { windowW / 2 - 60+500, windowH / 2 + 550, 150,50 };
-	
-	SDL_Rect btPosMusicBar = { windowW / 2 - 60+480, windowH / 2 +250, 190,50 };
-	SDL_Rect btPosFxBar = { windowW / 2 - 60+480, windowH / 2 +350, 190,50 };
-	SDL_Rect btPosFull = { windowW / 2 - 60 +650, windowH / 2 + 450 , 20,20 };
+	SDL_Rect btPosExit = { windowW / 2 - 60 + 500, windowH / 2 + 550, 150,50 };
+
+	SDL_Rect btPosMusicBar = { windowW / 2 - 60 + 480, windowH / 2 + 250, 190,50 };
+	SDL_Rect btPosFxBar = { windowW / 2 - 60 + 480, windowH / 2 + 350, 190,50 };
+	SDL_Rect btPosFull = { windowW / 2 - 60 + 650, windowH / 2 + 450 , 20,20 };
 	SDL_Rect btPosVsync = { windowW / 2 - 60 + 650, windowH / 2 + 550 , 20,20 };
 	SDL_Rect btPosBack = { windowW / 2 - 60 + 480, windowH / 2 + 650 , 190,50 };
-	
-	
-	
+
+
+
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
 	exitButton->state = GuiControlState::DISABLED;
 	resumeButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "RESUME", btPosResume, this);
 	resumeButton->state = GuiControlState::DISABLED;
 	backToTitleButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "BACK TO TITLE", btPosBackToTitle, this);
 	backToTitleButton->state = GuiControlState::DISABLED;
-	
+
 	settingsButton2 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings2, this);
 	settingsButton2->state = GuiControlState::DISABLED;
 
-	
+
 	musicSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 5, "MUSIC", btPosMusicBar, this);
 	musicSlider->function = FunctionGUI::MUSIC;
 	musicSlider->state = GuiControlState::DISABLED;
 
 
-	
+
 	FxSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Fx     ", btPosFxBar, this);
 	FxSlider->function = FunctionGUI::MUSIC;
 	FxSlider->state = GuiControlState::DISABLED;
@@ -154,16 +154,16 @@ bool Scene::Start()
 	GoBackButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "GO BACK", btPosBack, this);
 	GoBackButton->state = GuiControlState::DISABLED;
 
-	
+
 	FullscreenCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
 	FullscreenCheckBox->state = GuiControlState::DISABLED;
 
-	
+
 	VsyncCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 10, "V-SYNC", btPosVsync, this);
 	VsyncCheckBox->state = GuiControlState::DISABLED;
 
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
-	
+
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
 
@@ -182,7 +182,7 @@ bool Scene::Start()
 
 	// Texture to highligh mouse position 
 	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
-	
+
 	return true;
 }
 
@@ -195,7 +195,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	float camSpeed = 1; 
+	float camSpeed = 1;
 	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
 		debugcamera = true;
 	}
@@ -216,21 +216,21 @@ bool Scene::Update(float dt)
 		else {
 			app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
 		}
-		
+
 	}
-	
+
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += (int)ceil(camSpeed * dt);
-		
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
-		
+
 
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
@@ -247,8 +247,8 @@ bool Scene::Update(float dt)
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
 	iPoint origin = mouseTile;
 
-	
-	
+
+
 
 
 	return true;
@@ -278,7 +278,7 @@ bool Scene::CleanUp()
 	return true;
 }
 bool Scene::LoadState(pugi::xml_node node) {
-	
+
 	player->position.x = node.child("player").attribute("lastCheckpointX").as_int();
 	player->position.y = node.child("player").attribute("lastCheckpointY").as_int();
 	player->lives = node.child("player").attribute("lives").as_int();
@@ -286,7 +286,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 	player->pbody->body->SetTransform(newPos, player->pbody->body->GetAngle());
 	player->lastCheckpoint.x = newPos.x;
 	player->lastCheckpoint.y = newPos.y;
-	
+
 	//Esqueletos---------------------------------------------------------------------------------------
 	bool checkAlive = true;
 	if (enemy->isalive == true) {
@@ -307,7 +307,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 		}
 	}
-	
+
 	if (enemy2->isalive == true) {
 		enemy2->position.x = node.child("enemy2").attribute("x").as_int();
 		enemy2->position.y = node.child("enemy2").attribute("y").as_int();
@@ -325,7 +325,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 		}
 	}
-	
+
 	if (enemy3->isalive == true) {
 		enemy3->position.x = node.child("enemy3").attribute("x").as_int();
 		enemy3->position.y = node.child("enemy3").attribute("y").as_int();
@@ -343,7 +343,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 		}
 	}
-	
+
 	if (enemy4->isalive == true) {
 		enemy4->position.x = node.child("enemy4").attribute("x").as_int();
 		enemy4->position.y = node.child("enemy4").attribute("y").as_int();
@@ -361,7 +361,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 		}
 	}
-	
+
 	if (enemy5->isalive == true) {
 		enemy5->position.x = node.child("enemy5").attribute("x").as_int();
 		enemy5->position.y = node.child("enemy5").attribute("y").as_int();
@@ -386,18 +386,18 @@ bool Scene::LoadState(pugi::xml_node node) {
 		newPos = b2Vec2(PIXEL_TO_METERS(flyer->position.x), PIXEL_TO_METERS(flyer->position.y));
 		flyer->pbody->body->SetTransform(newPos, flyer->pbody->body->GetAngle());
 		checkAlive = node.child("flyer").attribute("estavivo").as_bool();
-		if ( checkAlive == false) {
+		if (checkAlive == false) {
 
 			flyer->health = 1;
 			flyer->finalposition.x = METERS_TO_PIXELS(flyer->pbody->body->GetTransform().p.x) - 16;
 			flyer->finalposition.y = METERS_TO_PIXELS(flyer->pbody->body->GetTransform().p.y) - 16;
-			
+
 			flyer->pbody->body->SetActive(false);
 			flyer->muriendo = 0;
 			flyer->isalive = false;
 		}
 	}
-	
+
 	if (flyer2->isalive == true) {
 		flyer2->position.x = node.child("flyer2").attribute("x").as_int();
 		flyer2->position.y = node.child("flyer2").attribute("y").as_int();
@@ -414,7 +414,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 			flyer2->isalive = false;
 		}
 	}
-	
+
 	if (flyer3->isalive == true) {
 		flyer3->position.x = node.child("flyer3").attribute("x").as_int();
 		flyer3->position.y = node.child("flyer3").attribute("y").as_int();
@@ -431,11 +431,29 @@ bool Scene::LoadState(pugi::xml_node node) {
 			flyer3->isalive = false;
 		}
 	}
+	//boss---------------------------------------------------------------------------------------
+	if (boss->isalive == true) {
+		boss->position.x = node.child("boss").attribute("x").as_int();
+		boss->position.y = node.child("boss").attribute("y").as_int();
+		boss->health = node.child("boss").attribute("health").as_int();
+		newPos = b2Vec2(PIXEL_TO_METERS(boss->position.x), PIXEL_TO_METERS(boss->position.y));
+		boss->pbody->body->SetTransform(newPos, boss->pbody->body->GetAngle());
+		checkAlive = node.child("boss").attribute("estavivo").as_bool();
+		if (boss->isalive && checkAlive == false) {
+
+			boss->health = 10;
+			boss->finalposition.x = METERS_TO_PIXELS(boss->pbody->body->GetTransform().p.x) - 16;
+			boss->finalposition.y = METERS_TO_PIXELS(boss->pbody->body->GetTransform().p.y) - 16;
+			boss->pbody->body->SetActive(false);
+			boss->muriendo = 0;
+			boss->isalive = false;
+		}
+	}
 	//checkpoint---------------------------------------------------------------------------------
 	int i = 0;
 	for (pugi::xml_node CheckpointNode = node.child("checkpoint"); CheckpointNode; CheckpointNode = CheckpointNode.next_sibling("chekpoint"))
 	{
-		listOfCheckpoints[i]->isPicked= CheckpointNode.attribute("isPicked").as_bool();
+		listOfCheckpoints[i]->isPicked = CheckpointNode.attribute("isPicked").as_bool();
 		i++;
 	}
 
@@ -464,7 +482,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 		i++;
 	}
 	return true;
-	
+
 }
 
 
@@ -479,6 +497,7 @@ bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node flyer2Node = node.append_child("flyer2");
 	pugi::xml_node flyer3Node = node.append_child("flyer3");
 	pugi::xml_node playerNode = node.append_child("player");
+	pugi::xml_node bossNode = node.append_child("boss");
 
 	//player-----------------------------------------------------------------
 	playerNode.append_attribute("x").set_value(player->position.x);
@@ -509,7 +528,7 @@ bool Scene::SaveState(pugi::xml_node node) {
 	enemy5Node.append_attribute("y").set_value(enemy5->position.y);
 	enemy5Node.append_attribute("estavivo").set_value(enemy5->isalive);
 
-	
+
 
 	//Fantasmas---------------------------------------------------------------------------------------
 
@@ -524,7 +543,11 @@ bool Scene::SaveState(pugi::xml_node node) {
 	flyer3Node.append_attribute("x").set_value(flyer3->position.x);
 	flyer3Node.append_attribute("y").set_value(flyer3->position.y);
 	flyer3Node.append_attribute("estavivo").set_value(flyer3->isalive);
-
+	//boss---------------------------------------------------------------------------------------------
+	bossNode.append_attribute("x").set_value(boss->position.x);
+	bossNode.append_attribute("y").set_value(boss->position.y);
+	bossNode.append_attribute("health").set_value(boss->health);
+	bossNode.append_attribute("estavivo").set_value(boss->isalive);
 	//checkpoints----------------------------------------------------------------
 	for (int i = 0; i < listOfCheckpoints.Count(); i++) {
 		pugi::xml_node CheckpointNode = node.append_child("checkpoint");
@@ -556,9 +579,9 @@ bool Scene::SaveState(pugi::xml_node node) {
 bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 1) {
 		//app->audio->active = true;
-		
+
 		ext = true;
-		
+
 	}
 	//resume 2
 	if (control->id == 2) {
@@ -570,14 +593,14 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	}
 	//back to title screen 3
 	if (control->id == 9) {
-		
+
 		app->scene->player->pausa = false;
 		active = false;
 		app->menu->active = true;
 		app->entityManager->active = false;
 		app->map->active = false;
 		app->scene->player->SetPosition(163, 665);
-		
+
 		app->menu->startButton->state = GuiControlState::NORMAL;
 		app->menu->exitButton->state = GuiControlState::NORMAL;
 		app->menu->settingsButton->state = GuiControlState::NORMAL;
@@ -587,8 +610,8 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
 
-		
-		
+
+
 	}
 	if (control->id == 3) {
 
@@ -598,13 +621,13 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		FullscreenCheckBox->state = GuiControlState::NORMAL;
 		VsyncCheckBox->state = GuiControlState::NORMAL;
 
-	
+
 		exitButton->state = GuiControlState::DISABLED;
 		app->scene->resumeButton->state = GuiControlState::DISABLED;
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
 		settingsButton2->state = GuiControlState::DISABLED;
-	
+
 
 
 
@@ -628,12 +651,12 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		FullscreenCheckBox->state = GuiControlState::DISABLED;
 		VsyncCheckBox->state = GuiControlState::DISABLED;
 
-	
+
 		exitButton->state = GuiControlState::NORMAL;
 		settingsButton2->state = GuiControlState::NORMAL;
 		resumeButton->state = GuiControlState::NORMAL;
 		backToTitleButton->state = GuiControlState::NORMAL;
-		
+
 
 
 	}
@@ -658,15 +681,15 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	}
 	if (control->id == 9) {
 
-		app->entityManager->active = true;
-		app->map->active = true;
-		app->scene->active = true;
-		
+		app->entityManager->active = false;
+		app->map->active = false;
+		app->scene->active = false;
+		//app->physics->active = false;
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton2->state = GuiControlState::DISABLED;
-	
+
 		active = false;
-		app->LoadRequest();
+
 
 
 	}

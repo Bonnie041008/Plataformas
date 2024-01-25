@@ -16,7 +16,7 @@
 HealthItem::HealthItem() : Entity(EntityType::HEALTHITEM)
 {
 	name.Create("healthItem");
-	
+
 	//actived
 	actived.PushBack({ 0, 0, 192, 192 });
 	actived.PushBack({ 192, 0, 192, 192 });
@@ -42,11 +42,11 @@ bool HealthItem::Awake() {
 bool HealthItem::Start() {
 
 	//initilize textures
-	
+
 	texture = app->tex->Load(texturePath);
-	pbody = app->physics->CreateCircle(position.x , position.y , 16, bodyType::STATIC);
+	pbody = app->physics->CreateCircle(position.x, position.y, 16, bodyType::STATIC);
 	pbody->ctype = ColliderType::HEALTHITEM;
-	
+
 	return true;
 }
 
@@ -65,12 +65,12 @@ bool HealthItem::Update(float dt)
 		&& !isPicked))
 	{
 		//efecto de sonido del portal
-		
+
 		isPicked = true;
-		
+		app->scene->player->lives = app->scene->player->lives + 1;
 		app->physics->DestroyObject(pbody);
 	}
-	
+
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
