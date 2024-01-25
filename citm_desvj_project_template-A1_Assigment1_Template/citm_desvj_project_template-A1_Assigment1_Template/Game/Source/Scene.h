@@ -14,6 +14,7 @@
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
+#include "GuiControlSlider.h"
 #include "GuiManager.h"
 
 #include <list>
@@ -70,6 +71,11 @@ public:
 	GuiControlButton* exitButton;
 	GuiControlButton* resumeButton;
 	GuiControlButton* backToTitleButton;
+	GuiControlButton* settingsButton2;
+	GuiControlSlider* musicSlider;
+	GuiControlSlider* FxSlider;
+	GuiControlButton* GoBackButton;
+	GuiControlButton* FullscreenButton;
 	Coin* coin;
 	TP* tp;
 	List<Checkpoint*> listOfCheckpoints;

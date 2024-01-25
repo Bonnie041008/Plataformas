@@ -110,16 +110,44 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	SDL_Rect btPosResume = { windowW / 2 - 60 + 480, windowH / 2 + 250, 190,50 };
-	SDL_Rect btPosBackToTitle = { windowW / 2 - 60 + 380, windowH / 2 + 350, 410,60 };
-	SDL_Rect btPosExit = { windowW / 2 - 60+500, windowH / 2 + 450, 150,50 };
+	SDL_Rect btPosSettings2 = { windowW / 2 - 60+480, windowH / 2 + 350, 190,50 };
+	SDL_Rect btPosBackToTitle = { windowW / 2 - 60 + 380, windowH / 2 + 450, 410,60 };
+	SDL_Rect btPosExit = { windowW / 2 - 60+500, windowH / 2 + 550, 150,50 };
 	
-
+	SDL_Rect btPosMusicBar = { windowW / 2 - 60+480, windowH / 2 +250, 190,50 };
+	SDL_Rect btPosFxBar = { windowW / 2 - 60+480, windowH / 2 +350, 190,50 };
+	SDL_Rect btPosFull = { windowW / 2 - 60+480, windowH / 2 + 450 , 190,50 };
+	SDL_Rect btPosBack = { windowW / 2 - 60 + 480, windowH / 2 + 550 , 190,50 };
+	
+	
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
 	exitButton->state = GuiControlState::DISABLED;
 	resumeButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "RESUME", btPosResume, this);
 	resumeButton->state = GuiControlState::DISABLED;
-	backToTitleButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "BACK TO TITLE", btPosBackToTitle, this);
+	backToTitleButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "BACK TO TITLE", btPosBackToTitle, this);
 	backToTitleButton->state = GuiControlState::DISABLED;
+	
+	settingsButton2 = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "SETTINGS", btPosSettings2, this);
+	settingsButton2->state = GuiControlState::DISABLED;
+
+	
+	musicSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 5, "MUSIC", btPosMusicBar, this);
+	musicSlider->function = FunctionGUI::MUSIC;
+	musicSlider->state = GuiControlState::DISABLED;
+
+
+	
+	FxSlider = (GuiControlSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 6, "Fx     ", btPosFxBar, this);
+	FxSlider->function = FunctionGUI::MUSIC;
+	FxSlider->state = GuiControlState::DISABLED;
+
+
+	GoBackButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "GO BACK", btPosBack, this);
+	GoBackButton->state = GuiControlState::DISABLED;
+
+	
+	FullscreenButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
+	FullscreenButton->state = GuiControlState::DISABLED;
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 	
 	//Get the size of the window
@@ -523,9 +551,10 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->scene->resumeButton->state = GuiControlState::DISABLED;
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
+		app->scene->settingsButton2->state = GuiControlState::DISABLED;
 	}
 	//back to title screen 3
-	if (control->id == 3) {
+	if (control->id == 9) {
 		
 
 		app->scene->player->pausa = false;
@@ -545,6 +574,84 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
 		
 		
+	}
+	if (control->id == 3) {
+
+		musicSlider->state = GuiControlState::NORMAL;
+		FxSlider->state = GuiControlState::NORMAL;
+		GoBackButton->state = GuiControlState::NORMAL;
+		FullscreenButton->state = GuiControlState::NORMAL;
+
+	
+		exitButton->state = GuiControlState::DISABLED;
+		app->scene->resumeButton->state = GuiControlState::DISABLED;
+		app->scene->exitButton->state = GuiControlState::DISABLED;
+		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
+		settingsButton2->state = GuiControlState::DISABLED;
+	
+
+
+
+
+	}
+	if (control->id == 5) {
+
+		app->audio->ChangeMusicVolume(musicSlider->newValue);
+
+	}
+	if (control->id == 6) {
+
+		app->audio->ChangeFxVolume(FxSlider->newValue);
+
+	}
+	if (control->id == 7) {
+
+		musicSlider->state = GuiControlState::DISABLED;
+		FxSlider->state = GuiControlState::DISABLED;
+		GoBackButton->state = GuiControlState::DISABLED;
+		FullscreenButton->state = GuiControlState::DISABLED;
+
+	
+		exitButton->state = GuiControlState::NORMAL;
+		settingsButton2->state = GuiControlState::NORMAL;
+		resumeButton->state = GuiControlState::NORMAL;
+		backToTitleButton->state = GuiControlState::NORMAL;
+		
+
+
+	}
+	if (control->id == 8) {
+		if (app->menu->fullscreen == false) {
+			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+			app->menu->fullscreen = true;
+		}
+		else {
+			uint heigth;
+			uint width;
+
+			app->win->GetWindowSize(width, heigth);
+
+			SDL_SetWindowFullscreen(app->win->window, 0);
+			SDL_SetWindowSize(app->win->window, width, heigth);
+			app->menu->fullscreen = false;
+		}
+
+
+
+	}
+	if (control->id == 9) {
+
+		app->entityManager->active = true;
+		app->map->active = true;
+		app->scene->active = true;
+		
+		exitButton->state = GuiControlState::DISABLED;
+		settingsButton2->state = GuiControlState::DISABLED;
+	
+		active = false;
+		app->LoadRequest();
+
+
 	}
 	return true;
 }

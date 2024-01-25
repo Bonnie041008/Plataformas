@@ -167,18 +167,20 @@ bool Player::Update(float dt)
 		currentAnimation = &idleAnim;
 	}
 	
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && pausa == false) {
 		if (pausa == false) {
 			pausa = true;
 			app->scene->resumeButton->state = GuiControlState::NORMAL;
 			app->scene->exitButton->state = GuiControlState::NORMAL;
 			app->scene->backToTitleButton->state = GuiControlState::NORMAL;
+			app->scene->settingsButton2->state = GuiControlState::NORMAL;
 		}
 		else {
 			pausa = false;
 			app->scene->resumeButton->state = GuiControlState::DISABLED;
 			app->scene->exitButton->state = GuiControlState::DISABLED;
 			app->scene->backToTitleButton->state = GuiControlState::DISABLED;
+			app->scene->settingsButton2->state = GuiControlState::DISABLED;
 		}
 	}
 	if (health != 0 && pausa == false) {
@@ -337,17 +339,22 @@ bool Player::Update(float dt)
 	
 	//muerte
 	if (health == 0 && isalive && pausa == false) {
-		lives = lives - 1;
+		
 		if(Muerte_Mago == true){
 			app->audio->PlayFx(MuerteMago);	
 		}
 		Muerte_Mago = false;
 		currentAnimation = &deadAnim;
+		if (muriendo == 0) {
+		
+			lives = lives - 1;
+		}
 		muriendo++;
 		
 		speed = 0;
 		if (muriendo > 70) {
 			SetPosition(lastCheckpoint.x,lastCheckpoint.y);
+		;
 			speed = 0.3f;
 			currentAnimation = &idleAnim;
 			deadAnim.Reset();
@@ -425,7 +432,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				muriendo++;
+				//muriendo++;
 				currentAnimation = &deadAnim;
 				//SetPosition(400, 352);
 			}
@@ -436,7 +443,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				muriendo++;
+				//muriendo++;
 				currentAnimation = &deadAnim;
 				//SetPosition(400, 352);
 			}
