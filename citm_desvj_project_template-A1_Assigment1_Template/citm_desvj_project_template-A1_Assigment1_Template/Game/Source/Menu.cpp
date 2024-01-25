@@ -195,6 +195,8 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		settingsButton->state = GuiControlState::DISABLED;
 		continueButton->state = GuiControlState::DISABLED;
 		creditsButton->state = GuiControlState::DISABLED;
+		app->scene->playerLifesBox->state = GuiControlState::NORMAL;
+		app->scene->scoreBox->state = GuiControlState::NORMAL;
 		
 		active = false;
 	}

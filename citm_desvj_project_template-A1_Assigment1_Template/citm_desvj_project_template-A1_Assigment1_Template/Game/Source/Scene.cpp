@@ -129,6 +129,11 @@ bool Scene::Start()
 
 
 
+	SDL_Rect livesBox = { windowW / 2 - 60 + 70, windowH / 2 + 50 , 190,90 };
+	SDL_Rect coinsBox = { windowW / 2 - 60 + 70, windowH / 2 + 200 , 190,90 };
+
+
+
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
 	exitButton->state = GuiControlState::DISABLED;
 	resumeButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "RESUME", btPosResume, this);
@@ -161,6 +166,13 @@ bool Scene::Start()
 
 	VsyncCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 10, "V-SYNC", btPosVsync, this);
 	VsyncCheckBox->state = GuiControlState::DISABLED;
+
+	playerLifesBox = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 11, " ", livesBox, this);
+	playerLifesBox->state = GuiControlState::DISABLED;
+
+	scoreBox = (GuiControlValueBox*)app->guiManager->CreateGuiControl(GuiControlType::VALUEBOX, 12, " ", coinsBox, this);
+	scoreBox->state = GuiControlState::DISABLED;
+
 
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 
@@ -196,6 +208,10 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	float camSpeed = 1;
+	std::string strPlayerLifes = std::to_string(player->lives);
+	playerLifesBox->SetValue(strPlayerLifes);
+	std::string coins = std::to_string(player->coinCount);
+	scoreBox->SetValue(coins);
 	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
 		debugcamera = true;
 	}
@@ -590,6 +606,8 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
 		app->scene->settingsButton2->state = GuiControlState::DISABLED;
+		app->scene->playerLifesBox->state = GuiControlState::NORMAL;
+		app->scene->scoreBox->state = GuiControlState::NORMAL;
 	}
 	//back to title screen 3
 	if (control->id == 9) {

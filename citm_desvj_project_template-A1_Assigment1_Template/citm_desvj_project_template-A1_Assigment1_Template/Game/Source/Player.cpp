@@ -181,6 +181,9 @@ bool Player::Update(float dt)
 			app->scene->exitButton->state = GuiControlState::NORMAL;
 			app->scene->backToTitleButton->state = GuiControlState::NORMAL;
 			app->scene->settingsButton2->state = GuiControlState::NORMAL;
+			app->scene->playerLifesBox->state = GuiControlState::DISABLED;
+			app->scene->scoreBox->state = GuiControlState::DISABLED;
+
 			
 			
 			
@@ -191,6 +194,8 @@ bool Player::Update(float dt)
 			app->scene->exitButton->state = GuiControlState::DISABLED;
 			app->scene->backToTitleButton->state = GuiControlState::DISABLED;
 			app->scene->settingsButton2->state = GuiControlState::DISABLED;
+			app->scene->playerLifesBox->state = GuiControlState::NORMAL;
+			app->scene->scoreBox->state = GuiControlState::NORMAL;
 		}
 	}
 	if (health != 0 && pausa == false) {

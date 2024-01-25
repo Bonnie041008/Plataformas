@@ -63,6 +63,7 @@ public:
 	bool hasToDestroyBall = false;
 	List <PhysBody*> listOfFireballs;
 	int pickCoinFxId;
+	int coinCount=0;
 	bool Muerte_Mago = true;
 	int MuerteMago;
 	bool Salto_Mago = false;

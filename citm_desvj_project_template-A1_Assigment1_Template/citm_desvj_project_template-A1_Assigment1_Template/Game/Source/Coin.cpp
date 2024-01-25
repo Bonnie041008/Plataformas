@@ -68,6 +68,7 @@ bool Coin::Update(float dt)
 
 
 		isPicked = true;
+		app->scene->player->coinCount++;
 		app->physics->DestroyObject(pbody);
 
 	}

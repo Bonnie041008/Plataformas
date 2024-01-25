@@ -17,6 +17,7 @@
 #include "GuiControlSlider.h"
 #include "GuiManager.h"
 #include "GuiControlCheckBox.h"
+#include "GuiControlValueBox.h"
 
 #include <list>
 struct SDL_Texture;
@@ -78,6 +79,9 @@ public:
 	GuiControlButton* GoBackButton;
 	GuiControlCheckBox* FullscreenCheckBox;
 	GuiControlCheckBox* VsyncCheckBox;
+	GuiControlValueBox* playerLifesBox;
+	GuiControlValueBox* scoreBox;
+	
 	Coin* coin;
 	TP* tp;
 	List<Checkpoint*> listOfCheckpoints;

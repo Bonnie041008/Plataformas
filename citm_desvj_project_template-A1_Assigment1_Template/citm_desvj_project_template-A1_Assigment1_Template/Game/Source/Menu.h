@@ -14,6 +14,7 @@
 #include "GuiManager.h"
 #include "GuiControlSlider.h"
 #include "GuiControlCheckBox.h"
+#include "GuiControlValueBox.h"
 
 struct SDL_Texture;
 

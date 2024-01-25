@@ -37,6 +37,8 @@
     <ClCompile Include="Source\HealthItem.cpp" />
     <ClCompile Include="Source\GuiControlCheckBox.cpp" />
     <ClCompile Include="Source\Intro.cpp" />
+    <ClCompile Include="Source\GuiControlValueBox.cpp" />
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -101,6 +103,8 @@
     <ClInclude Include="Source\HealthItem.h" />
     <ClInclude Include="Source\GuiControlCheckBox.h" />
     <ClInclude Include="Source\Intro.h" />
+    <ClInclude Include="Source\GuiControlValueBox.h" />
+
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
