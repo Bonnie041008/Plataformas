@@ -34,7 +34,7 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 
-	Animation inactive;
+	
 	Animation actived;
 	int cnt;
 	Animation* currentAnimation = nullptr;

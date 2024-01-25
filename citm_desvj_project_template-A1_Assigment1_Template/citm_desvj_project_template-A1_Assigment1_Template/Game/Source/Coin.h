@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -28,9 +29,12 @@ public:
 
 	bool isPicked = false;
 	PhysBody* pbody;
+	
 private:
 
 	SDL_Texture* texture;
+	Animation actived;
+	Animation* currentAnimation = nullptr;
 	const char* texturePath;
 
 };

@@ -55,6 +55,13 @@ bool Scene::Awake(pugi::xml_node& config)
 		coin->parameters = CoinNode;
 		listOfCoins.Add(coin);
 	}
+	//Healthitem--------------------------------------------------------------------------------
+	for (pugi::xml_node HealthNode = config.child("healthItem"); HealthNode; HealthNode = HealthNode.next_sibling("healthItem"))
+	{
+		HealthItem* healthItem = (HealthItem*)app->entityManager->CreateEntity(EntityType::HEALTHITEM);
+		healthItem->parameters = HealthNode;
+		listOfHealtthitems.Add(healthItem);
+	}
 	//TP---------------------------------------------------------------------------
 	if (config.child("tp")) {
 		tp = (TP*)app->entityManager->CreateEntity(EntityType::TP);
