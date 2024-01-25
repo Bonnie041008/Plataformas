@@ -53,7 +53,7 @@ bool GuiControlCheckBox::Update(float dt)
         }
 
         // Optional: Draw the text label for the CheckBox
-        app->render->DrawText(text.GetString(), bounds.x - bounds.w * 3, bounds.y, 150, bounds.h);
+        app->render->DrawText(text.GetString(), bounds.x - bounds.w * 8, bounds.y, 150, bounds.h);
     }
 
 

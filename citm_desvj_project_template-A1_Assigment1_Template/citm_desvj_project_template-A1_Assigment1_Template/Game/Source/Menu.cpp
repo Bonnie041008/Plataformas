@@ -12,7 +12,7 @@
 #include "Scene.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
-#include "Settings.h"
+
 
 
 Menu::Menu() : Module()
@@ -45,7 +45,7 @@ bool Menu::Start()
 	app->entityManager->active = false;
 	app->map->active = false;
 	app->scene->active = false;
-	//app->settings->active = false;
+
 
 
 
@@ -98,11 +98,11 @@ bool Menu::Start()
 	GoBackButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 7, "GO BACK", btPosBack, this);
 	GoBackButton->state = GuiControlState::DISABLED;
 
-	SDL_Rect btPosFull = { windowW / 2 - 60, windowH / 2 +50 , 120,20 };
+	SDL_Rect btPosFull = { windowW / 2 + 60, windowH / 2 +50 , 20,20 };
 	FullscreenCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
 	FullscreenCheckBox->state = GuiControlState::DISABLED;
 
-	SDL_Rect btPosVsync = { windowW / 2 - 60, windowH / 2 + 100 , 120,20 };
+	SDL_Rect btPosVsync = { windowW / 2 + 60, windowH / 2 + 100 , 20,20 };
 	VsyncCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 10, "V-SYNC", btPosVsync, this);
 	VsyncCheckBox->state = GuiControlState::DISABLED;
 
@@ -207,6 +207,7 @@ bool  Menu:: OnGuiMouseClickEvent(GuiControl* control) {
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton->state = GuiControlState::DISABLED;
 		continueButton->state = GuiControlState::DISABLED;
+		creditsButton->state = GuiControlState::DISABLED;
 	
 
 		

@@ -116,9 +116,10 @@ bool Scene::Start()
 	
 	SDL_Rect btPosMusicBar = { windowW / 2 - 60+480, windowH / 2 +250, 190,50 };
 	SDL_Rect btPosFxBar = { windowW / 2 - 60+480, windowH / 2 +350, 190,50 };
-	SDL_Rect btPosFull = { windowW / 2 - 60+480, windowH / 2 + 450 , 190,50 };
+	SDL_Rect btPosFull = { windowW / 2 - 60+480, windowH / 2 + 450 , 50,50 };
+	SDL_Rect btPosVsync = { windowW / 2 - 60 + 480, windowH / 2 + 550 , 50,50 };
 	SDL_Rect btPosBack = { windowW / 2 - 60 + 480, windowH / 2 + 650 , 190,50 };
-	SDL_Rect btPosVsync = { windowW / 2 - 60+480, windowH / 2 + 550 , 190,50 };
+	
 	
 	
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);

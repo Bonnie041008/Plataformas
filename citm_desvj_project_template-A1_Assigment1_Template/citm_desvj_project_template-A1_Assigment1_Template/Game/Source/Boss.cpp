@@ -123,7 +123,6 @@ bool Boss::Start() {
 	
 	MuerteBoss = app->audio->LoadFx("Assets/Audio/Fx/BossMuerte.wav");
 	AtaqueBoss = app->audio->LoadFx("Assets/Audio/Fx/BossAtaqueEspada.wav");
-	ParryBoss = app->audio->LoadFx("Assets/Audio/Fx/BossParry");
 
 
 	return true;
@@ -210,9 +209,11 @@ bool Boss::Update(float dt)
 				app->audio->PlayFx(AtaqueBoss);	
 			}
 			Ataque_Boss = false;
+			
 			if (parryMode == true) {
 				currentAnimation = &attackAnim2;
 			}
+
 			else {
 				currentAnimation = &attackAnim;
 			}
@@ -477,7 +478,6 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision FIREBALL");
 			if (parryMode == true) {
 				isAttacking = true;
-				app->audio->PlayFx(ParryBoss);
 				b2Vec2 vel = b2Vec2(move_x, move_y);
 				move_x = 0;
 				move_y = -GRAVITY_Y;
