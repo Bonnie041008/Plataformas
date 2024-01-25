@@ -12,15 +12,16 @@
 		<enemy2 x="1968" y="638" estavivo="true" />
 		<enemy3 x="3408" y="638" estavivo="true" />
 		<enemy4 x="4944" y="638" estavivo="true" />
-		<enemy5 x="6719" y="638" estavivo="true" />
-		<flyer x="300" y="550" estavivo="false" />
-		<flyer2 x="2496" y="241" estavivo="true" />
-		<flyer3 x="5568" y="241" estavivo="true" />
-		<player x="725" y="395" lives="5" lastCheckpointX="183" lastCheckpointY="635" />
+		<enemy5 x="6721" y="638" estavivo="true" />
+		<flyer x="430" y="622" estavivo="true" />
+		<flyer2 x="2496" y="239" estavivo="true" />
+		<flyer3 x="5568" y="239" estavivo="true" />
+		<player x="226" y="635" lives="5" lastCheckpointX="183" lastCheckpointY="635" />
+		<boss x="9312" y="638" health="5" estavivo="true" />
 		<checkpoint x="1087" y="409" x="183" y="635" isPicked="false" />
 		<checkpoint x="8331" y="648" x="183" y="635" isPicked="false" />
-		<coin x="403" y="605" isPicked="false" />
-		<coin x="503" y="605" isPicked="false" />
+		<coin x="-16" y="-16" isPicked="true" />
+		<coin x="-16" y="-16" isPicked="true" />
 		<coin x="-16" y="-16" isPicked="true" />
 		<healtitem x="887" y="589" isPicked="false" />
 	</scene>
@@ -28,6 +29,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="-213" y="0" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>

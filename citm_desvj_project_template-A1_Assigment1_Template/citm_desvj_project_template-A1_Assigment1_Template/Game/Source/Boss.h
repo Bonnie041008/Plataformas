@@ -45,7 +45,7 @@ public:
 	int cntfire;
 	float initialX;
 	float initialY;
-	int health = 5;
+	int health = 10;
 	bool isalive = true;
 	bool isFliped;
 	int muriendo = 0;
@@ -58,8 +58,6 @@ public:
 	float godspeed = 0.0f;
 	iPoint finalposition;
 	int cntatt = 0;
-
-	SDL_Texture* pantallaWin;
 	
 	bool Muerte_Boss = true;
 	int MuerteBoss;
