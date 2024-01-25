@@ -13,6 +13,7 @@
 #include "GuiControlButton.h"
 #include "GuiManager.h"
 #include "GuiControlSlider.h"
+#include "GuiControlCheckBox.h"
 
 struct SDL_Texture;
 
@@ -63,17 +64,22 @@ public:
 	Boss* boss;
 	SDL_Texture* mouseTileTex = nullptr;
 	SDL_Texture* pantallaInicio;
+	SDL_Texture* pantallaCredits;
 	Checkpoint* checkpoint;
 	GuiControlButton* startButton;
 	GuiControlButton* continueButton;
 	GuiControlButton* exitButton;
 	GuiControlButton* settingsButton;
+	GuiControlButton* creditsButton;
 	GuiControlSlider* musicSlider;
 	GuiControlSlider* FxSlider;
 	GuiControlButton* GoBackButton;
-	GuiControlButton* FullscreenButton;
+	GuiControlButton* GoBackCreditsButton;
+	GuiControlCheckBox* FullscreenCheckBox;
+	GuiControlCheckBox* VsyncCheckBox;
 	bool fullscreen = false;
 	bool debugcamera = false;
+	bool credits = false;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

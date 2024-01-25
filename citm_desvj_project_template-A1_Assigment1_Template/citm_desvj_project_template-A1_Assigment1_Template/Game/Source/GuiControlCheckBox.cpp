@@ -1,67 +1,72 @@
-#include "GuiControlButton.h"
+#include "GuiControlCheckBox.h"
 #include "Render.h"
 #include "App.h"
 #include "Audio.h"
 
-GuiControlButton::GuiControlButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
+// Constructor
+GuiControlCheckBox::GuiControlCheckBox(uint32 id, SDL_Rect bounds, const char* text)
+    : GuiControl(GuiControlType::CHECKBOX, id), checked(false)
 {
-	this->bounds = bounds;
-	this->text = text;
-
-	canClick = true;
-	drawBasic = false;
+    this->bounds = bounds;
+    this->text = text;
 }
 
-GuiControlButton::~GuiControlButton()
+// Destructor
+GuiControlCheckBox::~GuiControlCheckBox()
 {
 
 }
 
-bool GuiControlButton::Update(float dt)
+// Update method
+bool GuiControlCheckBox::Update(float dt)
 {
-	if (state != GuiControlState::DISABLED)
-	{
-		// L15: DONE 3: Update the state of the GUiButton according to the mouse position
-		app->input->GetMousePosition(mouseX, mouseY);
+    if (state != GuiControlState::DISABLED)
+    {
+        int mouseX, mouseY;
+        app->input->GetMousePosition(mouseX, mouseY);
 
-		//If the position of the mouse if inside the bounds of the button 
-		if (mouseX > bounds.x && mouseX < bounds.x + bounds.w && mouseY > bounds.y && mouseY < bounds.y + bounds.h) {
-		
-			state = GuiControlState::FOCUSED;
+        // Check if the mouse is over the CheckBox
+        if (mouseX > bounds.x && mouseX < bounds.x + bounds.w &&
+            mouseY > bounds.y && mouseY < bounds.y + bounds.h)
+        {
+            state = GuiControlState::FOCUSED;
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
-				state = GuiControlState::PRESSED;
-			}
-			
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
-				NotifyObserver();
-			}
-		}
-		else {
-			state = GuiControlState::NORMAL;
-		}
+            if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+            {
+                checked = !checked;
+                NotifyObserver();
+            }
+        }
+        else
+        {
+            state = GuiControlState::NORMAL;
+        }
 
-		//L15: DONE 4: Draw the button according the GuiControl State
-		switch (state)
-		{
-		case GuiControlState::DISABLED:
-			app->render->DrawRectangle(bounds, 200, 200, 200, 255, true, false);
-			break;
-		case GuiControlState::NORMAL:
-			app->render->DrawRectangle(bounds, 0, 0, 255, 255, true, false);
-			break;
-		case GuiControlState::FOCUSED:
-			app->render->DrawRectangle(bounds, 0, 0, 20, 255, true, false);
-			break;
-		case GuiControlState::PRESSED:
-			app->render->DrawRectangle(bounds, 0, 255, 0, 255, true, false);
-			break;
-		}
+        //Render
+        app->render->DrawTexture(texture, bounds.x - 200, bounds.y, false);
 
-		app->render->DrawText(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);
+        app->render->DrawRectangle(bounds, 0, 255, 255, 255, true, false);
+        if (checked)
+        {
+            // Draw something to indicate the CheckBox is checked (like a checkmark or filled box)
+            app->render->DrawRectangle({ bounds.x + 4, bounds.y + 4, bounds.w - 8, bounds.h - 8 }, 0, 255, 0, 255, true, false);
+        }
 
-	}
+        // Optional: Draw the text label for the CheckBox
+        app->render->DrawText(text.GetString(), bounds.x - bounds.w * 3, bounds.y, 150, bounds.h);
+    }
 
-	return false;
+
+
+    return false;
 }
 
+void GuiControlCheckBox::SetChecked(bool checked)
+{
+    this->checked = checked;
+}
+
+bool GuiControlCheckBox::IsChecked() const
+{
+    return checked;
+}

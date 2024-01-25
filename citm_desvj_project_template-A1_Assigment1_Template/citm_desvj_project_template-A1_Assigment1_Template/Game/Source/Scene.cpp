@@ -117,7 +117,8 @@ bool Scene::Start()
 	SDL_Rect btPosMusicBar = { windowW / 2 - 60+480, windowH / 2 +250, 190,50 };
 	SDL_Rect btPosFxBar = { windowW / 2 - 60+480, windowH / 2 +350, 190,50 };
 	SDL_Rect btPosFull = { windowW / 2 - 60+480, windowH / 2 + 450 , 190,50 };
-	SDL_Rect btPosBack = { windowW / 2 - 60 + 480, windowH / 2 + 550 , 190,50 };
+	SDL_Rect btPosBack = { windowW / 2 - 60 + 480, windowH / 2 + 650 , 190,50 };
+	SDL_Rect btPosVsync = { windowW / 2 - 60+480, windowH / 2 + 550 , 190,50 };
 	
 	
 	exitButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "EXIT", btPosExit, this);
@@ -146,8 +147,13 @@ bool Scene::Start()
 	GoBackButton->state = GuiControlState::DISABLED;
 
 	
-	FullscreenButton = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
-	FullscreenButton->state = GuiControlState::DISABLED;
+	FullscreenCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 8, "FULLSCREEN", btPosFull, this);
+	FullscreenCheckBox->state = GuiControlState::DISABLED;
+
+	
+	VsyncCheckBox = (GuiControlCheckBox*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 10, "V-SYNC", btPosVsync, this);
+	VsyncCheckBox->state = GuiControlState::DISABLED;
+
 	//app->audio->PlayMusic("Assets/Audio/Music/Sonido-de-Fondo.wav");
 	
 	//Get the size of the window
@@ -568,6 +574,7 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->menu->exitButton->state = GuiControlState::NORMAL;
 		app->menu->settingsButton->state = GuiControlState::NORMAL;
 		app->menu->continueButton->state = GuiControlState::NORMAL;
+		app->menu->creditsButton->state = GuiControlState::NORMAL;
 		app->scene->resumeButton->state = GuiControlState::DISABLED;
 		app->scene->exitButton->state = GuiControlState::DISABLED;
 		app->scene->backToTitleButton->state = GuiControlState::DISABLED;
@@ -580,7 +587,8 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		musicSlider->state = GuiControlState::NORMAL;
 		FxSlider->state = GuiControlState::NORMAL;
 		GoBackButton->state = GuiControlState::NORMAL;
-		FullscreenButton->state = GuiControlState::NORMAL;
+		FullscreenCheckBox->state = GuiControlState::NORMAL;
+		VsyncCheckBox->state = GuiControlState::NORMAL;
 
 	
 		exitButton->state = GuiControlState::DISABLED;
@@ -609,7 +617,8 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		musicSlider->state = GuiControlState::DISABLED;
 		FxSlider->state = GuiControlState::DISABLED;
 		GoBackButton->state = GuiControlState::DISABLED;
-		FullscreenButton->state = GuiControlState::DISABLED;
+		FullscreenCheckBox->state = GuiControlState::DISABLED;
+		VsyncCheckBox->state = GuiControlState::DISABLED;
 
 	
 		exitButton->state = GuiControlState::NORMAL;

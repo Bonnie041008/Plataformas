@@ -63,6 +63,7 @@ public:
 	int MuerteBoss;
 	bool Ataque_Boss = true;
 	int AtaqueBoss;
+	int ParryBoss;
 	const float JUMP_FORCE = 50.0f; // Ajusta este valor según tus necesidades
 	const float MAX_FALL_SPEED = 10.0f;
 	
