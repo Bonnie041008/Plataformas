@@ -52,7 +52,7 @@ bool HealthItem::Start() {
 
 bool HealthItem::Update(float dt)
 {
-	//currentAnimation = &actived;
+	
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
 	currentAnimation = &actived;
 	app->render->DrawTexture(texture, position.x - 80, position.y - 80, false, &currentAnimation->GetCurrentFrame());

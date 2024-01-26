@@ -16,11 +16,11 @@
 		<enemy3 x="3408" y="638" estavivo="true" />
 		<enemy4 x="4944" y="638" estavivo="true" />
 		<enemy5 x="6721" y="638" estavivo="true" />
-		<flyer x="623" y="369" estavivo="true" />
+		<flyer x="513" y="414" estavivo="true" />
 		<flyer2 x="2496" y="239" estavivo="true" />
 		<flyer3 x="5568" y="239" estavivo="true" />
-		<player x="147" y="635" lives="5" lastCheckpointX="183" lastCheckpointY="635" />
-		<boss x="9313" y="638" health="10" estavivo="true" />
+		<player x="263" y="635" lives="5" lastCheckpointX="183" lastCheckpointY="635" />
+		<boss x="9312" y="638" health="10" estavivo="true" />
 		<checkpoint x="1087" y="409" x="183" y="635" isPicked="false" />
 		<checkpoint x="4121" y="648" x="183" y="635" isPicked="false" />
 		<checkpoint x="6083" y="409" x="183" y="635" isPicked="false" />

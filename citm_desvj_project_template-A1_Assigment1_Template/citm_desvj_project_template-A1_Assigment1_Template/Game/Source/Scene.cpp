@@ -219,8 +219,6 @@ bool Scene::Update(float dt)
 	scoreBox->SetValue(coins);
 	std::string seconds = std::to_string(player->timerGod);
 	timerBox->SetValue(seconds);
-
-
 	app->scene->player->timerFrames++;
 	if (app->scene->player->timerFrames == 60) {
 
@@ -228,7 +226,6 @@ bool Scene::Update(float dt)
 
 		app->scene->player->timerFrames = 0;
 	}
-
 	if (app->input->GetKey(SDL_SCANCODE_O) == KEY_REPEAT) {
 		debugcamera = true;
 	}
@@ -249,81 +246,59 @@ bool Scene::Update(float dt)
 		else {
 			app->render->camera.y = -player->position.y + app->win->screenSurface->h / 2;
 		}
-
 	}
-
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += (int)ceil(camSpeed * dt);
-
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y -= (int)ceil(camSpeed * dt);
-
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
-
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
-
-
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
-
 	// Get the mouse position and obtain the map coordinate
 	iPoint mousePos;
 	app->input->GetMousePosition(mousePos.x, mousePos.y);
 	iPoint mouseTile = app->map->WorldToMap(mousePos.x - app->render->camera.x,
 		mousePos.y - app->render->camera.y);
-
 	// Render a texture where the mouse is over to highlight the tile, use the texture 'mouseTileTex'
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
 	iPoint origin = mouseTile;
-
-	float timeSinceLivesZero = 0.0f;
 	bool isWaitingAfterLivesZero = false;
-	float delayAfterLivesZero = 25.0f;
-
-	if (app->scene->player->lives == 0 && !isWaitingAfterLivesZero)
+	if (app->scene->player->lives == 0 )
 	{
 		isWaitingAfterLivesZero = true;
-		timeSinceLivesZero = 0.0f;
+		timeSinceLivesZero++;
 	}
-
 	if (isWaitingAfterLivesZero)
 	{
-		timeSinceLivesZero += dt;
-
-		if (timeSinceLivesZero >= delayAfterLivesZero)
+		
+		if (timeSinceLivesZero >= 70.0f)
 		{
-			
 			active = false;
 			app->map->active = false;
 			app->entityManager->active = false;
 			app->guiManager->active = false;
 			app->gameover->active = true;
-
-			
 			isWaitingAfterLivesZero = false;
 			timeSinceLivesZero = 0.0f;
 		}
 	}
-
-	float timeSinceBossDefeated = 0.0f;
 	bool isWaitingAfterBossDefeated = false;
-	float delayAfterBossDefeated = 20.0f;
-
-	if (boss->health == 0 && !isWaitingAfterBossDefeated)
+	if (boss->health == 0 )
 	{
 		isWaitingAfterBossDefeated = true;
-		timeSinceBossDefeated = 0.0f;
+		timeSinceBossDefeated++;
 	}
 
 	if (isWaitingAfterBossDefeated)
 	{
-		timeSinceBossDefeated += dt;
+		
 
-		if (timeSinceBossDefeated >= delayAfterBossDefeated)
+		if (timeSinceBossDefeated >=50.0f)
 		{
 			
 			active = false;
@@ -661,7 +636,7 @@ bool Scene::SaveState(pugi::xml_node node) {
 }
 bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	if (control->id == 1) {
-		//app->audio->active = true;
+		
 
 		ext = true;
 
@@ -770,7 +745,7 @@ bool  Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		app->entityManager->active = false;
 		app->map->active = false;
 		app->scene->active = false;
-		//app->physics->active = false;
+		
 		exitButton->state = GuiControlState::DISABLED;
 		settingsButton2->state = GuiControlState::DISABLED;
 

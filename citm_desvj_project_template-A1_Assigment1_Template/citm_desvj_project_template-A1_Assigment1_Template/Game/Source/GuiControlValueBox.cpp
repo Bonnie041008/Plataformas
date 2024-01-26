@@ -39,7 +39,7 @@ bool GuiControlValueBox::Update(float dt)
         {
             state = GuiControlState::NORMAL;
         }
-       // app->render->DrawRectangle(bounds, 0, 0, 255, 255, true, false);
+      
         app->render->DrawText(value.c_str(), bounds.x, bounds.y, bounds.w / 2, bounds.h,255, 255, 255);
         app->render->DrawTexture(texture, 20, 0, false);
     }

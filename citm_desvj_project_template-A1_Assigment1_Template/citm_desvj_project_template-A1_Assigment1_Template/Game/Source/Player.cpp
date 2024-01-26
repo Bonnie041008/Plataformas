@@ -24,7 +24,6 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 320, 0, 64, 64 }); 
 	idleAnim.loop = true;
 	idleAnim.speed = 0.07f;
-
 	//correr
 	rightAnim.PushBack({ 0,64,64,64 });
 	rightAnim.PushBack({ 64,64,64,64 });
@@ -34,10 +33,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 	rightAnim.PushBack({ 320,64,64,64 });
 	rightAnim.PushBack({ 384,64,64,64 });
 	rightAnim.PushBack({ 448,64,64,64 });
-
 	rightAnim.loop = true;
 	rightAnim.speed = 0.2f;
-
 	//dead
 	deadAnim.PushBack({ 0,128,64,64 });
 	deadAnim.PushBack({ 64,128,64,64 });
@@ -53,51 +50,24 @@ Player::Player() : Entity(EntityType::PLAYER)
 	deadAnim.PushBack({ 0,0,0,0 });
 	deadAnim.loop = false;
 	deadAnim.speed = 0.2f;
-
 	//salto
-
 	jumpAnim.PushBack({ 0,192,64,64 });
 	jumpAnim.PushBack({ 64,192,64,64 });
 	jumpAnim.PushBack({ 128,192,64,64 });
 	jumpAnim.PushBack({ 192,192,64,64 });
 	jumpAnim.PushBack({ 256,192,64,64 });
 	jumpAnim.PushBack({ 320,192,64,64 });
-	/*jumpAnim.PushBack({ 384,192,64,64 });
-	jumpAnim.PushBack({ 448,192,64,64 });
-	jumpAnim.PushBack({ 512,192,64,64 });
-	jumpAnim.PushBack({ 576,192,64,64 });*/
-	
-
-
-
-
 	jumpAnim.loop = false;
 	jumpAnim.speed = 0.2f;
-
-
-
-
 	//caida
-	
-	
 	fallAnim.PushBack({ 0,0,0,0 });
-
-
-
-
-
 	fallAnim.loop = false;
 	fallAnim.speed = 0.2f;
-
 	// attack
-
 	attackAnim.PushBack({ 0,256,64,64 });
 	attackAnim.PushBack({ 64,256,64,64 });
 	attackAnim.PushBack({ 128,256,64,64 });
 	attackAnim.PushBack({ 192,256,64,64 });
-	
-
-	
 	attackAnim.loop = false;
 	attackAnim.speed = 0.2f;
 }
@@ -112,10 +82,8 @@ bool Player::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	initialX = position.x;
 	initialY = position.y;
-
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &idleAnim;
-
 	return true;
 }
 
@@ -127,14 +95,11 @@ bool Player::Start() {
 	pbody = app->physics->CreateCircle(position.x , position.y , 20, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
-
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 	MuerteMago = app->audio->LoadFx("Assets/Audio/Fx/Muerte-Mago.wav");
 	SaltoMago = app->audio->LoadFx("Assets/Audio/Fx/Salto.wav");
 	AtaqueMago = app->audio->LoadFx("Assets/Audio/Fx/Ataque.wav");
-
 	fondobotonesPausa = app->tex->Load("Assets/Textures/FondosBotones/FondoBotones-Pausa.png");
-
 	return true;
 }
 
@@ -148,19 +113,28 @@ void Player::SetPosition(int x, int y) {
 bool Player::Update(float dt)
 {
 
-	
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && isjumping == false && pausa == false) {
+		SetPosition(1103, 425);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN && isjumping == false && pausa == false) {
+		SetPosition(4137, 665);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN && isjumping == false && pausa == false) {
+		SetPosition(6099, 425);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN && isjumping == false && pausa == false) {
+		SetPosition(8347, 665);
+	}
 	
 	if (fireBalltoDestroy != -1 && pausa == false) {
 		app->physics->DestroyObject(listOfFireballs[fireBalltoDestroy]);
 		listOfFireballs.Del(listOfFireballs.At(fireBalltoDestroy));
 		fireBalltoDestroy = -1;
-		
 	}
 	if (enemyfireBalltoDestroy != -1 && pausa == false) {
 		app->physics->DestroyObject(listOfFireballs[enemyfireBalltoDestroy]);
 		listOfFireballs.Del(listOfFireballs.At(enemyfireBalltoDestroy));
 		enemyfireBalltoDestroy = -1;
-
 	}
 	b2Vec2 vel = b2Vec2(move_x, move_y);
 	move_x = 0;
@@ -185,10 +159,6 @@ bool Player::Update(float dt)
 			app->scene->playerLifesBox->state = GuiControlState::DISABLED;
 			app->scene->scoreBox->state = GuiControlState::DISABLED;
 			app->scene->timerBox->state = GuiControlState::DISABLED;
-
-			
-			
-			
 		}
 		else {
 			pausa = false;
@@ -203,98 +173,68 @@ bool Player::Update(float dt)
 	}
 	if (health != 0 && pausa == false) {
 		if ((app->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN || cntfire > 0) && pausa == false) {
-
-
-
-
 			isAttacking = true;
 			if (isAttacking == true && Ataque_Mago == true) {
 				app->audio->PlayFx(AtaqueMago);
-
 			}
 			Ataque_Mago = false;
 			currentAnimation = &attackAnim;
 			if (cntfire == 0) {
 				b2Vec2 fireBallvel = b2Vec2(10, 0);
-
 				if (isFliped) {
 					fireBallvel = b2Vec2(-10, 0);
 					fireBall = app->physics->CreateCircle(position.x - 30, position.y + 15, 15, bodyType::DYNAMIC);
 				}
 				else {
 					fireBall = app->physics->CreateCircle(position.x + 70, position.y + 15, 15, bodyType::DYNAMIC);
-
 				}
 				fireBall->listener = this;
 				fireBall->ctype = ColliderType::FIREBALL;
 				fireBall->body->SetLinearVelocity(fireBallvel);
 				listOfFireballs.Add(fireBall);
 			}
-
 			cntfire++;
 			attackAnim.Update();
 			if (cntfire > 18 && isAttacking == true) {
-
-
-
 				attackAnim.Reset();
-
-
-
 				isAttacking = false;
 				Ataque_Mago = true;
 				//currentAnimation = &idleAnim;
 				cntfire = 0;
 			}
-
-
 		}
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isjumping == false && pausa == false) {
 			// Cambia la velocidad vertical para simular un salto
 			Salto_Mago = true;
 			if (isjumping == false && Salto_Mago == true) {
 				app->audio->PlayFx(SaltoMago);
-
 			}
 			Salto_Mago = false;
-
 			isjumping = true;
 			jumpcnt = 0;
-
-
 		}
 		if (isjumping) {
 			currentAnimation = &jumpAnim;
-
-
 			move_y = GRAVITY_Y + jumpcnt - dt + 5;
 			currentAnimation = &jumpAnim;
-
 			if (health == 0 && currentAnimation == &jumpAnim) {
 				currentAnimation = &deadAnim;
 			}
-
 			jumpcnt++;
-
 		}
 		else {
 			jumpAnim.Reset();
 			jumpcnt = 0;
 		}
 	}
-	
-	
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && pausa==false) {
 		move_x = -speed*dt;
 		isFliped = true;
-
 		if (godmode == true)
 		{
 			move_x = -speed * 5 *dt;
 		}
-
 		currentAnimation = &rightAnim;
-
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && pausa == false) {
@@ -318,15 +258,9 @@ bool Player::Update(float dt)
 		SetPosition(183, 635);
 		health = 1;
 	}
-
-
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && pausa == false) {
-		//vel = b2Vec2(speed * dt, -GRAVITY_Y);
-
+	
 		health = 0;
-		
-		
-
 	}
 	//godmode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && pausa == false) {
@@ -372,30 +306,20 @@ bool Player::Update(float dt)
 		speed = 0;
 		if (muriendo > 70) {
 			SetPosition(lastCheckpoint.x,lastCheckpoint.y);
-		;
+		
 			speed = 0.3f;
 			currentAnimation = &idleAnim;
 			deadAnim.Reset();
 			health = 1;
-		
 			muriendo = 0;
-
 			Muerte_Mago = true;
-			
-			
 		}
-	
 	}
-
 	// Añadir la funcionalidad de saltar
-	
-	
 	if (pausa == true) {
 		move_y = 0.0f;
 	}
 	vel = b2Vec2(move_x, move_y);
-	
-	
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(vel);
 
@@ -410,14 +334,8 @@ bool Player::Update(float dt)
 	if (pausa == false) {
 		currentAnimation->Update();
 	}
-	
 	currentposition = position;
 	return true;
-
-	
-
-
-
 }
 
 bool Player::CleanUp()
@@ -455,9 +373,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				//muriendo++;
 				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
 			}
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
@@ -466,9 +382,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				//muriendo++;
 				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
 			}
 			break;
 		case ColliderType::BOSS:
@@ -478,9 +392,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				health = 0;
 			}
 			if (health == 0 && isalive) {
-				//muriendo++;
 				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
 			}
 
 			break;
@@ -495,14 +407,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision HEALTHIEM");
 			physB->body->SetActive(false);
 			break;
-
 		case ColliderType::TP:
 			LOG("Collision TP");
 			physB->body->SetActive(false);
 			break;
-		
-			
-
 		case ColliderType::FIREENEMY:
 			LOG("Collision FIREENEMY");
 			if (godmode == false)
@@ -512,7 +420,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			if (health == 0 && isalive) {
 				muriendo++;
 				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
 			}
 			break;
 		}
@@ -527,6 +434,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::PLAYER:
 			LOG("Collision PLAYER");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
+			break;
+		case ColliderType::HEALTHITEM:
+			LOG("Collision HEALTHIEM");
+			physB->body->SetActive(false);
+			break;
+		case ColliderType::COIN:
+			LOG("Collision COIN");
+			physB->body->SetActive(false);
+
+
 			break;
 		case ColliderType::BOSS:
 			LOG("Collision BOSS");
@@ -571,7 +488,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision FIREENEMY");
 			fireBalltoDestroy = listOfFireballs.Find(physA);
 			enemyfireBalltoDestroy = listOfFireballs.Find(physB);
-			//fireBalltoDestroy = listOfFireballs.Find(fireBall);
 			break;
 		}
 	}
@@ -581,7 +497,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	
 	case ColliderType::PLAYER:
 		LOG("Collision PLAYER");
-		//physA->body->DestroyFixture(physA);
 		fireBalltoDestroy = listOfFireballs.Find(physA);
 		break;
 	

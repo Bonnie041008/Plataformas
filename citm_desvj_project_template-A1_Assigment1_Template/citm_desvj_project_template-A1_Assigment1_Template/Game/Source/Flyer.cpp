@@ -133,9 +133,7 @@ bool Flyer::Update(float dt)
 		app->render->DrawTexture(texture, position.x - 15, position.y - 20, isFliped, &currentAnimation->GetCurrentFrame());
 		currentAnimation->Update();
 	}
-	/*else {
-		app->render->DrawTexture(texture, finalposition.x - 15, finalposition.y - 30, isFliped, &currentAnimation->GetCurrentFrame());
-	}*/
+	
 	//Set the velocity of the pbody of the player
 	if (isalive == true) {
 		if (app->scene->player->position.x + 20 > initialX - walkingRange && app->scene->player->position.x - 20 < initialX + walkingRange) {
@@ -216,7 +214,7 @@ bool Flyer::Update(float dt)
 						}
 
 					}
-					//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+					
 					for (uint i = 0; i < path->Count(); i++) {
 
 						iPoint pos5 = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
@@ -294,7 +292,7 @@ bool Flyer::Update(float dt)
 				}
 
 			}
-			//app->render->DrawTexture(app->scene->mouseTileTex, pos.x, pos.y, false);
+			
 			for (uint i = 0; i < path->Count(); i++) {
 
 				iPoint pos5 = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
@@ -380,7 +378,7 @@ void Flyer::OnCollision(PhysBody* physA, PhysBody* physB) {
 			if (health == 0 && isalive) {
 				muriendo++;
 				currentAnimation = &deadAnim;
-				//SetPosition(400, 352);
+				
 			}
 
 			break;

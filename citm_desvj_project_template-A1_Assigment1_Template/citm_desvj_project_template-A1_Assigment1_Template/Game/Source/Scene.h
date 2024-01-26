@@ -91,6 +91,8 @@ public:
 	List<Coin*> listOfCoins;
 	List<HealthItem*> listOfHealtthitems;
 	bool ext;
+	float timeSinceBossDefeated = 0.0f;
+	float timeSinceLivesZero = 0.0f;
 private:
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;

@@ -41,9 +41,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 		break;
 	case GuiControlType::VALUEBOX:
 		guiControl = new GuiControlValueBox(id, bounds, text);
-		if (guiControl->id == 11) {
-			guiControl->texture = app->tex->Load("Assets/Textures/coinUi.png");
-		}
+	
 		break;
 	}
 
