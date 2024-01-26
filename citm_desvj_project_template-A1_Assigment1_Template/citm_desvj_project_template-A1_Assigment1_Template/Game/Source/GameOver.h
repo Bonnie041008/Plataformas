@@ -1,5 +1,5 @@
 #ifndef __GAMEOVER_H__
-#define __gameover_H__
+#define __GAMEOVER_H__
 
 #include "Module.h"
 #include "Player.h"
