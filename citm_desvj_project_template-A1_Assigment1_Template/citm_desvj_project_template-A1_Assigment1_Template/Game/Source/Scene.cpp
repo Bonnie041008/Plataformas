@@ -280,32 +280,63 @@ bool Scene::Update(float dt)
 	iPoint highlightedTileWorld = app->map->MapToWorld(mouseTile.x, mouseTile.y);
 	iPoint origin = mouseTile;
 
-	if (app->scene->player->lives == 0)
+	float timeSinceLivesZero = 0.0f;
+	bool isWaitingAfterLivesZero = false;
+	float delayAfterLivesZero = 25.0f;
+
+	if (app->scene->player->lives == 0 && !isWaitingAfterLivesZero)
 	{
-		
-		active = false;
-		app->map->active = false;
-		app->entityManager->active = false;
-		app->guiManager->active = false;
-
-		app->gameover->active = true;
-
+		isWaitingAfterLivesZero = true;
+		timeSinceLivesZero = 0.0f;
 	}
 
-	if (boss->health == 0)
+	if (isWaitingAfterLivesZero)
 	{
-		
-		active = false;
-		app->map->active = false;
-		app->entityManager->active = false;
-		app->guiManager->active = false;
+		timeSinceLivesZero += dt;
 
-		app->winFinal->active = true;
+		if (timeSinceLivesZero >= delayAfterLivesZero)
+		{
+			
+			active = false;
+			app->map->active = false;
+			app->entityManager->active = false;
+			app->guiManager->active = false;
+			app->gameover->active = true;
 
+			
+			isWaitingAfterLivesZero = false;
+			timeSinceLivesZero = 0.0f;
+		}
 	}
 
+	float timeSinceBossDefeated = 0.0f;
+	bool isWaitingAfterBossDefeated = false;
+	float delayAfterBossDefeated = 20.0f;
 
+	if (boss->health == 0 && !isWaitingAfterBossDefeated)
+	{
+		isWaitingAfterBossDefeated = true;
+		timeSinceBossDefeated = 0.0f;
+	}
 
+	if (isWaitingAfterBossDefeated)
+	{
+		timeSinceBossDefeated += dt;
+
+		if (timeSinceBossDefeated >= delayAfterBossDefeated)
+		{
+			
+			active = false;
+			app->map->active = false;
+			app->entityManager->active = false;
+			app->guiManager->active = false;
+			app->winFinal->active = true;
+
+			
+			isWaitingAfterBossDefeated = false;
+			timeSinceBossDefeated = 0.0f;
+		}
+	}
 
 	return true;
 }

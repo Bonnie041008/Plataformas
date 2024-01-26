@@ -82,6 +82,8 @@ public:
 	GuiControlValueBox* playerLifesBox;
 	GuiControlValueBox* scoreBox;
 	GuiControlValueBox* timerBox;
+
+	
 	
 	Coin* coin;
 	TP* tp;
