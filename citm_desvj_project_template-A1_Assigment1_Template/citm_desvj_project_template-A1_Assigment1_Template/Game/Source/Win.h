@@ -50,34 +50,8 @@ public:
 
 
 public:
-	Player* player;
-	Enemy* enemy;
-	Enemy* enemy2;
-	Enemy* enemy3;
-	Enemy* enemy4;
-	Enemy* enemy5;
-	Flyer* flyer;
-	Flyer* flyer2;
-	Flyer* flyer3;
-	Boss* boss;
-	SDL_Texture* mouseTileTex = nullptr;
+	
 	SDL_Texture* pantallaWin;
-	Checkpoint* checkpoint;
-	Checkpoint* checkpoint2;
-	GuiControlButton* exitButton;
-	GuiControlButton* resumeButton;
-	GuiControlButton* backToTitleButton;
-	GuiControlButton* settingsButton2;
-	GuiControlSlider* musicSlider;
-	GuiControlSlider* FxSlider;
-	GuiControlButton* GoBackButton;
-	GuiControlCheckBox* FullscreenCheckBox;
-	GuiControlCheckBox* VsyncCheckBox;
-	Coin* coin;
-	TP* tp;
-	List<Checkpoint*> listOfCheckpoints;
-	List<Coin*> listOfCoins;
-	List<HealthItem*> listOfHealtthitems;
 	bool ext;
 private:
 	SDL_Texture* img;
