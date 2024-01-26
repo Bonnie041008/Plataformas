@@ -35,6 +35,8 @@ Controls:
 
    F11 Enable/Disable FPS cap to 30
 
+   K: -1 Lifepoints
+
    1 / 2 / 3 / 4: Tp to the checkpoints
 
 Menu:
