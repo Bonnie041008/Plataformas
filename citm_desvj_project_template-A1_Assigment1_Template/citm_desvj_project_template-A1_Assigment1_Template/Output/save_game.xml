@@ -16,17 +16,46 @@
 		<enemy3 x="3408" y="638" estavivo="true" />
 		<enemy4 x="4944" y="638" estavivo="true" />
 		<enemy5 x="6721" y="638" estavivo="true" />
-		<flyer x="430" y="400" estavivo="true" />
+		<flyer x="623" y="369" estavivo="true" />
 		<flyer2 x="2496" y="239" estavivo="true" />
 		<flyer3 x="5568" y="239" estavivo="true" />
-		<player x="183" y="622" lives="5" lastCheckpointX="3" lastCheckpointY="12" />
-		<boss x="9312" y="638" health="5" estavivo="true" />
-		<checkpoint x="1103" y="425" x="3" y="12" isPicked="false" />
-		<checkpoint x="8347" y="665" x="3" y="12" isPicked="false" />
-		<coin x="403" y="605" isPicked="true" />
-		<coin x="503" y="605" isPicked="true" />
-		<coin x="603" y="605" isPicked="true" />
-		<healtitem x="903" y="605" isPicked="false" />
+		<player x="147" y="635" lives="5" lastCheckpointX="183" lastCheckpointY="635" />
+		<boss x="9313" y="638" health="10" estavivo="true" />
+		<checkpoint x="1087" y="409" x="183" y="635" isPicked="false" />
+		<checkpoint x="4121" y="648" x="183" y="635" isPicked="false" />
+		<checkpoint x="6083" y="409" x="183" y="635" isPicked="false" />
+		<checkpoint x="8331" y="648" x="183" y="635" isPicked="false" />
+		<coin x="403" y="605" isPicked="false" />
+		<coin x="503" y="605" isPicked="false" />
+		<coin x="603" y="605" isPicked="false" />
+		<coin x="1437" y="635" isPicked="false" />
+		<coin x="1546" y="587" isPicked="false" />
+		<coin x="1686" y="539" isPicked="false" />
+		<coin x="2448" y="480" isPicked="false" />
+		<coin x="2527" y="448" isPicked="false" />
+		<coin x="2604" y="556" isPicked="false" />
+		<coin x="2956" y="587" isPicked="false" />
+		<coin x="3149" y="539" isPicked="false" />
+		<coin x="3654" y="587" isPicked="false" />
+		<coin x="3745" y="471" isPicked="false" />
+		<coin x="3845" y="587" isPicked="false" />
+		<coin x="4377" y="587" isPicked="false" />
+		<coin x="4474" y="539" isPicked="false" />
+		<coin x="4570" y="490" isPicked="false" />
+		<coin x="5574" y="347" isPicked="false" />
+		<coin x="5627" y="347" isPicked="false" />
+		<coin x="6005" y="395" isPicked="false" />
+		<coin x="6105" y="395" isPicked="false" />
+		<coin x="6200" y="395" isPicked="false" />
+		<coin x="7067" y="633" isPicked="false" />
+		<coin x="7131" y="550" isPicked="false" />
+		<coin x="7215" y="525" isPicked="false" />
+		<coin x="7317" y="635" isPicked="false" />
+		<healtitem x="887" y="589" isPicked="false" />
+		<healtitem x="991" y="331" isPicked="false" />
+		<healtitem x="2341" y="475" isPicked="false" />
+		<healtitem x="4705" y="475" isPicked="false" />
+		<healtitem x="7380" y="619" isPicked="false" />
 	</scene>
 	<entitymanager />
 	<guiManager />
