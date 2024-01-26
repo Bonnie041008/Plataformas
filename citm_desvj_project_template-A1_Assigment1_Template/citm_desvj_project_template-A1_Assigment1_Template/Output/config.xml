@@ -26,13 +26,51 @@
   <scene>
     <player x="163" y="665" texturepath="Assets/Textures/player1.png"/>
     <checkpoint  x="1103" y="425" texturepath="Assets/Textures/checkpoint-export.png"/>
+	<checkpoint  x="4137" y="665" texturepath="Assets/Textures/checkpoint-export.png"/>
+	<checkpoint  x="6099" y="425" texturepath="Assets/Textures/checkpoint-export.png"/>
 	<checkpoint  x="8347" y="665" texturepath="Assets/Textures/checkpoint-export.png"/>
 	
 	  <tp  x="7495" y="665"/>
 	  <coin  x="403" y="605" texturepath="Assets/Textures/CoinSpritesheet.png"/>
 	  <coin  x="503" y="605" texturepath="Assets/Textures/CoinSpritesheet.png"/>
 	  <coin  x="603" y="605" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+
+	  <coin  x="1437" y="635" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="1546" y="587" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="1686" y="539" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+
+	  <coin  x="2448" y="481" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="2527" y="448" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="2604" y="556" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+
+	  <coin  x="2956" y="587" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="3149" y="539" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  
+	  <coin  x="3654" y="587" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="3745" y="471" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="3845" y="587" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+
+	  <coin  x="4377" y="587" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="4474" y="539" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="4570" y="491" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+
+	  <coin  x="5574" y="347" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="5627" y="347" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="6006" y="395" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="6105" y="395" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="6200" y="395" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+
+	  <coin  x="7067" y="633" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="7131" y="550" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="7215" y="525" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  <coin  x="7317" y="635" texturepath="Assets/Textures/CoinSpritesheet.png"/>
+	  	  
 	  <healthItem  x="903" y="605" texturepath="Assets/Textures/HealhtItemSpritesheet.png"/>
+	  <healthItem  x="1007" y="347" texturepath="Assets/Textures/HealhtItemSpritesheet.png"/>
+	  <healthItem  x="2357" y="491" texturepath="Assets/Textures/HealhtItemSpritesheet.png"/>
+	  <healthItem  x="4722" y="491" texturepath="Assets/Textures/HealhtItemSpritesheet.png"/>
+	  <healthItem  x="7396" y="635" texturepath="Assets/Textures/HealhtItemSpritesheet.png"/>
+	  
     
 	  <boss x="9347" y="635" texturepath="Assets/Textures/Boss_Spritesheet2-export.png"/>
 	  <enemy x="1125" y="635" texturepath="Assets/Textures/spritesheetskeleton.png"/>
